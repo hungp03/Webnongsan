@@ -5,18 +5,18 @@ import java.util.List;
 import ecofarm.entity.Cart;
 
 public interface CartDAO {
-	boolean insertCart(Cart cart);
+	public boolean insertCart(Cart cart);
 
-	boolean deleteCart(Cart cart);
+	public boolean deleteCart(Cart cart);
 
-	boolean updateCart(Cart cart);
+	public boolean updateCart(Cart cart);
 
-	int updateQuantity(int productId, int quantity);
+	public int updateQuantity(int productId, int quantity);
 
-	Cart getCart(int accountId, int productId);
+	public Cart getCart(int accountId, int productId);
 
-	List<Cart> getCart(int accountId);
+	public List<Cart> getCart(int accountId);
 
-	int removeCart(int accountId);
+	public int removeCart(int accountId);
 
 }
