@@ -1,27 +1,25 @@
 package ecofarm.entity;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-
 @Embeddable
-public class OrderDetailId implements Serializable {
+public class WishlistId implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "Product_ID", nullable = false)
 	private int productId;
-	@Column(name = "Order_ID", nullable = false)
-	private int orderId;
 
-	public OrderDetailId() {
+	@Column(name = "Account_ID", nullable = false)
+	private int accountId;
+
+	public WishlistId() {
 	}
 
-	public OrderDetailId(int productId, int orderId) {
+	public WishlistId(int productId, int accountId) {
 		this.productId = productId;
-		this.orderId = orderId;
+		this.accountId = accountId;
 	}
 
 	public int getProductId() {
@@ -32,12 +30,12 @@ public class OrderDetailId implements Serializable {
 		this.productId = productId;
 	}
 
-	public int getOrderId() {
-		return this.orderId;
+	public int getAccountId() {
+		return this.accountId;
 	}
 
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
+	public void setAccountId(int accountId) {
+		this.accountId = accountId;
 	}
 
 }

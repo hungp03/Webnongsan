@@ -1,6 +1,5 @@
 package ecofarm.entity;
 
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,10 +9,10 @@ import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Cart", schema = "dbo", catalog = "DB_Webns")
-public class Cart {
+@Table(name = "Wishlist", schema = "dbo", catalog = "DB_Webns")
+public class Wishlist {
 	@EmbeddedId
-	private CartId id;
+	private WishlistId id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@MapsId("accountId")
@@ -25,24 +24,21 @@ public class Cart {
 	@JoinColumn(name = "Product_ID", nullable = false, insertable = false, updatable = false)
 	private Product product;
 
-	@Column(name = "Quantity", nullable = false)
-	private int quantity;
-
-	public Cart() {
+	public Wishlist() {
 	}
 
-	public Cart(CartId id, Account account, Product product, int quantity) {
+	public Wishlist(WishlistId id, Account account, Product product) {
 		this.id = id;
 		this.account = account;
 		this.product = product;
-		this.quantity = quantity;
+
 	}
 
-	public CartId getId() {
+	public WishlistId getId() {
 		return this.id;
 	}
 
-	public void setId(CartId id) {
+	public void setId(WishlistId id) {
 		this.id = id;
 	}
 
@@ -60,14 +56,6 @@ public class Cart {
 
 	public void setProduct(Product product) {
 		this.product = product;
-	}
-
-	public int getQuantity() {
-		return this.quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
 	}
 
 }

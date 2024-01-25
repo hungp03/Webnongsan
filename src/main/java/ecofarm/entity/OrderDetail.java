@@ -18,12 +18,12 @@ public class OrderDetail {
 	private OrderDetailId id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@MapsId("order_Id")
+	@MapsId("orderId")
 	@JoinColumn(name = "Order_ID", nullable = false, insertable = false, updatable = false)
 	private Orders order;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@MapsId("product_Id")
+	@MapsId("productId")
 	@JoinColumn(name = "Product_ID", nullable = false, insertable = false, updatable = false)
 	private Product product;
 

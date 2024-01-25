@@ -24,7 +24,6 @@
 				<value>classpath:global_vi</value>
 				<value>classpath:home</value>
 				<value>classpath:home_vi</value>
-
 			</list>
 		</property>
 	</bean>

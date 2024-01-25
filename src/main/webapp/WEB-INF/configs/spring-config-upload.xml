@@ -16,17 +16,17 @@
 		<property name="maxUploadSize" value="20971520" />
 	</bean>
 
-	<!-- Thay doi theo cau hình moi may -->
+	<!-- Thay đổi vị trí theo tùy máy -->
 	<bean id="accountImgDir" class="ecofarm.bean.UploadFile">
 		<property name="path"
 			value="C:\Users\Hung Pham\Desktop\WebNongSan\src\main\webapp\assets\img\account\"></property>
 	</bean>
-	<!-- Thay doi theo cau hình moi may -->
+	<!-- Thay đổi vị trí theo tùy máy -->
 	<bean id="categoryImgDir" class="ecofarm.bean.UploadFile">
 		<property name="path"
 			value="C:\Users\Hung Pham\Desktop\WebNongSan\src\main\webapp\assets\img\category\"></property>
 	</bean>
-	<!-- Thay doi theo cau hình moi may -->
+	<!-- Thay đổi vị trí theo tùy máy -->
 	<bean id="productImgDir" class="ecofarm.bean.UploadFile">
 		<property name="path"
 			value="C:\Users\Hung Pham\Desktop\WebNongSan\src\main\webapp\assets\img\products\"></property>

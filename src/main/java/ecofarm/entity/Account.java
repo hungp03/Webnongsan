@@ -1,33 +1,29 @@
 package ecofarm.entity;
+
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-
-//Annotatyion @Entity xác định class Account là một Entity, ánh xạ đến 1 bảng trong CSDL
 @Entity
-// Annotation @Table chỉ định rằng lớp Account sẽ ánh xạ đến bảng Account trong CSDL
-// Tham số schema chỉ định schema của bảng là dbo. 
-// Tham số catalog chỉ định catalog của bảng DB_Webns.
 @Table(name = "Account", schema = "dbo", catalog = "DB_Webns")
-public class Account{
+public class Account {
 	@Id
 	@GeneratedValue
 	@Column(name = "Account_ID", unique = true, nullable = false)
 	private int accountId;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Role_ID", nullable = false)
 	private Role role;
+
 	@Column(name = "Last_Name", nullable = false)
 	private String lastName;
 
@@ -37,7 +33,7 @@ public class Account{
 	@Column(name = "Email", nullable = false)
 	private String email;
 
-	@Column(name = "Phone")
+	@Column(name = "Phone", nullable = false)
 	private String phoneNumber;
 
 	@Column(name = "Avatar")
@@ -54,14 +50,22 @@ public class Account{
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Address_ID")
-	private Address address;
+	private Address defaultAddress;
 
-	public Address getAddress() {
-		return address;
+	public Address getDefaultAddress() {
+		return defaultAddress;
 	}
 
-	public void setDefaultAddress(Address address) {
-		this.address = address;
+	public void setDefaultAddress(Address defaultAddress) {
+		this.defaultAddress = defaultAddress;
+	}
+
+	public Set<Wishlist> getWishlist() {
+		return wishlist;
+	}
+
+	public void setWishlist(Set<Wishlist> wishlist) {
+		this.wishlist = wishlist;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
@@ -71,8 +75,13 @@ public class Account{
 	private Set<Product> products = new HashSet<>(0);
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+	private Set<Feedback> feedbacks = new HashSet<>(0);
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
 	private Set<Cart> carts = new HashSet<>(0);
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+	private Set<Wishlist> wishlist = new HashSet<>(0);
 
 	public Account() {
 
@@ -191,6 +200,14 @@ public class Account{
 
 	public void setProducts(Set<Product> products) {
 		this.products = products;
+	}
+
+	public Set<Feedback> getFeedbacks() {
+		return feedbacks;
+	}
+
+	public void setFeedbacks(Set<Feedback> feedbacks) {
+		this.feedbacks = feedbacks;
 	}
 
 	public Set<Cart> getCarts() {

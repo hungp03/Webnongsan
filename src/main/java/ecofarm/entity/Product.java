@@ -54,19 +54,24 @@ public class Product {
 	@Column(name = "Unit")
 	private String unit;
 
-	@Column(name = "is_deleted", nullable = false)
-	private int isDeleted;
-	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Account_ID", nullable = false)
 	private Account account;
 	
-	
+	@Column(name = "is_deleted", nullable = false)
+	private int isDeleted;
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
 	private Set<Cart> carts = new HashSet<>(0);
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
 	private Set<OrderDetail> orderDetails = new HashSet<>(0);
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
+	private Set<Feedback> feedbacks = new HashSet<>(0);
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+	private Set<Wishlist> wishlist = new HashSet<>(0);
 
 	public Product() {
 	}
@@ -78,11 +83,10 @@ public class Product {
 		this.price = price;
 		this.quantity = quantity;
 		this.postingDate = postingDate;
-		this.isDeleted = 0;
 	}
 
 	public Product(int productId, Category category, String productName, double price, String image, int quantity,
-			String detail, Date postingDate, Date expiryDate, Set<Cart> carts, Set<OrderDetail> orderDetails) {
+			String detail, Date postingDate, Date expiryDate, Set<Cart> carts, Set<OrderDetail> orderDetails, Set<Feedback> feedbacks, int isDeleted) {
 		this.productId = productId;
 		this.category = category;
 		this.productName = productName;
@@ -93,15 +97,10 @@ public class Product {
 		this.postingDate = postingDate;
 		this.carts = carts;
 		this.orderDetails = orderDetails;
-		this.isDeleted = 0;
-	}
-
-	public int isProductDeleted() {
-		return this.isDeleted;
-	}
-	public void setProductDeleted(int isDeleted) {
+		this.feedbacks = feedbacks;
 		this.isDeleted = isDeleted;
 	}
+
 	public int getProductId() {
 		return this.productId;
 	}
@@ -182,6 +181,14 @@ public class Product {
 		this.orderDetails = orderDetails;
 	}
 
+	public Set<Feedback> getFeedbacks() {
+		return this.feedbacks;
+	}
+
+	public void setFeedbacks(Set<Feedback> feedbacks) {
+		this.feedbacks = feedbacks;
+	}
+
 	public String getUnit() {
 		return unit;
 	}
@@ -197,5 +204,12 @@ public class Product {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
-
+	
+	public int isProductDeleted() {
+		return this.isDeleted;
+	}
+	
+	public void setProductDeleted(int isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 }
