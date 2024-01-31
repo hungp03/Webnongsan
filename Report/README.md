@@ -58,4 +58,5 @@ Feedback (**Feedback_ID**, Star, Status, Feedback_Content, Posting_Date, **_Acco
 ## Biểu đồ diagram
 ![Diagram](./img/Diagram.png)
 
-<!-- ## Mô hình thực thể quan hệ (Entity Relationship Diagram - ERD) -->
+## Mô hình thực thể quan hệ (Entity Relationship Diagram - ERD)
+![ERD](./img/ERD.svg)
