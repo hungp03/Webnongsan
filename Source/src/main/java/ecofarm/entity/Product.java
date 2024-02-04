@@ -58,8 +58,8 @@ public class Product {
 	@JoinColumn(name = "Account_ID", nullable = false)
 	private Account account;
 	
-	@Column(name = "is_deleted", nullable = false)
-	private int isDeleted;
+	@Column(name = "Status", nullable = false)
+	private int status;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
 	private Set<Cart> carts = new HashSet<>(0);
@@ -86,7 +86,7 @@ public class Product {
 	}
 
 	public Product(int productId, Category category, String productName, double price, String image, int quantity,
-			String detail, Date postingDate, Date expiryDate, Set<Cart> carts, Set<OrderDetail> orderDetails, Set<Feedback> feedbacks, int isDeleted) {
+			String detail, Date postingDate, Date expiryDate, Set<Cart> carts, Set<OrderDetail> orderDetails, Set<Feedback> feedbacks, int status) {
 		this.productId = productId;
 		this.category = category;
 		this.productName = productName;
@@ -98,7 +98,7 @@ public class Product {
 		this.carts = carts;
 		this.orderDetails = orderDetails;
 		this.feedbacks = feedbacks;
-		this.isDeleted = isDeleted;
+		this.status = status;
 	}
 
 	public int getProductId() {
@@ -204,12 +204,22 @@ public class Product {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
-	
-	public int isProductDeleted() {
-		return this.isDeleted;
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public Set<Wishlist> getWishlist() {
+		return wishlist;
+	}
+
+	public void setWishlist(Set<Wishlist> wishlist) {
+		this.wishlist = wishlist;
 	}
 	
-	public void setProductDeleted(int isDeleted) {
-		this.isDeleted = isDeleted;
-	}
+	
 }

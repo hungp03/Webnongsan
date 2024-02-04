@@ -16,7 +16,6 @@ Website có những chức năng chính sau
 | Thêm SP vào mục yêu thích | Giúp việc tìm lại sản phẩm dễ dàng hơn cho lần mua sau |
 | Thanh toán, hủy đơn hàng | Thực hiện thanh toán, hủy đơn hàng khi đơn chưa được xác nhận |
 | Quản lý đơn hàng | Admin cập nhật tình trạng đơn hàng sau khi khách hàng đặt hàng. |
-| Quản lý nhân viên | Tạo, khóa, xóa, cập nhật tài khoản nhân viên (admin) |
 | Đánh giá | Khách hàng đánh giá sản phẩm sau khi mua hàng. |
 | Quản lý khách hàng | Xóa/khóa tài khoản khách hàng nếu họ vi phạm |
 | Quản lý category, Products | CRUD Categories, Products |
@@ -40,14 +39,14 @@ District (**DistrictID**, Name, **_ProvinceID_**)
 
 Province (**ProvinceID**, Name)
 
-Product (**Product_ID**, Product_Name, Price, Image, Quantity, Detail, Posting_Date, Unit, **_Category_ID_**, **_Account_ID_**, is_deleted)
+Product (**Product_ID**, Product_Name, Price, Image, Quantity, Detail, Posting_Date, Unit, **_Category_ID_**, **_Account_ID_**, Status)
 
 Cart (**Product_ID**, **Account_ID**, Quantity)
 - Bảng Cart có ``Product_ID`` và ``Account_ID`` là PK và FK 
 
 Orders (**Order_ID**, Order_Time, Order_Status, **_Address_ID_**, **_Account_ID_**, Total_Price)	
 
-Order_Detail (**Order_ID**, **Product_ID**, Quantity, Unit_Price)
+Order_Detail (**Order_ID**, **Product_ID**, Quantity, Product_Unit_Price)
 - Bảng Order_Detail có ``Product_ID`` và ``Order_ID`` là PK và FK 
 
 Wishlist (**Account_ID**, **Product_ID**)
