@@ -9,7 +9,8 @@
 						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 						http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-
+	
+	<!--  
 	<bean id="ecofarm" class="ecofarm.bean.Company">
 		<property name="logoNavImg" value="assets/img/logo.png" />
 		<property name="slider1Img" value="assets/img/slide_1.jpg" />
@@ -45,9 +46,10 @@
 
 		</property>
 	</bean>
-
-
+	-->
+	
 	<!-- CSDL -->
+	<!--  
 	<bean id="ProductDAO" class="ecofarm.DAOImplements.ProductDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
@@ -69,4 +71,5 @@
 	<bean id="OrderDAO" class="ecofarm.DAOImplements.OrderDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	-->
 </beans>
