@@ -17,14 +17,14 @@
 	<!-- Spring MVC Annotation -->
 	<context:annotation-config />
 	<mvc:annotation-driven />
-
+	<mvc:resources location="/assets/" mapping="/assets/**"></mvc:resources>
 	<!-- Cấu hình view -->
 	<bean id="viewResolver" p:prefix="/WEB-INF/views/" p:suffix=".jsp"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver" />
 
 	<!-- Cấu hình package chứa các controller -->
 	<context:component-scan
-		base-package="ecofarm.controller, ecofarm.controller.admin, ecofarm.controller.employee, ecofarm.bean" />
+		base-package="ecofarm.controller,ecofarm.controller.user, ecofarm.controller.admin, ecofarm.controller.employee, ecofarm.bean" />
 
 	<!-- Cấu hình resources -->
 	<!-- <mvc:resources mapping="/assets/**" location="/assets/" /> -->
