@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
+//@Table(name = "Category", schema = "dbo", catalog = "DB_Webns")
 @Table(name = "Category", schema = "dbo", catalog = "DB_Webnongsan")
 public class Category {
 
