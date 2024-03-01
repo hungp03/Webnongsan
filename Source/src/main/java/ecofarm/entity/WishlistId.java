@@ -8,10 +8,10 @@ public class WishlistId implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "Product_ID", nullable = false)
+	@Column(name = "ProductID", nullable = false)
 	private int productId;
 
-	@Column(name = "Account_ID", nullable = false)
+	@Column(name = "AccountID", nullable = false)
 	private int accountId;
 
 	public WishlistId() {

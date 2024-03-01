@@ -49,26 +49,26 @@
 	-->
 	
 	<!-- CSDL -->
-	<!--  
-	<bean id="ProductDAO" class="ecofarm.DAOImplements.ProductDAOImpl">
+	<!-- 	  
+	<bean id="ProductDAO" class="ecofarm.DAOImpl.ProductDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	<bean id="CategoryDAO" class="ecofarm.DAOImplements.CategoryDAOImpl">
+	<bean id="CategoryDAO" class="ecofarm.DAOImpl.CategoryDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	<bean id="CartDAO" class="ecofarm.DAOImplements.CartDAOImpl">
+	<bean id="CartDAO" class="ecofarm.DAOImpl.CartDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 
-	<bean id="AccountDAO" class="ecofarm.DAOImplements.AccountDAOImpl">
+	<bean id="AccountDAO" class="ecofarm.DAOImpl.AccountDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 
-	<bean id="AddressDAO" class="ecofarm.DAOImplements.AddressDAOImpl">
+	<bean id="AddressDAO" class="ecofarm.DAOImpl.AddressDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<bean id="OrderDAO" class="ecofarm.DAOImplements.OrderDAOImpl">
+	<bean id="OrderDAO" class="ecofarm.DAOImpl.OrderDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	-->

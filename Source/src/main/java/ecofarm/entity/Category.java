@@ -12,15 +12,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Category", schema = "dbo", catalog = "DB_Webns")
+@Table(name = "Category", schema = "dbo", catalog = "DB_Webnongsan")
 public class Category {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "Category_ID", unique = true, nullable = false)
+	@Column(name = "CategoryID", unique = true, nullable = false)
 	private int categoryId;
 
-	@Column(name = "Category_Name", nullable = false)
+	@Column(name = "Name", nullable = false)
 	private String name;
 
 	@Column(name = "Image")

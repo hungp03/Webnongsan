@@ -9,19 +9,19 @@ import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Wishlist", schema = "dbo", catalog = "DB_Webns")
+@Table(name = "Wishlist", schema = "dbo", catalog = "DB_Webnongsan")
 public class Wishlist {
 	@EmbeddedId
 	private WishlistId id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@MapsId("accountId")
-	@JoinColumn(name = "Account_ID", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "AccountID", nullable = false, insertable = false, updatable = false)
 	private Account account;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@MapsId("productId")
-	@JoinColumn(name = "Product_ID", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "ProductID", nullable = false, insertable = false, updatable = false)
 	private Product product;
 
 	public Wishlist() {

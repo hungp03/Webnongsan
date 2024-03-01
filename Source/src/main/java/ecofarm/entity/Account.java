@@ -2,6 +2,7 @@ package ecofarm.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,27 +14,28 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Account", schema = "dbo", catalog = "DB_Webns")
+@Table(name = "Account", schema = "dbo", catalog = "DB_Webnongsan")
 public class Account {
+
 	@Id
 	@GeneratedValue
-	@Column(name = "Account_ID", unique = true, nullable = false)
+	@Column(name = "AccountID", unique = true, nullable = false)
 	private int accountId;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "Role_ID", nullable = false)
+	@JoinColumn(name = "RoleID", nullable = false)
 	private Role role;
 
-	@Column(name = "Last_Name", nullable = false)
+	@Column(name = "LastName", nullable = false)
 	private String lastName;
 
-	@Column(name = "First_Name", nullable = false)
+	@Column(name = "FirstName", nullable = false)
 	private String firstName;
 
 	@Column(name = "Email", nullable = false)
 	private String email;
 
-	@Column(name = "Phone", nullable = false)
+	@Column(name = "PhoneNumber")
 	private String phoneNumber;
 
 	@Column(name = "Avatar")
@@ -49,7 +51,7 @@ public class Account {
 	private Set<Address> addresses = new HashSet<>(0);
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "Address_ID")
+	@JoinColumn(name = "DefaultAddress")
 	private Address defaultAddress;
 
 	public Address getDefaultAddress() {
@@ -70,6 +72,9 @@ public class Account {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
 	private Set<Orders> orders = new HashSet<>(0);
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+	private Set<Coupon> coupons = new HashSet<>(0);
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
 	private Set<Product> products = new HashSet<>(0);
@@ -192,6 +197,14 @@ public class Account {
 
 	public void setOrders(Set<Orders> orders) {
 		this.orders = orders;
+	}
+
+	public Set<Coupon> getCoupons() {
+		return coupons;
+	}
+
+	public void setCoupons(Set<Coupon> coupons) {
+		this.coupons = coupons;
 	}
 
 	public Set<Product> getProducts() {
