@@ -2,6 +2,7 @@ package ecofarm.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,31 +14,28 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Address", schema = "dbo", catalog = "DB_Webns")
+@Table(name = "Address", schema = "dbo", catalog = "DB_Webnongsan")
 public class Address {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "Address_ID", unique = true, nullable = false)
+	@Column(name = "AddressID", unique = true, nullable = false)
 	private int addressId;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "WardID", nullable = false)
 	private Ward ward;
 
-	@Column(name = "Address_Name", nullable = false)
+	@Column(name = "Name")
 	private String name;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Account_ID", nullable = false)
+	@JoinColumn(name = "AccountID", nullable = false)
 	private Account account;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "defaultAddress")
 	private Set<Account> accounts = new HashSet<>(0);
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
-	private Set<Orders> orders = new HashSet<>(0);
-	
 	public Address() {
 
 	}
@@ -46,15 +44,6 @@ public class Address {
 		this.ward = ward;
 		this.account = account;
 
-	}
-	
-
-	public Set<Orders> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(Set<Orders> orders) {
-		this.orders = orders;
 	}
 
 	public Address(int addressId, Ward ward, String name) {

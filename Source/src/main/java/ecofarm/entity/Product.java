@@ -19,19 +19,19 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "Product", schema = "dbo", catalog = "DB_Webns")
+@Table(name = "Product", schema = "dbo", catalog = "DB_Webnongsan")
 public class Product {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "Product_ID", unique = true, nullable = false)
+	@Column(name = "ProductID", unique = true, nullable = false)
 	private int productId;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "Category_ID", nullable = false)
+	@JoinColumn(name = "CategoryID", nullable = false)
 	private Category category;
 
-	@Column(name = "Product_Name", nullable = false)
+	@Column(name = "ProductName", nullable = false)
 	private String productName;
 
 	@Column(name = "Price", nullable = false, scale = 4)
@@ -48,18 +48,19 @@ public class Product {
 
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@Column(name = "Posting_Date", nullable = false, length = 10)
+	@Column(name = "PostingDate", nullable = false, length = 10)
 	private Date postingDate;
 
 	@Column(name = "Unit")
 	private String unit;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "Account_ID", nullable = false)
+	@JoinColumn(name = "CouponID")
+	private Coupon coupon;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "AccountID", nullable = false)
 	private Account account;
-	
-	@Column(name = "Status", nullable = false)
-	private int status;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
 	private Set<Cart> carts = new HashSet<>(0);
@@ -86,7 +87,8 @@ public class Product {
 	}
 
 	public Product(int productId, Category category, String productName, double price, String image, int quantity,
-			String detail, Date postingDate, Date expiryDate, Set<Cart> carts, Set<OrderDetail> orderDetails, Set<Feedback> feedbacks, int status) {
+			String detail, Date postingDate, Date expiryDate, Set<Cart> carts, Set<OrderDetail> orderDetails,
+			Set<Coupon> coupons, Set<Feedback> feedbacks) {
 		this.productId = productId;
 		this.category = category;
 		this.productName = productName;
@@ -98,7 +100,6 @@ public class Product {
 		this.carts = carts;
 		this.orderDetails = orderDetails;
 		this.feedbacks = feedbacks;
-		this.status = status;
 	}
 
 	public int getProductId() {
@@ -197,6 +198,14 @@ public class Product {
 		this.unit = unit;
 	}
 
+	public Coupon getCoupon() {
+		return coupon;
+	}
+
+	public void setCoupon(Coupon coupon) {
+		this.coupon = coupon;
+	}
+
 	public Account getAccount() {
 		return account;
 	}
@@ -205,21 +214,4 @@ public class Product {
 		this.account = account;
 	}
 
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
-
-	public Set<Wishlist> getWishlist() {
-		return wishlist;
-	}
-
-	public void setWishlist(Set<Wishlist> wishlist) {
-		this.wishlist = wishlist;
-	}
-	
-	
 }

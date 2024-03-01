@@ -1,0 +1,54 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM 
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+
+		<property name="hibernate.dialect">
+			org.hibernate.dialect.SQLServerDialect
+		</property>
+
+		<property name="hibernate.connection.driver_class">
+			com.microsoft.sqlserver.jdbc.SQLServerDriver
+		</property>
+
+		<!-- Assume test is the database name -->
+
+		<property name="hibernate.connection.url">
+			jdbc:sqlserver://localhost:1433;Database=DB_Webnongsan;integratedSecurity=false;trustServerCertificate=true;
+		</property>
+
+		<property name="hibernate.connection.username">
+			sa
+		</property>
+
+		<property name="hibernate.connection.password">
+			123456
+		</property>
+		<property name="hibernate.hbm2ddl.auto">
+			create-update
+		</property>
+		<property name="show_sql">true</property>
+
+		<!-- List of XML mapping files -->
+		<mapping class = "ecofarm.entity.Province"/>
+		<mapping class ="ecofarm.entity.Account"/>
+		<mapping class ="ecofarm.entity.Address"/>
+		<mapping class ="ecofarm.entity.Cart"/>
+		<mapping class ="ecofarm.entity.CartId"/>
+		<mapping class ="ecofarm.entity.Category"/>
+		<mapping class ="ecofarm.entity.Coupon"/>
+		<mapping class ="ecofarm.entity.District"/>
+		<mapping class ="ecofarm.entity.Feedback"/>
+		<mapping class ="ecofarm.entity.OrderDetail"/>
+		<mapping class ="ecofarm.entity.OrderDetailId"/>
+		<mapping class ="ecofarm.entity.Orders"/>
+		<mapping class ="ecofarm.entity.Product"/>
+		<mapping class ="ecofarm.entity.Role"/>
+		<mapping class ="ecofarm.entity.Ward"/>
+		<mapping class ="ecofarm.entity.Wishlist"/>
+		<mapping class ="ecofarm.entity.WishlistId"/>
+		
+
+	</session-factory>
+</hibernate-configuration>

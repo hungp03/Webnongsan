@@ -24,7 +24,7 @@
 
 	<!-- Cấu hình package chứa các controller -->
 	<context:component-scan
-		base-package="ecofarm.controller,ecofarm.controller.user, ecofarm.controller.admin, ecofarm.controller.employee, ecofarm.bean" />
+		base-package="ecofarm.controller, ecofarm.controller.user, ecofarm.controller.admin, ecofarm.controller.employee, ecofarm.DAO, ecofarm.DAOImpl, ecofarm.entity, ecofarm.utility " />
 
 	<!-- Cấu hình resources -->
 	<!-- <mvc:resources mapping="/assets/**" location="/assets/" /> -->

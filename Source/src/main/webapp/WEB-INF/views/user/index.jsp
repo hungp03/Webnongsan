@@ -13,7 +13,10 @@
                             <span>All departments</span>
                         </div>
                         <ul>
-                            <li><a href="<c:url value="/assets/user/#"/>">Fresh Meat</a></li>
+<%--                         	<c:forEach var="item" items="${categories}">
+                        		<li><a href="<c:url value="/san-pham/${item.categoryID }"/>">${item.name }</a></li>
+                        	</c:forEach> --%>
+                            
                             <li><a href="<c:url value="/assets/user/#"/>">Vegetables</a></li>
                             <li><a href="<c:url value="/assets/user/#"/>">Fruit & Nut Gifts</a></li>
                             <li><a href="<c:url value="/assets/user/#"/>">Fresh Berries</a></li>
@@ -23,7 +26,7 @@
                             <li><a href="<c:url value="/assets/user/#"/>">Fresh Onion</a></li>
                             <li><a href="<c:url value="/assets/user/#"/>">Papayaya & Crisps</a></li>
                             <li><a href="<c:url value="/assets/user/#"/>">Oatmeal</a></li>
-                            <li><a href="<c:url value="/assets/user/#"/>">Fresh Bananas</a></li>
+                            <li><a href="<c:url value="/assets/user/#"/>">Fresh Bananas</a></li> 
                         </ul>
                     </div>
                 </div>
