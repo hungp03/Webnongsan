@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
+//@Table(name = "Address", schema = "dbo", catalog = "DB_Webns")
 @Table(name = "Address", schema = "dbo", catalog = "DB_Webnongsan")
 public class Address {
 

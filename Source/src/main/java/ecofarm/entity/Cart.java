@@ -10,6 +10,7 @@ import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 @Entity
+//@Table(name = "Cart", schema = "dbo", catalog = "DB_Webns")
 @Table(name = "Cart", schema = "dbo", catalog = "DB_Webnongsan")
 public class Cart {
 	@EmbeddedId

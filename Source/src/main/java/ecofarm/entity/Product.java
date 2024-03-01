@@ -19,6 +19,7 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+//@Table(name = "Product", schema = "dbo", catalog = "DB_Webns")
 @Table(name = "Product", schema = "dbo", catalog = "DB_Webnongsan")
 public class Product {
 
@@ -54,6 +55,10 @@ public class Product {
 	@Column(name = "Unit")
 	private String unit;
 
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(name = "CouponID")
+//	private Coupon coupon;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CouponID")
 	private Coupon coupon;
@@ -88,7 +93,8 @@ public class Product {
 
 	public Product(int productId, Category category, String productName, double price, String image, int quantity,
 			String detail, Date postingDate, Date expiryDate, Set<Cart> carts, Set<OrderDetail> orderDetails,
-			Set<Coupon> coupons, Set<Feedback> feedbacks) {
+//			Set<Coupon> coupons, 
+			Set<Feedback> feedbacks) {
 		this.productId = productId;
 		this.category = category;
 		this.productName = productName;

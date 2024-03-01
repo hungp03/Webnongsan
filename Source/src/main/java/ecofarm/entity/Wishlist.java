@@ -9,6 +9,7 @@ import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 @Entity
+//@Table(name = "Wishlist", schema = "dbo", catalog = "DB_Webns")
 @Table(name = "Wishlist", schema = "dbo", catalog = "DB_Webnongsan")
 public class Wishlist {
 	@EmbeddedId

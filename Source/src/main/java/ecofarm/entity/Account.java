@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
+//@Table(name = "Account", schema = "dbo", catalog = "DB_Webns")
 @Table(name = "Account", schema = "dbo", catalog = "DB_Webnongsan")
 public class Account {
 
@@ -73,8 +74,10 @@ public class Account {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
 	private Set<Orders> orders = new HashSet<>(0);
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
-	private Set<Coupon> coupons = new HashSet<>(0);
+	/*
+	 * @OneToMany(fetch = FetchType.LAZY, mappedBy = "account") private Set<Coupon>
+	 * coupons = new HashSet<>(0);
+	 */
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
 	private Set<Product> products = new HashSet<>(0);
@@ -199,13 +202,11 @@ public class Account {
 		this.orders = orders;
 	}
 
-	public Set<Coupon> getCoupons() {
-		return coupons;
-	}
-
-	public void setCoupons(Set<Coupon> coupons) {
-		this.coupons = coupons;
-	}
+	/*
+	 * public Set<Coupon> getCoupons() { return coupons; }
+	 * 
+	 * public void setCoupons(Set<Coupon> coupons) { this.coupons = coupons; }
+	 */
 
 	public Set<Product> getProducts() {
 		return products;
