@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="<c:url value="/assets/user/css/owl.carousel.min.css"/>" type="text/css">
     <link rel="stylesheet" href="<c:url value="/assets/user/css/slicknav.min.css"/>" type="text/css">
     <link rel="stylesheet" href="<c:url value="/assets/user/css/style.css"/>" type="text/css">
+	<decorator:head/>
 </head>
 
 <body>

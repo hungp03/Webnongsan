@@ -1,6 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/layouts/user/common.jsp"%>
+<head>
+<style>
+.featured__controls ul li a {
+	list-style: none;
+	font-size: 18px;
+	color: #1c1c1c;
+	display: inline-block;
+	position: relative;
+	cursor: pointer;
+}
+</style>
+</head>
 <body>
 	<!-- Hero Section Begin -->
 	<section class="hero">
@@ -9,12 +21,12 @@
 				<div class="col-lg-3">
 					<div class="hero__categories">
 						<div class="hero__categories__all">
-							<i class="fa fa-bars"></i> <span>All departments</span>
+							<i class="fa fa-bars"></i> <span>Danh mục</span>
 						</div>
 						<ul>
 							<c:forEach var="item" items="${categories}">
 								<li><a
-									href="<c:url value="/san-pham/${item.categoryId }"/>">${item.name }</a></li>
+									href="<c:url value="/product.htm?categoryId=${item.categoryId }&currentPage=1"/>">${item.name }</a></li>
 							</c:forEach>
 						</ul>
 					</div>
@@ -49,7 +61,7 @@
 								Vegetable <br />100% Organic
 							</h2>
 							<p>Free Pickup and Delivery Available</p>
-							<a href="<c:url value="/assets/user/#"/>" class="primary-btn">SHOP
+							<a href="<c:url value="/product.htm"/>" class="primary-btn">SHOP
 								NOW</a>
 						</div>
 					</div>
@@ -69,7 +81,8 @@
 							<div class="categories__item set-bg"
 								data-setbg="<c:url value="/assets/user/img/category/${item.image }"/>">
 								<h5>
-									<a href="<c:url value="/san-pham/${item.categoryId }"/>">${item.name }</a>
+									<a
+										href="<c:url value="/product.htm?categoryId=${item.categoryId }&currentPage=1"/>">${item.name }</a>
 								</h5>
 							</div>
 
@@ -90,47 +103,95 @@
 						<h2>Featured Product</h2>
 					</div>
 					<div class="featured__controls">
-						<ul>
-							<li class="active" data-filter="*">All</li>
+						<ul style="justify-content: center; border-bottom: 0px" class="nav nav-tabs"  role="tablist">
+							<li class="active mixitup-control-active" ><a href="#tabs-0" data-toggle="tab"
+								role="tab" aria-selected="true">All</a></li>
 							<c:forEach var="item" items="${categories }" varStatus="loop">
-								<li><a
-									href="<c:url value="/san-pham/${item.categoryId }"/>"
-									style="list-style: none; font-size: 18px; color: #1c1c1c; display: inline-block;position: relative; cursor: pointer;">
-										${item.name }</a></li>
+								<li><a href="#tabs-${item.categoryId }" data-toggle="tab"
+									role="tab" aria-selected="false"> ${item.name }</a></li>
 							</c:forEach>
+
 							<!-- <li data-filter=".oranges">Oranges</li>
 							<li data-filter=".fresh-meat">Fresh Meat</li>
 							<li data-filter=".vegetables">Vegetables</li>
 							<li data-filter=".fastfood">Fastfood</li> -->
 						</ul>
 					</div>
+
 				</div>
 			</div>
-			<div class="row featured__filter">
-			
-				<div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
-					<div class="featured__item">
-						<div class="featured__item__pic set-bg"
-							data-setbg="<c:url value="/assets/user/img/featured/feature-1.jpg"/>">
-							<ul class="featured__item__pic__hover">
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-heart"></i></a></li>
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-retweet"></i></a></li>
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="featured__item__text">
-							<h6>
-								<a href="<c:url value="/assets/user/#"/>">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
+
+
+
+			<div class="tab-content">
+				<div class="tab-pane active" id="tabs-0" role="tabpanel">
+					<div class="row">
+						<c:forEach var="item" items="${products }" begin="0" end="7">
+							<div class="col-lg-3 col-md-4 col-sm-6">
+								<div class="featured__item">
+									<div class="featured__item__pic set-bg"
+										data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
+										<ul class="featured__item__pic__hover">
+											<li><a href="<c:url value="/assets/user/#"/>"><i
+													class="fa fa-heart"></i></a></li>
+											<li><a href="<c:url value="/assets/user/#"/>"><i
+													class="fa fa-retweet"></i></a></li>
+											<li><a href="<c:url value="/assets/user/#"/>"><i
+													class="fa fa-shopping-cart"></i></a></li>
+										</ul>
+									</div>
+									<div class="featured__item__text">
+										<h6>
+											<a href="<c:url value="/assets/user/#"/>">${item.productName }</a>
+										</h6>
+										<h5>${item.price}</h5>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+
 					</div>
 				</div>
-				
-				<div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
+				<c:forEach var="category" items="${categories }">
+					<div class="tab-pane" id="tabs-${category.categoryId }" role="tabpanel">
+						<div class="row">
+							<c:set var="count" value="0"/>
+							<c:forEach var="item" items="${products }">
+							<c:if test="${item.category.categoryId == category.categoryId and count < 8}">
+								<div class="col-lg-3 col-md-4 col-sm-6">
+									<div class="featured__item">
+										<div class="featured__item__pic set-bg"
+											data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
+											<ul class="featured__item__pic__hover">
+												<li><a href="<c:url value="/assets/user/#"/>"><i
+														class="fa fa-heart"></i></a></li>
+												<li><a href="<c:url value="/assets/user/#"/>"><i
+														class="fa fa-retweet"></i></a></li>
+												<li><a href="<c:url value="/assets/user/#"/>"><i
+														class="fa fa-shopping-cart"></i></a></li>
+											</ul>
+										</div>
+										<div class="featured__item__text">
+											<h6>
+												<a href="<c:url value="/assets/user/#"/>">${item.productName }</a>
+											</h6>
+											<h5>${item.price}</h5>
+										</div>
+									</div>
+								</div>
+								<c:set var="count" value="${count+1 }"/>
+								</c:if>
+							</c:forEach>
+
+						</div>
+					</div>
+
+
+				</c:forEach>
+			</div>
+
+
+			<%-- <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
 					<div class="featured__item">
 						<div class="featured__item__pic set-bg"
 							data-setbg="<c:url value="/assets/user/img/featured/feature-2.jpg"/>">
@@ -277,7 +338,8 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			 --%>
+		</div>
 		</div>
 	</section>
 	<!-- Featured Section End -->
@@ -310,81 +372,39 @@
 				<div class="col-lg-4 col-md-6">
 					<div class="latest-product__text">
 						<h4>Latest Products</h4>
+						<c:set var="limitLatestProduct" value="${latestProducts.size()}" />
+						<c:if test="${limitLatestProduct > 5 }">
+							<c:set var="limitLatestProduct" value="5" />
+						</c:if>
 						<div class="latest-product__slider owl-carousel">
+
 							<div class="latest-prdouct__slider__item">
-								<a href="<c:url value="/assets/user/#"/>"
-									class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img
-											src="<c:url value="/assets/user/img/latest-product/lp-1.jpg"/>"
-											alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a> <a href="<c:url value="/assets/user/#"/>"
-									class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img
-											src="<c:url value="/assets/user/img/latest-product/lp-2.jpg"/>"
-											alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a> <a href="<c:url value="/assets/user/#"/>"
-									class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img
-											src="<c:url value="/assets/user/img/latest-product/lp-3.jpg"/>"
-											alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a>
+								<c:forEach var="item" items="${latestProducts}" varStatus="loop"
+									begin="0" end="${limitLatestProduct }">
+									<a
+										href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"
+										class="latest-product__item">
+										<div class="latest-product__item__pic">
+											<img
+												src="<c:url value="/assets/user/img/products/${item.image }"/>"
+												alt="">
+										</div>
+										<div class="latest-product__item__text">
+											<h6>${item.productName }</h6>
+											<span>${item.price }</span>
+										</div>
+									</a>
+									<c:if
+										test="${(loop.index+1) % 3 == 0 || (loop.index+1) == latestProducts.size() }">
 							</div>
-							<div class="latest-prdouct__slider__item">
-								<a href="<c:url value="/assets/user/#"/>"
-									class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img
-											src="<c:url value="/assets/user/img/latest-product/lp-1.jpg"/>"
-											alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a> <a href="<c:url value="/assets/user/#"/>"
-									class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img
-											src="<c:url value="/assets/user/img/latest-product/lp-2.jpg"/>"
-											alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a> <a href="<c:url value="/assets/user/#"/>"
-									class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img
-											src="<c:url value="/assets/user/img/latest-product/lp-3.jpg"/>"
-											alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a>
-							</div>
+							<c:if test="${(loop.index+1) < limitLatestProduct }">
+								<div class="latest-prdouct__slider__item">
+							</c:if>
+							</c:if>
+							</c:forEach>
 						</div>
 					</div>
+
 				</div>
 				<div class="col-lg-4 col-md-6">
 					<div class="latest-product__text">
