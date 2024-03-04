@@ -36,7 +36,7 @@
 			</ul>
 		</div>
 		<div class="header__top__right__auth">
-			<a href="<c:url value="/assets/user/#"/>"><i class="fa fa-user"></i>
+			<a href="<c:url value="/login.htm"/>"><i class="fa fa-user"></i>
 				Login</a>
 		</div>
 	</div>
@@ -44,38 +44,11 @@
 		<ul>
 			<li class="active"><a href="<c:url value="/index.htm"/>">Home</a></li>
 			<li><a href="<c:url value="/product.htm"/>">Shop</a></li>
-			<li><a href="<c:url value="/assets/user/#"/>">Pages</a>
-				<ul class="header__menu__dropdown">
-					<li><a
-						href="<c:url value="/assets/user/./shop-details.html"/>">Shop
-							Details</a></li>
-					<li><a
-						href="<c:url value="/assets/user/./shoping-cart.html"/>">Shoping
-							Cart</a></li>
-					<li><a href="<c:url value="/assets/user/./checkout.html"/>">Check
-							Out</a></li>
-					<li><a
-						href="<c:url value="/assets/user/./blog-details.html"/>">Blog
-							Details</a></li>
-				</ul></li>
-			<li><a href="<c:url value="/assets/user/./blog.html"/>">Blog</a></li>
-			<li><a href="<c:url value="/assets/user/./contact.html"/>">Contact</a></li>
+			<li><a href="<c:url value="/blog.htm"/>">Blog</a></li>
+			<li><a href="<c:url value="/contact.htm"/>">Contact</a></li>
 		</ul>
 	</nav>
 	<div id="mobile-menu-wrap"></div>
-	<div class="header__top__right__social">
-		<a href="<c:url value="/assets/user/#"/>"><i
-			class="fa fa-facebook"></i></a> <a href="<c:url value="/assets/user/#"/>"><i
-			class="fa fa-twitter"></i></a> <a href="<c:url value="/assets/user/#"/>"><i
-			class="fa fa-linkedin"></i></a> <a href="<c:url value="/assets/user/#"/>"><i
-			class="fa fa-pinterest-p"></i></a>
-	</div>
-	<div class="humberger__menu__contact">
-		<ul>
-			<li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-			<li>Free Shipping for all Order of $99</li>
-		</ul>
-	</div>
 </div>
 <!-- Humberger End -->
 
@@ -94,30 +67,33 @@
 					<ul>
 						<li class="active"><a href="<c:url value="/index.htm"/>">Home</a></li>
 						<li><a href="<c:url value="/product.htm"/>">Shop</a></li>
-						<li><a href="<c:url value="/assets/user/#"/>">Pages</a>
-							<ul class="header__menu__dropdown">
-								<li><a
-									href="<c:url value="/assets/user/./shop-details.html"/>">Shop
-										Details</a></li>
-								<li><a
-									href="<c:url value="/assets/user/./shoping-cart.html"/>">Shoping
-										Cart</a></li>
-								<li><a href="<c:url value="/assets/user/./checkout.html"/>">Check
-										Out</a></li>
-								<li><a
-									href="<c:url value="/assets/user/./blog-details.html"/>">Blog
-										Details</a></li>
-							</ul></li>
-						<li><a href="<c:url value="/assets/user/./contact.html"/>">Contact</a></li>
-						<li><a href="<c:url value="/login"/>">Login</a></li>
+						<li><a href="<c:url value="/blog.htm"/>">Blog</a></li>
+						<li><a href="<c:url value="/contact.htm"/>">Contact</a></li>
+						<c:if test="${empty loggedInUserId }">
+							<li><a href="<c:url value="/login.htm"/>">Login</a></li>
+						</c:if>
+						<c:if test="${not empty loggedInUserId }">
+							<li><a href="<c:url value="/logout.htm"/>">Logout</a></li>
+						</c:if>
+
 					</ul>
+
 				</nav>
 			</div>
 			<div class="col-lg-3">
 				<div class="header__cart">
 					<ul>
-						<li style="margin-right:5px"><a href="<c:url value="/login.htm"/>" style="color: #000000;line-height: 13px;"><i
-								class="fa fa-user"></i>Login</a></li>
+
+						<li style="margin-right: 5px"><a
+							href="<c:url value="/login.htm"/>"
+							style="color: #000000; line-height: 13px;"><i
+								class="fa fa-user"></i> <c:if test="${empty loggedInUserId }">
+							Login
+						</c:if> <c:if test="${not empty loggedInUserId }">
+							${loggedInUserId }
+						</c:if> </a></li>
+
+
 						<li><a href="<c:url value="/wishlist.htm"/>"><i
 								class="fa fa-heart"></i> <span>1</span></a></li>
 						<li><a href="<c:url value="/cart.htm"/>"><i
