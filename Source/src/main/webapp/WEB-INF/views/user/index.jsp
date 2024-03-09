@@ -136,7 +136,7 @@
 													class="fa fa-heart"></i></a></li>
 											<li><a href="<c:url value="/assets/user/#"/>"><i
 													class="fa fa-retweet"></i></a></li>
-											<li><a href="<c:url value="/assets/user/#"/>"><i
+											<li><a href="<c:url value="/AddCart.htm?productID=${item.productId }"/>"><i
 													class="fa fa-shopping-cart"></i></a></li>
 										</ul>
 									</div>
@@ -167,7 +167,7 @@
 														class="fa fa-heart"></i></a></li>
 												<li><a href="<c:url value="/assets/user/#"/>"><i
 														class="fa fa-retweet"></i></a></li>
-												<li><a href="<c:url value="/assets/user/#"/>"><i
+												<li><a href="<c:url value="/AddCart.htm?productID=${item.productId }"/>"><i
 														class="fa fa-shopping-cart"></i></a></li>
 											</ul>
 										</div>
@@ -411,77 +411,30 @@
 						<h4>Top Rated Products</h4>
 						<div class="latest-product__slider owl-carousel">
 							<div class="latest-prdouct__slider__item">
-								<a href="<c:url value="/assets/user/#"/>"
-									class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img
-											src="<c:url value="/assets/user/img/latest-product/lp-1.jpg"/>"
-											alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a> <a href="<c:url value="/assets/user/#"/>"
-									class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img
-											src="<c:url value="/assets/user/img/latest-product/lp-2.jpg"/>"
-											alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a> <a href="<c:url value="/assets/user/#"/>"
-									class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img
-											src="<c:url value="/assets/user/img/latest-product/lp-3.jpg"/>"
-											alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a>
+								<c:forEach var="item" items="${ratedProducts}" varStatus="loop"
+									begin="0" end="${limitLatestProduct }">
+									<a
+										href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"
+										class="latest-product__item">
+										<div class="latest-product__item__pic">
+											<img
+												src="<c:url value="/assets/user/img/products/${item.image }"/>"
+												alt="">
+										</div>
+										<div class="latest-product__item__text">
+											<h6>${item.productName }</h6>
+											<span>${item.price }</span>
+										</div>
+									</a>
+									<c:if
+										test="${(loop.index+1) % 3 == 0 || (loop.index+1) == latestProducts.size() }">
 							</div>
-							<div class="latest-prdouct__slider__item">
-								<a href="<c:url value="/assets/user/#"/>"
-									class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img
-											src="<c:url value="/assets/user/img/latest-product/lp-1.jpg"/>"
-											alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a> <a href="<c:url value="/assets/user/#"/>"
-									class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img
-											src="<c:url value="/assets/user/img/latest-product/lp-2.jpg"/>"
-											alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a> <a href="<c:url value="/assets/user/#"/>"
-									class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img
-											src="<c:url value="/assets/user/img/latest-product/lp-3.jpg"/>"
-											alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a>
-							</div>
+							<c:if test="${(loop.index+1) < limitLatestProduct }">
+								<div class="latest-prdouct__slider__item">
+							</c:if>
+							</c:if>
+							</c:forEach>
+
 						</div>
 					</div>
 				</div>
@@ -490,18 +443,31 @@
 						<h4>Review Products</h4>
 						<div class="latest-product__slider owl-carousel">
 							<div class="latest-prdouct__slider__item">
-								<a href="<c:url value="/assets/user/#"/>"
-									class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img
-											src="<c:url value="/assets/user/img/latest-product/lp-1.jpg"/>"
-											alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a> <a href="<c:url value="/assets/user/#"/>"
+								<c:forEach var="item" items="${reviewProducts}" varStatus="loop"
+									begin="0" end="${limitLatestProduct }">
+									<a
+										href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"
+										class="latest-product__item">
+										<div class="latest-product__item__pic">
+											<img
+												src="<c:url value="/assets/user/img/products/${item.image }"/>"
+												alt="">
+										</div>
+										<div class="latest-product__item__text">
+											<h6>${item.productName }</h6>
+											<span>${item.price }</span>
+										</div>
+									</a>
+									<c:if
+										test="${(loop.index+1) % 3 == 0 || (loop.index+1) == latestProducts.size() }">
+							</div>
+							<c:if test="${(loop.index+1) < limitLatestProduct }">
+								<div class="latest-prdouct__slider__item">
+							</c:if>
+							</c:if>
+							</c:forEach>
+								
+								<%-- <a href="<c:url value="/assets/user/#"/>"
 									class="latest-product__item">
 									<div class="latest-product__item__pic">
 										<img
@@ -512,46 +478,12 @@
 										<h6>Crab Pool Security</h6>
 										<span>$30.00</span>
 									</div>
-								</a> <a href="<c:url value="/assets/user/#"/>"
-									class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img
-											src="<c:url value="/assets/user/img/latest-product/lp-3.jpg"/>"
-											alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a>
-							</div>
-							<div class="latest-prdouct__slider__item">
+								</a> 
+								
 								<a href="<c:url value="/assets/user/#"/>"
 									class="latest-product__item">
 									<div class="latest-product__item__pic">
 										<img
-											src="<c:url value="/assets/user/img/latest-product/lp-1.jpg"/>"
-											alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a> <a href="<c:url value="/assets/user/#"/>"
-									class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img
-											src="<c:url value="/assets/user/img/latest-product/lp-2.jpg"/>"
-											alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a> <a href="<c:url value="/assets/user/#"/>"
-									class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img
 											src="<c:url value="/assets/user/img/latest-product/lp-3.jpg"/>"
 											alt="">
 									</div>
@@ -559,8 +491,8 @@
 										<h6>Crab Pool Security</h6>
 										<span>$30.00</span>
 									</div>
-								</a>
-							</div>
+								</a> --%>
+
 						</div>
 					</div>
 				</div>

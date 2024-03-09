@@ -101,7 +101,7 @@
 	border-radius: 0.25em;
 }
 .form-check-input:checked[type=checkbox] {
-    --bs-form-check-bg-image: url(https://png.pngtree.com/png-clipart/20190904/original/pngtree-check-icon-png-image_4479663.jpg);
+    --bs-form-check-bg-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8c3ZnIHdpZHRoPSIxMiIgaGVpZ2h0PSI5IiB2aWV3Qm94PSIwIDAgMTIgOSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCiAgPHBhdGggZD0iTTQuNTc1IDguOTc3cy0uNDA0LS4wMDctLjUzNi0uMTY1TC4wNTcgNS42NGwuODI5LTEuMjI3TDQuNDcgNy4yNjggMTAuOTIxLjA4NmwuOTIzIDEuMTAzLTYuODYzIDcuNjRjLS4xMzQtLjAwMy0uNDA2LjE0OC0uNDA2LjE0OHoiIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPg0KPC9zdmc+);
 	background-color: green !important;
 }
 .form-check-input:checked {
@@ -198,8 +198,9 @@ a.text-muted{
 								<!-- form check -->
 								<div class="form-check">
 									<input id="flexCheckDefault" name="isRemember"
-										class="form-check-input" type="checkbox" value="true"><input
-										type="hidden" name="_isRemember" value="on">
+										class="form-check-input" type="checkbox" checked="true" value="on">
+<!-- 										<input
+										type="hidden" name="_isRemember" value="on"> -->
 									<!-- label -->
 									<label class="form-check-label" for="flexCheckDefault">
 										Remember me </label>
