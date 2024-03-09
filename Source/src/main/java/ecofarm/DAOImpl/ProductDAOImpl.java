@@ -3,8 +3,6 @@ package ecofarm.DAOImpl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.jsp.tagext.TryCatchFinally;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -126,16 +124,42 @@ public class ProductDAOImpl implements IProductDAO {
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getReviewProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Product> list = new ArrayList<>();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			Transaction tr = session.beginTransaction();
+			String hql = "FROM Product ORDER BY Reviews DESC";
+			list = session.createQuery(hql).list();
+			tr.commit();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getRatedProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Product> list = new ArrayList<>();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			Transaction tr = session.beginTransaction();
+			String hql = "FROM Product ORDER BY RatingStar DESC";
+			list = session.createQuery(hql).list();
+			tr.commit();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		return list;
 	}
 
 }

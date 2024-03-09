@@ -136,5 +136,30 @@ public class AccountDAOImpl implements IAccountDAO {
 		}
 		return false;
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public Account getAccountByID(int accountID) {
+		List<Account> accounts = new ArrayList<>();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			Transaction tr = session.beginTransaction();
+			String hql = "FROM Account WHERE AccountID =:accountID";
+			Query query = session.createQuery(hql);
+			query.setParameter("accountID", accountID);
+			accounts = query.list();
+			tr.commit();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+//		System.out.println(accounts.get(0).getAccountId());
+		if (accounts.size() > 0) {
+			return accounts.get(0);
+		}
+		return null;
+
+	}
 
 }

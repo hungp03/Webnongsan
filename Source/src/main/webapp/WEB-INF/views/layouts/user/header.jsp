@@ -46,6 +46,12 @@
 			<li><a href="<c:url value="/product.htm"/>">Shop</a></li>
 			<li><a href="<c:url value="/blog.htm"/>">Blog</a></li>
 			<li><a href="<c:url value="/contact.htm"/>">Contact</a></li>
+			<c:if test="${empty userInfo }">
+				<li><a href="<c:url value="/login.htm"/>">Login</a></li>
+			</c:if>
+			<c:if test="${not empty userInfo }">
+				<li><a href="<c:url value="/logout.htm"/>">Logout</a></li>
+			</c:if>
 		</ul>
 	</nav>
 	<div id="mobile-menu-wrap"></div>
@@ -69,10 +75,10 @@
 						<li><a href="<c:url value="/product.htm"/>">Shop</a></li>
 						<li><a href="<c:url value="/blog.htm"/>">Blog</a></li>
 						<li><a href="<c:url value="/contact.htm"/>">Contact</a></li>
-						<c:if test="${empty loggedInUserId }">
+						<c:if test="${empty userInfo }">
 							<li><a href="<c:url value="/login.htm"/>">Login</a></li>
 						</c:if>
-						<c:if test="${not empty loggedInUserId }">
+						<c:if test="${not empty userInfo }">
 							<li><a href="<c:url value="/logout.htm"/>">Logout</a></li>
 						</c:if>
 
@@ -87,10 +93,10 @@
 						<li style="margin-right: 5px"><a
 							href="<c:url value="/login.htm"/>"
 							style="color: #000000; line-height: 13px;"><i
-								class="fa fa-user"></i> <c:if test="${empty loggedInUserId }">
+								class="fa fa-user"></i> <c:if test="${empty userInfo }">
 							Login
-						</c:if> <c:if test="${not empty loggedInUserId }">
-							${loggedInUserId }
+						</c:if> <c:if test="${not empty userInfo }">
+							${userInfo.getName() }
 						</c:if> </a></li>
 
 

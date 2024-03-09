@@ -54,6 +54,12 @@ public class Product {
 
 	@Column(name = "Unit")
 	private String unit;
+	
+	@Column(name = "RatingStar")
+	private double ratingStar;
+	
+	@Column(name = "Reviews")
+	private int reviews;
 
 //	@ManyToOne(fetch = FetchType.EAGER)
 //	@JoinColumn(name = "CouponID")
@@ -220,4 +226,21 @@ public class Product {
 		this.account = account;
 	}
 
+	public double getRatingStar() {
+		return ratingStar;
+	}
+
+	public void setRatingStar(double ratingStar) {
+		this.ratingStar = ratingStar;
+	}
+
+	public int getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(int reviews) {
+		this.reviews = reviews;
+	}
+
+	
 }
