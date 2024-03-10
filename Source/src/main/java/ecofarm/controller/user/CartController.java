@@ -1,5 +1,7 @@
 package ecofarm.controller.user;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,25 +13,52 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ecofarm.DAOImpl.AccountDAOImpl;
 import ecofarm.DAOImpl.CartDAOImpl;
 import ecofarm.entity.Account;
+import ecofarm.entity.Cart;
 
 @Controller
 public class CartController {
 	private AccountDAOImpl accountDAO = new AccountDAOImpl();
 	private CartDAOImpl cartDAO = new CartDAOImpl();
 	@RequestMapping("cart")
-	public String Index() {
-		
+	public String Index(HttpServletRequest request,HttpSession session,
+			@CookieValue(value = "userEmail",defaultValue = "",required = false) String userEmail) {
+		if (userEmail != "") {
+			Account account = accountDAO.getAccountByEmail(userEmail);
+			List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
+			session.setAttribute("carts", list);
+			session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
+		}
 		return "user/cart";
 	}
 	@RequestMapping("/AddCart")
-	public String AddToCart(@RequestParam(value = "productID",required = true) int productID,
+	public String AddToCart(@RequestParam(value = "productId",required = true) int productId,
 			@CookieValue(value = "userEmail",defaultValue = "",required = false) String userEmail,
 			HttpSession session, HttpServletRequest request) {
-//		System.out.println(userEmail);
+		if (userEmail.equals("")) {
+			request.setAttribute("user", new Account());
+			return "user/login";
+		}	
 		Account account = accountDAO.getAccountByEmail(userEmail);
-//		System.out.println(account.getAccountId());
+		cartDAO.addToCart(productId,account.getAccountId());
+		return "redirect:"+request.getHeader("Referer");
+	}
+	
+	@RequestMapping("/DeleteCart")
+	public String DeleteFromCart(@RequestParam(value = "productId",required = true) int productId,
+			@CookieValue(value = "userEmail",defaultValue = "",required = false) String userEmail,
+			HttpSession session, HttpServletRequest request) {
+		Account account = accountDAO.getAccountByEmail(userEmail);
+		cartDAO.deleteCart(productId, account.getAccountId());
+		return "redirect:"+request.getHeader("Referer");
+	}
+	@RequestMapping("/EditCart")
+	public String EditCartQnt(@RequestParam(value = "productId",required = true) int productId,
+			@RequestParam(value="qty",required = true) int quantity,
+			@CookieValue(value = "userEmail",defaultValue = "",required = false) String userEmail,
+			HttpSession session, HttpServletRequest request) {
 		
-		cartDAO.addToCart(productID,account.getAccountId());
+		Account account = accountDAO.getAccountByEmail(userEmail);
+		cartDAO.editCart(productId, account.getAccountId(), quantity);
 		return "redirect:"+request.getHeader("Referer");
 	}
 }

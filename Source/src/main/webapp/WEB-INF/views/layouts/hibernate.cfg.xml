@@ -29,15 +29,7 @@
 			create-update
 		</property>
 		<property name="show_sql">false</property>
-		<!-- Cấu hình CurrentSessionContext sử dụng thread -->
-<!--         <property name="current_session_context_class">thread</property>
- -->        <!-- Cấu hình loại giao dịch -->
-<!--         <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
-		Cấu hình Session Factory
-        <property name="sessionFactoryName">sessionFactory</property>
-        Cấu hình giao dịch tự động
-        <property name="hibernate.current_session_context_class">thread</property> -->
- 
+
 		<!-- List of XML mapping files -->
 		<mapping class = "ecofarm.entity.Province"/>
 		<mapping class ="ecofarm.entity.Account"/>

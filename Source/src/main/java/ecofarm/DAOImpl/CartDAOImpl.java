@@ -1,7 +1,6 @@
 package ecofarm.DAOImpl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -26,7 +25,7 @@ public class CartDAOImpl implements ICartDAO {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			Transaction tr = session.beginTransaction();
-			String hql = "FROM Cart WHERE AccountID =: accountID";
+			String hql = "FROM Cart WHERE AccountID = :accountID";
 			Query query = session.createQuery(hql);
 			query.setParameter("accountID", accountID);
 			list = query.list();
@@ -111,15 +110,58 @@ public class CartDAOImpl implements ICartDAO {
 	}
 
 	@Override
-	public HashMap<Long, Cart> editCart(long id, HashMap<Long, Cart> cart, int quantity) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean editCart(int productID, int accountID,int quantity) {
+		boolean isEdit = false;
+		Cart checkCart = getCartByID(productID, accountID);
+		if (checkCart != null) {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			try {
+				Transaction tr = session.beginTransaction();
+				checkCart.setQuantity(quantity);
+				session.update(checkCart);
+				tr.commit();
+				isEdit = true;
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+			}finally {
+				session.close();
+			}
+		}
+		return isEdit;
 	}
 
 	@Override
-	public HashMap<Long, Cart> deleteCart(long id, HashMap<Long, Cart> cart) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean deleteCart(int productID, int accountID) {
+		boolean isDeleted = false;
+		Cart checkCart = getCartByID(productID, accountID);
+		if (checkCart != null) {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			try {
+				Transaction tr = session.beginTransaction();
+				session.delete(checkCart);
+				tr.commit();
+				isDeleted = true;
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+			}finally {
+				session.close();
+			}
+		}
+		return isDeleted;
+	}
+
+	@Override
+	public double getTotalPrice(List<Cart> cart) {
+		double total = 0;
+		if(cart.size() > 0) {
+			for(Cart item : cart) {
+				total += item.getQuantity() * item.getProduct().getPrice();
+			}
+			return total;
+		}
+		return total;
 	}
 
 }

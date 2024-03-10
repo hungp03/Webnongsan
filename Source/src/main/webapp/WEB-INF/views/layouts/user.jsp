@@ -44,5 +44,14 @@
     <script src="<c:url value="/assets/user/js/mixitup.min.js"/>"></script>
     <script src="<c:url value="/assets/user/js/owl.carousel.min.js"/>"></script>
     <script src="<c:url value="/assets/user/js/main.js"/>"></script>
+    <decorator:getProperty property="page.script"></decorator:getProperty>
+    <script>
+    	$(window).on("load", function (){
+    		$(".set-bg").each(function () {
+            	var bg = $(this).data("setbg");
+            	$(this).css("background-image", "url(" + bg + ")");
+          	});
+    	})
+    </script>
 </body>
 </html>
