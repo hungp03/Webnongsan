@@ -15,18 +15,19 @@
 			http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 	<!-- Kết nối CSDL -->
-	<!-- <bean id="dataSource"
+	<!--  <bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
 		p:driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 		p:url="jdbc:sqlserver://localhost:1433;Database=DB_Webnongsan;integratedSecurity=false;trustServerCertificate=true;"
 		p:username="sa" p:password="123456">
-	</bean>
-	
+	</bean> -->
+	<!--  
 	<bean id="jdbcTemplate"
 		class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
- -->
+	-->
+ 
 	<!-- Cấu hình Hibernate -->
 	<!-- <bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -38,8 +39,8 @@
 			</props>
 		</property>
 		<property name="packagesToScan" value="ecofarm.entity" />
-	</bean> -->
-
+	</bean> 
+ -->
 
 
 	<!-- Transaction Manager -->
@@ -47,5 +48,5 @@
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
 		p:sessionFactory-ref="sessionFactory" />
 	<tx:annotation-driven
-		transaction-manager="transactionManager" /> -->
+		transaction-manager="transactionManager" />  -->
 </beans>
