@@ -8,4 +8,5 @@ public interface IAccountDAO {
 	public boolean checkAccountLogin(Account account);
 	public Account getAccountByEmail(String email);
 	public Account getAccountByID(int accountID);
+	public boolean forgotPassword(String username, String password);
 }

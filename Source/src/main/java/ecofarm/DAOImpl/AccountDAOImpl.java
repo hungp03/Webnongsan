@@ -161,5 +161,21 @@ public class AccountDAOImpl implements IAccountDAO {
 		return null;
 
 	}
+	@Override
+	public boolean forgotPassword(String username, String password) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			Account account = getAccountByEmail(username);
+			if(account != null) {
+				account.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(12)));
+				session.update(account);			}
+			Transaction tr = session.beginTransaction();
+			tr.commit();
+			return true;
+		} catch (Exception e) {
+			session.close();
+		}
+		return false;
+	}
 
 }
