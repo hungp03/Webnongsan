@@ -43,7 +43,7 @@
 	position: absolute;
 	right: 20px;
 	top: 50%;
-	transform: translateY(-50%);
+	trans translateY(-50%);
 }
 
 .position-relative {
@@ -163,70 +163,42 @@ a.text-muted{
 		<div class="container">
 			<!-- row -->
 			<div class="row justify-content-center align-items-center">
-				<div class="col-12 col-md-6 col-lg-4 order-lg-1 order-2">
-					<!-- img -->
-					<img src="<c:url value="/assets/user/img/signin-g.svg"/>" alt=""
-						class="img-fluid">
-				</div>
 				<!-- col -->
 				<div class="col-12 col-md-6 offset-lg-1 col-lg-4 order-lg-2 order-1">
 					<div class="mb-lg-9 mb-3">
 						<h1 class="mb-1 h2 fw-bold">
-							Sign in to <span class="text-success-login">OGANI </span>
+							Forgot your password <span class="text-success-login">OGANI </span>
 						</h1>
-						<p>Welcome back to OGANI! Enter your email to get started.</p>
+						<p>PLease enter your new password</p>
 					</div>
 
-					<form:form id="userbean" class="pt-2" action="login.htm" method="post" modelAttribute="user">
+					<form id="userbean" class="pt-2" action="mailer/newPassword.htm" method="post">
 						<div class="row g-3">
 							<!-- row -->
 
 							<div class="col-12">
 								<!-- input -->
-								<form:input path="email" placeholder="Email address"
-									type="email" class="form-control"/>
+								<input name="newpass" placeholder="New Password"
+									type="text" class="form-control" required/>
 							</div>
 							<div class="col-12">
 								<!-- input -->
-								<div class="password-field position-relative">
-									<form:input path="password" placeholder="Password"
-										type="password" class="form-control"/> 
-								</div>
-
-							</div>
-							<div class="d-flex justify-content-between">
-								<!-- form check -->
-								<div class="form-check">
-									<input id="flexCheckDefault" name="isRemember"
-										class="form-check-input" type="checkbox" checked="true" value="on">
-<!-- 										<input
-										type="hidden" name="_isRemember" value="on"> -->
-									<!-- label -->
-									<label class="form-check-label" for="flexCheckDefault">
-										Remember me </label>
-								</div>
-								<div>
-									<a data-bs-toggle="modal" data-bs-target="#exampleModal"
-										class="text-muted" href="<c:url value="forgotPassword.htm"/>">Forgot password?</a>
-								</div>
+								<input name="confirmPass" placeholder="Confirm Password"
+									type="text" class="form-control" required/>
 							</div>
 							<!-- btn -->
 							<div class="col-12 d-grid">
 								<button
-									class="btn btn-success btn-block  mb-3" type="submit">Log
-									in</button>
+									class="btn btn-success btn-block  mb-3" type="submit">Đăng nhập</button>
 							</div>
-							<!-- link -->
-							<div>
-								Do not have an account? <a href="<c:url value="register.htm"/>"
-									class="link-success " previewlistener="true">Create new</a>
-							</div>
+
 						</div>
-					</form:form>
+					</form>
 				</div>
 			</div>
 
 		</div>
+		
 	</section>
 </body>
 
