@@ -24,9 +24,11 @@ public class CartController {
 			@CookieValue(value = "userEmail",defaultValue = "",required = false) String userEmail) {
 		if (userEmail != "") {
 			Account account = accountDAO.getAccountByEmail(userEmail);
-			List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
-			session.setAttribute("carts", list);
-			session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
+			if(account!=null) {
+				List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
+				session.setAttribute("carts", list);
+				session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
+			}
 		}
 		return "user/cart";
 	}
