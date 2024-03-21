@@ -172,7 +172,7 @@ a.text-muted{
 						<p>PLease enter your email</p>
 					</div>
 
-					<form id="userbean" class="pt-2" action="mailer/send.htm" method="post">
+					<form id="userbean" class="pt-2" action="forgotPassword.htm" method="post">
 						<div class="row g-3">
 							<!-- row -->
 
@@ -181,6 +181,12 @@ a.text-muted{
 								<input name="email" placeholder="Email address"
 									type="email" class="form-control" required/>
 							</div>
+							<c:if test="${not empty message}">
+								<div class="col-12">
+									<span style="color: red;font-weight: 500;font-size: 16px;font-family: 'Cairo', sans-serif;line-height: 26px;">
+									${message }</span>
+								</div>
+							</c:if>
 							
 							<!-- btn -->
 							<div class="col-12 d-grid">

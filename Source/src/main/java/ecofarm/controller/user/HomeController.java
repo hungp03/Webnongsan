@@ -22,10 +22,11 @@ public class HomeController {
 	@RequestMapping(value={"/index"},method=RequestMethod.GET)
 	public String Index(@CookieValue(value = "userEmail",defaultValue = "",required = false) String userEmail, 
 			HttpServletRequest request,HttpSession session) {
-
-		if(userEmail != "") {
+		
+		if(!userEmail.equals("")) {
 			session.setAttribute("userInfo", accountDAO.getAccountByEmail(userEmail));
 		}
+		
 		request.setAttribute("categories", categoryDAO.getAllCategories());
 		request.setAttribute("latestProducts",productDAO.getLatestProduct());
 		request.setAttribute("products",productDAO.getAllProducts());

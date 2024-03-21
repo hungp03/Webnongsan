@@ -225,27 +225,27 @@ label {
 							<div class="col">
 								<!-- input -->
 								<form:input path="firstName" placeholder="First name"
-									type="text" class="form-control " />
+									type="text" class="form-control " required />
 
 							</div>
 							
 							<div class="col">
 								<form:input path="lastName" placeholder="Last name"
-									type="text" class="form-control " />
+									type="text" class="form-control " required/>
 
 
 							</div>
 							<div class="col-12">
 
 								<form:input path="email" placeholder="Email" type="email"
-									class="form-control" />
+									class="form-control" required/>
 
 							</div>
 							<div class="col-12">
 								<div class="password-field position-relative">
 									<form:input path="password"
 										placeholder="Enter password" type="password"
-										class="form-control"/>
+										class="form-control" required/>
 
 								</div>
 							</div>
@@ -262,8 +262,14 @@ label {
 
 							</div>
 							<!-- btn -->
+							<c:if test="${not empty status}">
+								<div class="col-12">
+									<span style="color: red;font-weight: 500;padding: 4px 12px;font-size: 16px;font-family: 'Cairo', sans-serif;line-height: 26px;">
+									${ status}</span>
+								</div>
+							</c:if>
 							<div class="col-12 d-grid">
-								<button name="update" type="submit" class="btn btn-success">Register</button>
+								<button name="update" type="submit" class="btn btn-success">Tiếp theo</button>
 							</div>
 
 							<!-- text -->
