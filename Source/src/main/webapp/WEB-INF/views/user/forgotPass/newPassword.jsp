@@ -172,20 +172,26 @@ a.text-muted{
 						<p>PLease enter your new password</p>
 					</div>
 
-					<form id="userbean" class="pt-2" action="mailer/newPassword.htm" method="post">
+					<form id="userbean" class="pt-2" action="forgotPassword/newPassword.htm" method="post">
 						<div class="row g-3">
 							<!-- row -->
 
 							<div class="col-12">
 								<!-- input -->
-								<input name="newpass" placeholder="New Password"
-									type="text" class="form-control" required/>
+								<input name="newPass" placeholder="New Password"
+									type="password" class="form-control" required/>
 							</div>
 							<div class="col-12">
 								<!-- input -->
 								<input name="confirmPass" placeholder="Confirm Password"
-									type="text" class="form-control" required/>
+									type="password" class="form-control" required/>
 							</div>
+							<c:if test="${not empty message}">
+								<div class="col-12">
+									<span style="color: red;font-weight: 500;font-size: 16px;font-family: 'Cairo', sans-serif;line-height: 26px;">
+									${message }</span>
+								</div>
+							</c:if>
 							<!-- btn -->
 							<div class="col-12 d-grid">
 								<button
