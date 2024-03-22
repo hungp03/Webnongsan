@@ -1,11 +1,16 @@
 package ecofarm.controller.user;
 
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -13,17 +18,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import ecofarm.DAOImpl.AccountDAOImpl;
+import ecofarm.bean.UploadFile;
 import ecofarm.entity.Account;
 import ecofarm.utility.Mailer;
 
 @Controller
 public class UserController {
-//	@Autowired
-//	JavaMailSender mailer;
+
 	@Autowired
 	Mailer mailer;
+	@Autowired
+	@Qualifier("accountImgDir")
+	UploadFile baseUploadFile;
 
 	private AccountDAOImpl accountDAO = new AccountDAOImpl();
 	private String validateCodeFP = "";
@@ -38,8 +47,31 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = {"/register"},method = RequestMethod.POST)
-	public String CreateAccount(@ModelAttribute("user") Account account,HttpSession session,HttpServletRequest request) {
+	public String CreateAccount(@RequestParam("firstName") String firstName,
+			@RequestParam("lastName") String lastName,
+			@RequestParam("email") String email,
+			@RequestParam("password") String password,
+			@RequestParam("phoneNumber") String phoneNumber,
+			@RequestParam("avatar") MultipartFile avatar,
+			HttpSession session,HttpServletRequest request) {
 		boolean isAdded = false;
+		Account account = new Account();
+		account.setFirstName(firstName);
+		account.setLastName(lastName);
+		account.setEmail(email);
+		account.setPassword(password);
+		account.setPhoneNumber(phoneNumber);
+		if(!avatar.isEmpty()) {
+			try {
+				account.setAvatar(baseUploadFile.uploadUserAvatar(avatar));
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				System.out.println(e.getMessage());
+			}
+
+		}
+
 		if(accountDAO.checkAccountRegister(account)) {
 			if(accountDAO.createAccount(account)) {
 				emailValidateRegister = account.getEmail();

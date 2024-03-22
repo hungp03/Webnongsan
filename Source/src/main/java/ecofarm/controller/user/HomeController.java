@@ -37,12 +37,15 @@ public class HomeController {
 		if(!userEmail.equals("")) {
 			session.setAttribute("userInfo", accountDAO.getAccountByEmail(userEmail));
 			Account account =accountDAO.getAccountByEmail(userEmail);
-			List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
-			session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
-			session.setAttribute("carts", list);
+			if(account!=null) {
+				List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
+				session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
+				session.setAttribute("carts", list);
+			}
 			
 			List<Wishlist> wishlist = wishlistDAO.getWishlistByAccountID(account.getAccountId());
 			session.setAttribute("wishlist", wishlist);
+
 		}else {
 			Account account =(Account)session.getAttribute("userInfo");
 			if(account!=null) {

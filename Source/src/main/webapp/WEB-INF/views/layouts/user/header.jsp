@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/layouts/user/common.jsp"%>
 
+
+
 <!-- Page Preloder -->
 <div id="preloder">
 	<div class="loader"></div>
@@ -98,18 +100,20 @@
 				</nav>
 			</div>
 			<div class="col-lg-3">
-				<div class="header__cart">
-					<ul>
-
+				<div class="header__cart" style="display: flex;align-items: center;justify-content: end">
+					<ul style="display: flex">
+						<c:if test="${empty userInfo}">
 						<li style="margin-right: 5px"><a
 							href="<c:url value="/login.htm"/>"
 							style="color: #000000; line-height: 13px;"><i
-								class="fa fa-user"></i> <c:if test="${empty userInfo }">
-							Login
-						</c:if> <c:if test="${not empty userInfo }">
-							${userInfo.getName() }
-						</c:if> </a></li>
-
+								class="fa fa-user"></i>Login</a></li>
+						</c:if>
+						<c:if test="${not empty  userInfo}">
+							<div class="user-nav__user">
+                        		<img src="<c:url value="/assets/user/img/account/${userInfo.avatar }"/>" alt="User photo" class="user-nav__user-photo">
+                        		<span class="user-nav__user-name" style="margin-right: 5px">${userInfo.getName() }</span>
+                    		</div>
+						</c:if>
 
 						<li><a href="<c:url value="/wishlist.htm"/>"><i
 								class="fa fa-heart"></i> <span> <c:if

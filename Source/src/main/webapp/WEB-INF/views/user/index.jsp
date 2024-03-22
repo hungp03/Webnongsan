@@ -103,18 +103,15 @@
 						<h2>Featured Product</h2>
 					</div>
 					<div class="featured__controls">
-						<ul style="justify-content: center; border-bottom: 0px" class="nav nav-tabs"  role="tablist">
-							<li class="active mixitup-control-active" ><a href="#tabs-0" data-toggle="tab"
-								role="tab" aria-selected="true">All</a></li>
+						<ul style="justify-content: center; border-bottom: 0px"
+							class="nav nav-tabs" role="tablist">
+							<li class="active mixitup-control-active"><a href="#tabs-0"
+								data-toggle="tab" role="tab" aria-selected="true">All</a></li>
 							<c:forEach var="item" items="${categories }" varStatus="loop">
 								<li><a href="#tabs-${item.categoryId }" data-toggle="tab"
 									role="tab" aria-selected="false"> ${item.name }</a></li>
 							</c:forEach>
 
-							<!-- <li data-filter=".oranges">Oranges</li>
-							<li data-filter=".fresh-meat">Fresh Meat</li>
-							<li data-filter=".vegetables">Vegetables</li>
-							<li data-filter=".fastfood">Fastfood</li> -->
 						</ul>
 					</div>
 
@@ -136,7 +133,8 @@
 													class="fa fa-heart"></i></a></li>
 											<li><a href="<c:url value="assets/user/#"/>"><i
 													class="fa fa-retweet"></i></a></li>
-											<li><a href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
+											<li><a
+												href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
 													class="fa fa-shopping-cart"></i></a></li>
 										</ul>
 									</div>
@@ -153,10 +151,12 @@
 					</div>
 				</div>
 				<c:forEach var="category" items="${categories }">
-					<div class="tab-pane" id="tabs-${category.categoryId }" role="tabpanel">
+					<div class="tab-pane" id="tabs-${category.categoryId }"
+						role="tabpanel">
 						<div class="row">
-							<c:set var="count" value="0"/>
+							<c:set var="count" value="0" />
 							<c:forEach var="item" items="${products }">
+
 							<c:if test="${item.category.categoryId == category.categoryId and count < 8}">
 								<div class="col-lg-3 col-md-4 col-sm-6">
 									<div class="featured__item">
@@ -176,10 +176,10 @@
 												<a href="<c:url value="/assets/user/#"/>">${item.productName }</a>
 											</h6>
 											<h5>${item.price}</h5>
+
 										</div>
 									</div>
-								</div>
-								<c:set var="count" value="${count+1 }"/>
+									<c:set var="count" value="${count+1 }" />
 								</c:if>
 							</c:forEach>
 
@@ -340,7 +340,7 @@
 				</div>
 			 --%>
 		</div>
-		</div>
+
 	</section>
 	<!-- Featured Section End -->
 
@@ -370,12 +370,15 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-4 col-md-6">
+
 					<div class="latest-product__text">
 						<h4>Latest Products</h4>
+
 						<c:set var="limitLatestProduct" value="${latestProducts.size()}" />
 						<c:if test="${limitLatestProduct > 5 }">
 							<c:set var="limitLatestProduct" value="5" />
 						</c:if>
+
 						<div class="latest-product__slider owl-carousel">
 
 							<div class="latest-prdouct__slider__item">
@@ -466,8 +469,8 @@
 							</c:if>
 							</c:if>
 							</c:forEach>
-								
-								<%-- <a href="<c:url value="/assets/user/#"/>"
+
+							<%-- <a href="<c:url value="/assets/user/#"/>"
 									class="latest-product__item">
 									<div class="latest-product__item__pic">
 										<img

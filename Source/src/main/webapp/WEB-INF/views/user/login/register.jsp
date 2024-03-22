@@ -217,48 +217,45 @@ label {
 						</p>
 					</div>
 					<!-- form -->
-					<form:form id="userbean" action="register.htm"
-						method="post" modelAttribute="user">
+					<form id="userbean" action="register.htm"
+						method="post" enctype="multipart/form-data">
 						<div class="row g-3">
 							<!-- col -->
 							
 							<div class="col">
 								<!-- input -->
-								<form:input path="firstName" placeholder="First name"
-									type="text" class="form-control " required />
+								<input name="firstName" placeholder="First name"
+									type="text" class="form-control " />
 
 							</div>
 							
 							<div class="col">
-								<form:input path="lastName" placeholder="Last name"
-									type="text" class="form-control " required/>
-
-
+								<input name="lastName" placeholder="Last name"
+									type="text" class="form-control "/>
 							</div>
 							<div class="col-12">
 
-								<form:input path="email" placeholder="Email" type="email"
-									class="form-control" required/>
+								<input name="email" placeholder="Email" type="email"
+									class="form-control"/>
 
 							</div>
 							<div class="col-12">
 								<div class="password-field position-relative">
-									<form:input path="password"
+									<input name="password"
 										placeholder="Enter password" type="password"
-										class="form-control" required/>
+										class="form-control"/>
 
 								</div>
 							</div>
 							<div class="col-12">
-								<form:input path="phoneNumber"
+								<input name="phoneNumber"
 									placeholder="Phone Number" type="text" class="form-control"
 									/>
 
 							</div>
 							<div class="col-12" style="display:flex;">
 								<label for="avatar" style="margin-right:5px">Avatar:</label> 
-								<form:input path="avatar" type="file" class="form-control-file"
-									accept="image/*" />
+								<input name="avatar" id="avatar" type="file" class="form-control-file"/>
 
 							</div>
 							<!-- btn -->
@@ -279,7 +276,7 @@ label {
 									class="link-success" href="#!">Privacy Policy</a></small>
 							</p>
 						</div>
-					</form:form>
+					</form>
 				</div>
 			</div>
 		</div>
