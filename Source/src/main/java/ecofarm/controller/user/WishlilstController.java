@@ -25,12 +25,15 @@ public class WishlilstController {
 	@RequestMapping("/wishlist")
 	public String Index(HttpServletRequest request, HttpSession session,
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail) {
-		if (userEmail != "") {
+		if (!userEmail.equals("")) {
 			Account account = accountDAO.getAccountByEmail(userEmail);
+			if(account!=null) {
 			List<Wishlist> list = wishlistDAO.getWishlistByAccountID(account.getAccountId());
 			session.setAttribute("wishlist", list);
+			return "user/wishlist";
+			}
 		}
-		return "user/wishlist";
+		return "redirect:/login.htm";
 	}
 
 	@RequestMapping("/AddWishlist")
