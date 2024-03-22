@@ -34,9 +34,11 @@ public class HomeController {
 		if(!userEmail.equals("")) {
 			session.setAttribute("userInfo", accountDAO.getAccountByEmail(userEmail));
 			Account account =accountDAO.getAccountByEmail(userEmail);
-			List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
-			session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
-			session.setAttribute("carts", list);
+			if(account!=null) {
+				List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
+				session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
+				session.setAttribute("carts", list);
+			}
 		}else {
 			Account account =(Account)session.getAttribute("userInfo");
 			if(account!=null) {
