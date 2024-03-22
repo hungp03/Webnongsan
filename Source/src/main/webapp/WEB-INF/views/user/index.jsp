@@ -129,9 +129,9 @@
 									<div class="featured__item__pic set-bg"
 										data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
 										<ul class="featured__item__pic__hover">
-											<li><a href="<c:url value="/assets/user/#"/>"><i
+											<li><a href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
 													class="fa fa-heart"></i></a></li>
-											<li><a href="<c:url value="/assets/user/#"/>"><i
+											<li><a href="<c:url value="assets/user/#"/>"><i
 													class="fa fa-retweet"></i></a></li>
 											<li><a
 												href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
@@ -156,28 +156,27 @@
 						<div class="row">
 							<c:set var="count" value="0" />
 							<c:forEach var="item" items="${products }">
-								<c:if
-									test="${item.category.categoryId == category.categoryId and count < 8}">
-									<div class="col-lg-3 col-md-4 col-sm-6">
-										<div class="featured__item">
-											<div class="featured__item__pic set-bg"
-												data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
-												<ul class="featured__item__pic__hover">
-													<li><a href="<c:url value="/assets/user/#"/>"><i
-															class="fa fa-heart"></i></a></li>
-													<li><a href="<c:url value="/assets/user/#"/>"><i
-															class="fa fa-retweet"></i></a></li>
-													<li><a
-														href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
-															class="fa fa-shopping-cart"></i></a></li>
-												</ul>
-											</div>
-											<div class="featured__item__text">
-												<h6>
-													<a href="<c:url value="/assets/user/#"/>">${item.productName }</a>
-												</h6>
-												<h5>${item.price}</h5>
-											</div>
+
+							<c:if test="${item.category.categoryId == category.categoryId and count < 8}">
+								<div class="col-lg-3 col-md-4 col-sm-6">
+									<div class="featured__item">
+										<div class="featured__item__pic set-bg"
+											data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
+											<ul class="featured__item__pic__hover">
+												<li><a href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
+														class="fa fa-heart"></i></a></li>
+												<li><a href="<c:url value="assets/user/#"/>"><i
+														class="fa fa-retweet"></i></a></li>
+												<li><a href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
+														class="fa fa-shopping-cart"></i></a></li>
+											</ul>
+										</div>
+										<div class="featured__item__text">
+											<h6>
+												<a href="<c:url value="/assets/user/#"/>">${item.productName }</a>
+											</h6>
+											<h5>${item.price}</h5>
+
 										</div>
 									</div>
 									<c:set var="count" value="${count+1 }" />
