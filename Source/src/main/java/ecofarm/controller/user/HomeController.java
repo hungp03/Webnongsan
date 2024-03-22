@@ -15,8 +15,10 @@ import ecofarm.DAOImpl.AccountDAOImpl;
 import ecofarm.DAOImpl.CartDAOImpl;
 import ecofarm.DAOImpl.CategoryDAOImpl;
 import ecofarm.DAOImpl.ProductDAOImpl;
+import ecofarm.DAOImpl.WishlistDAOImpl;
 import ecofarm.entity.Account;
 import ecofarm.entity.Cart;
+import ecofarm.entity.Wishlist;
 
 
 @Controller
@@ -26,6 +28,7 @@ public class HomeController {
 	private ProductDAOImpl productDAO = new ProductDAOImpl();
 	private AccountDAOImpl accountDAO = new AccountDAOImpl();
 	private CartDAOImpl cartDAO = new CartDAOImpl();
+	private WishlistDAOImpl wishlistDAO = new WishlistDAOImpl();
 	
 	@RequestMapping(value={"/index"},method=RequestMethod.GET)
 	public String Index(@CookieValue(value = "userEmail",defaultValue = "",required = false) String userEmail, 
@@ -37,6 +40,9 @@ public class HomeController {
 			List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
 			session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
 			session.setAttribute("carts", list);
+			
+			List<Wishlist> wishlist = wishlistDAO.getWishlistByAccountID(account.getAccountId());
+			session.setAttribute("wishlist", wishlist);
 		}else {
 			Account account =(Account)session.getAttribute("userInfo");
 			if(account!=null) {
@@ -46,6 +52,9 @@ public class HomeController {
 				List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
 				session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
 				session.setAttribute("carts", list);
+				//Tính số lượng wishlist khi đăng nhập
+				List<Wishlist> wishlist = wishlistDAO.getWishlistByAccountID(account.getAccountId());
+				session.setAttribute("wishlist", wishlist);
 				}
 		}
 		
