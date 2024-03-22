@@ -10,22 +10,21 @@
 						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 						http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	
-	<!--  
+	
 	<bean id="ecofarm" class="ecofarm.bean.Company">
-		<property name="logoNavImg" value="assets/img/logo.png" />
-		<property name="slider1Img" value="assets/img/slide_1.jpg" />
-		<property name="slider2Img" value="assets/img/slide_2.jpg" />
-		<property name="logoFooterImg"
-			value="assets/img/logo_white.png" />
-		<property name="banner1" value="assets/img/banner_1.png" />
-		<property name="banner2" value="assets/img/banner_2.jpg" />
-		<property name="phoneNumber" value="(+84) 123456789" />
+		<property name="logoNavImg" value="assets/user/img/logo.png" />
+		<property name="sliderImg" value="assets/user/img/hero/banner.jpg" />
+		<property name="banner1" value="assets/user/img/banner/banner-1.jpg" />
+		<property name="banner2" value="assets/user/img/banner/banner-2.jpg" />
+		<property name="phoneNumber" value="(+84) 912381180" />
 		<property name="gmail"
-			value="noreplymail1249@gmail.com" />
+			value="giahuyvu.1712@gmail.com" />
 		<property name="address" value="97 Man Thiện" />
+		<property name="openTime" value="8:00"/>
+		<property name="closeTime" value="21:00"/>
 	</bean>
 
-
+	<!--
 	<bean id="mailSender"
 		class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />

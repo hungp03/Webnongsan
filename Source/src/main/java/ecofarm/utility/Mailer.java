@@ -46,4 +46,21 @@ public class Mailer {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public boolean sendForUs(String to, String subject,String body) {
+		try {
+			MimeMessage mail = mailer.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(mail);
+			
+			helper.setFrom(to,to);
+			helper.setTo(from);
+			helper.setReplyTo(to, to);
+			helper.setSubject(subject);
+			helper.setText(body, true);
+			mailer.send(mail);
+			return true;
+		}catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
