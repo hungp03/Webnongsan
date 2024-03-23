@@ -154,7 +154,6 @@ public class AccountDAOImpl implements IAccountDAO {
 		} finally {
 			session.close();
 		}
-//		System.out.println(accounts.get(0).getAccountId());
 		if (accounts.size() > 0) {
 			return accounts.get(0);
 		}

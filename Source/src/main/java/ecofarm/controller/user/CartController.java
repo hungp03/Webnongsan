@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ecofarm.DAOImpl.AccountDAOImpl;
@@ -32,7 +33,7 @@ public class CartController {
 		}
 		return "user/cart";
 	}
-	@RequestMapping("/AddCart")
+	@RequestMapping(value= {"/AddCart"},method = RequestMethod.GET)
 	public String AddToCart(@RequestParam(value = "productId",required = true) int productId,
 			@CookieValue(value = "userEmail",defaultValue = "",required = false) String userEmail,
 			HttpSession session, HttpServletRequest request) {
@@ -42,6 +43,21 @@ public class CartController {
 		}	
 		Account account = accountDAO.getAccountByEmail(userEmail);
 		cartDAO.addToCart(productId,account.getAccountId());
+		return "redirect:"+request.getHeader("Referer");
+	}
+	
+	@RequestMapping(value={"/AddCart"},method = RequestMethod.POST)
+	public String AddToCartQuantity(@RequestParam(value = "productId",required = true) int productId,
+			@CookieValue(value = "userEmail",defaultValue = "",required = false) String userEmail,
+			@RequestParam("quantity") String quantity,
+			HttpSession session, HttpServletRequest request) {
+		if (userEmail.equals("")) {
+			request.setAttribute("user", new Account());
+			return "user/login";
+		}	
+
+		Account account = accountDAO.getAccountByEmail(userEmail);
+		cartDAO.addToCart(productId,account.getAccountId(),Integer.parseInt(quantity));
 		return "redirect:"+request.getHeader("Referer");
 	}
 	

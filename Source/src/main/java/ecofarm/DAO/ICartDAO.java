@@ -7,6 +7,7 @@ import ecofarm.entity.Cart;
 public interface ICartDAO {
 	public List<Cart> getCartByAccountID(int accountID);
 	public boolean addToCart(int productID, int accountID);
+	public boolean addToCart(int productID, int accountID,int quantity);
 	public boolean editCart(int productID, int accountID,int quantity);
 	public boolean deleteCart(int productID, int accountID);
 	public double getTotalPrice(List<Cart> cart);
