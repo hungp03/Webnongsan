@@ -164,4 +164,43 @@ public class CartDAOImpl implements ICartDAO {
 		return total;
 	}
 
+	@Override
+	public boolean addToCart(int productID, int accountID, int quantity) {
+		boolean isAdded = false;
+		Cart cart = new Cart();
+		CartId cartId = new CartId();
+		cartId.setAccountId(accountID);
+		cartId.setProductId(productID);
+		
+		Product product = productDAO.getProductByID(productID);
+		Account account = accountDAO.getAccountByID(accountID);
+		
+		Cart checkCart = getCartByID(productID, accountID);
+		
+		if(product!=null) {
+			cart.setAccount(account);
+			cart.setProduct(product);
+			cart.setId(cartId);
+			if(checkCart==null) {
+				cart.setQuantity(quantity);
+			}else {
+				cart.setQuantity(checkCart.getQuantity()+quantity);
+			}
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			try {
+				Transaction tr = session.beginTransaction();
+				session.update(cart);
+				tr.commit();
+				isAdded = true;
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+			}finally {
+				session.close();
+			}
+		}
+		return isAdded;
+	}
+
 }

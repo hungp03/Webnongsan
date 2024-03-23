@@ -131,8 +131,8 @@
 										<ul class="featured__item__pic__hover">
 											<li><a href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
 													class="fa fa-heart"></i></a></li>
-											<li><a href="<c:url value="assets/user/#"/>"><i
-													class="fa fa-retweet"></i></a></li>
+											<li><a href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
+															class="fa fa-retweet"></i></a></li>
 											<li><a
 												href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
 													class="fa fa-shopping-cart"></i></a></li>
@@ -165,8 +165,8 @@
 											<ul class="featured__item__pic__hover">
 												<li><a href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
 														class="fa fa-heart"></i></a></li>
-												<li><a href="<c:url value="assets/user/#"/>"><i
-														class="fa fa-retweet"></i></a></li>
+												<li><a href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
+															class="fa fa-retweet"></i></a></li>
 												<li><a href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
 														class="fa fa-shopping-cart"></i></a></li>
 											</ul>
@@ -178,6 +178,7 @@
 											<h5>${item.price}</h5>
 
 										</div>
+									</div>
 									</div>
 									<c:set var="count" value="${count+1 }" />
 								</c:if>
