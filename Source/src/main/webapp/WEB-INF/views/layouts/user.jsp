@@ -6,7 +6,6 @@
 <html lang="zxx">
 
 <head>
-<<<<<<< HEAD
     <meta charset="UTF-8">
     <meta name="description" content="Ogani Template">
     <meta name="keywords" content="Ogani, unica, creative, html">
@@ -17,7 +16,6 @@
 	<link rel="icon" type="image/x-icon" href="assets/user/img/icon.png">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
-=======
 <meta charset="UTF-8">
 <meta name="description" content="Ogani Template">
 <meta name="keywords" content="Ogani, unica, creative, html">
@@ -30,7 +28,6 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
 	rel="stylesheet">
->>>>>>> aca4f5582c0f8c19884cdd747559615a3548b0c4
 
 <!-- Css Styles -->
 <link rel="stylesheet"

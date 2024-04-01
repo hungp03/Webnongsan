@@ -29,20 +29,6 @@
 	
 	<!-- <bean id="AccountDAO" class="ecofarm.DAOImpl.AccountDAOImpl">
 
-	
-	<bean id="ecofarm" class="ecofarm.bean.Company">
-		<property name="logoNavImg" value="assets/user/img/logo.png" />
-		<property name="sliderImg" value="assets/user/img/hero/banner.jpg" />
-		<property name="banner1" value="assets/user/img/banner/banner-1.jpg" />
-		<property name="banner2" value="assets/user/img/banner/banner-2.jpg" />
-		<property name="phoneNumber" value="(+84) 912381180" />
-		<property name="gmail"
-			value="giahuyvu.1712@gmail.com" />
-		<property name="address" value="97 Man Thiện" />
-		<property name="openTime" value="8:00"/>
-		<property name="closeTime" value="21:00"/>
-	</bean>
-
 	<bean id="mailSender"
 		class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
@@ -80,4 +66,16 @@
 	<!-- <bean id="OrderDAO" class="ecofarm.DAOImpl.OrderDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean> -->
+	<bean id="ecofarm" class="ecofarm.bean.Company">
+		<property name="logoNavImg" value="assets/user/img/logo.png" />
+		<property name="sliderImg" value="assets/user/img/hero/banner.jpg" />
+		<property name="banner1" value="assets/user/img/banner/banner-1.jpg" />
+		<property name="banner2" value="assets/user/img/banner/banner-2.jpg" />
+		<property name="phoneNumber" value="(+84) 123456789" />
+		<property name="gmail"
+			value="abc@gmail.com" />
+		<property name="address" value="97 Man Thiện" />
+		<property name="openTime" value="8:00"/>
+		<property name="closeTime" value="21:00"/>
+	</bean>
 </beans>

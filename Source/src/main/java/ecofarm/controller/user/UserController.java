@@ -130,14 +130,15 @@ public class UserController {
 			
 			if(checkRemember!= null) {
 				Cookie cookie = new Cookie("userEmail", loggedInUser.getEmail());
+				Cookie cookie_role = new Cookie("userRole", loggedInUser.getRole().getRoleId());
 				cookie.setMaxAge(24*60*60);
 				response.addCookie(cookie);
+				response.addCookie(cookie_role);
 			}else {
 				Cookie cookie = new Cookie("userEmail", loggedInUser.getEmail());
 				cookie.setMaxAge(-1);
 				response.addCookie(cookie);
 			}
-			session.setAttribute("user", loggedInUser);
 			request.setAttribute("status","Đăng nhập tài khoản thành công");
 			return "redirect:/index.htm";
 		}else {

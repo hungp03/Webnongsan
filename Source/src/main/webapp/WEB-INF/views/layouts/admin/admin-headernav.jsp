@@ -48,18 +48,6 @@
 			class="nav-link"> <i class="bi bi-bag-fill"></i> <span>Order</span></a>
 		</li>
 
-		<hr class="sidebar-divider">
-		<!-- Nav Item - Profile -->
-		<li class="nav-item "><a href="admin/profile.htm"
-			class="nav-link"> <i class="bi bi-person-circle"></i> <span>Profile</span></a>
-		</li>
-
-
-		<!-- Nav Item - Logout -->
-		<li class="nav-item "><a href="guest/logout.htm" class="nav-link">
-				<i class="bi bi-box-arrow-left"></i> <span>Logout</span>
-		</a></li>
-
 	</ul>
 </div>
 <!-- End of Sidebar -->
