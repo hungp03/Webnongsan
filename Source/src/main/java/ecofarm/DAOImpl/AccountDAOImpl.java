@@ -3,6 +3,7 @@ package ecofarm.DAOImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -29,15 +30,16 @@ public class AccountDAOImpl implements IAccountDAO {
 			Transaction tr = session.beginTransaction();
 			session.save(account);
 			tr.commit();
-			isCreated =  true;
+			isCreated = true;
 		} catch (Exception e) {
 			logger.error("Error creating account: " + e.getMessage(), e);
-	        throw new RuntimeException("Error creating account", e);
+			throw new RuntimeException("Error creating account", e);
 		} finally {
 			session.close();
 		}
 		return isCreated;
 	}
+
 	@SuppressWarnings("unchecked")
 	private Role getRoleByID(String roleID) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -55,9 +57,9 @@ public class AccountDAOImpl implements IAccountDAO {
 		} finally {
 			session.close();
 		}
-		if(list.size() > 0) {
+		if (list.size() > 0) {
 			return list.get(0);
-		}else {
+		} else {
 			return null;
 		}
 	}
@@ -76,27 +78,31 @@ public class AccountDAOImpl implements IAccountDAO {
 			tr.commit();
 		} catch (Exception e) {
 			logger.error("Error getting account by email: " + e.getMessage(), e);
-	        throw new RuntimeException("Error getting account by email", e);
-		}finally {
+			throw new RuntimeException("Error getting account by email", e);
+		} finally {
 			session.close();
 		}
-		
-		if(list.size() > 0) {
+
+		if (list.size() > 0) {
 			return list.get(0);
-		}else {
+		} else {
 			return null;
 		}
-		
+
 	}
 
 	@Override
 	public boolean checkAccountRegister(Account account) {
 		List<Account> allAccounts = getAllAccounts();
-		if(account.getEmail() == null) return false;
-		if(account.getFirstName() == null) return false;
-		if(account.getLastName() == null) return false;
-		if(account.getPhoneNumber() == null) return false;
-		
+		if (account.getEmail() == null)
+			return false;
+		if (account.getFirstName() == null)
+			return false;
+		if (account.getLastName() == null)
+			return false;
+		if (account.getPhoneNumber() == null)
+			return false;
+
 		for (Account el : allAccounts) {
 			if (account.getEmail().equals(el.getEmail()))
 				return false;
@@ -127,15 +133,18 @@ public class AccountDAOImpl implements IAccountDAO {
 		}
 		return list;
 	}
+
 	@Override
 	public boolean checkAccountLogin(Account account) {
 		String pass = account.getPassword();
 		Account user = getAccountByEmail(account.getEmail());
-		if(user != null) {
-			if(BCrypt.checkpw(pass, user.getPassword())) return true;
+		if (user != null) {
+			if (BCrypt.checkpw(pass, user.getPassword()))
+				return true;
 		}
 		return false;
 	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Account getAccountByID(int accountID) {
@@ -161,19 +170,90 @@ public class AccountDAOImpl implements IAccountDAO {
 		return null;
 
 	}
+
 	@Override
 	public boolean forgotPassword(String username, String password) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			Account account = getAccountByEmail(username);
-			if(account != null) {
+			if (account != null) {
 				account.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(12)));
-				session.update(account);			}
+				session.update(account);
+			}
 			Transaction tr = session.beginTransaction();
 			tr.commit();
 			return true;
 		} catch (Exception e) {
 			session.close();
+		}
+		return false;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Account> listAccountWithRole(EnumRoleID roleID) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction t = session.beginTransaction();
+		List<Account> list = null;
+		try {
+
+			String hql = "FROM Account WHERE RoleID = :roleID";
+			Query query = session.createQuery(hql);
+			query.setParameter("roleID", roleID.toString());
+			list = query.list();
+
+			t.commit();
+		} catch (HibernateException e) {
+			if (session != null && session.getTransaction() != null) {
+				t.rollback(); // Rollback nếu có lỗi
+			}
+			e.printStackTrace(); // Xử lý hoặc ghi log lỗi
+		} finally {
+			if (session != null && session.isOpen()) {
+				session.close(); // Đóng session
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<Account> listAccounts() {
+		Session ss = HibernateUtil.getSessionFactory().getCurrentSession();
+		@SuppressWarnings("unchecked")
+		List<Account> list = ss.createQuery("FROM Account").list();
+		return list;
+	}
+
+	@Override
+	public boolean updateAccount(Account account) {
+		Session ss = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = ss.beginTransaction();
+		try {
+			ss.update(account);
+			t.commit();
+			return true;
+		} catch (Exception e) {
+			System.out.println("Update Account - error: " + e.getMessage());
+			t.rollback();
+		} finally {
+			ss.close();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteAccount(Account account) {
+		Session ss = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = ss.beginTransaction();
+		try {
+			ss.delete(account);
+			t.commit();
+			return true;
+		} catch (Exception e) {
+			System.out.println("Delete Account - error: " + e.getMessage());
+			t.rollback();
+		} finally {
+			ss.close();
 		}
 		return false;
 	}

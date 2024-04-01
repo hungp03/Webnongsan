@@ -13,4 +13,8 @@ public interface IProductDAO {
 	public List<Product> getLatestProduct();
 	public List<Product> getReviewProduct();
 	public List<Product> getRatedProduct();
+//	public boolean insertProduct(Product product);
+//	public boolean updateProduct(Product product);
+//	public boolean deleteProduct(Product product);
+
 }

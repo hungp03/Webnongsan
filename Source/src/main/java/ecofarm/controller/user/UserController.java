@@ -84,6 +84,7 @@ public class UserController {
 				cookie.setMaxAge(-1);
 				response.addCookie(cookie);
 			}
+			session.setAttribute("user", loggedInUser);
 			request.setAttribute("status","Đăng nhập tài khoản thành công");
 			return "redirect:/index.htm";
 		}else {

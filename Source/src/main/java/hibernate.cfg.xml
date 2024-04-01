@@ -29,35 +29,32 @@
 			create-update
 		</property>
 		<property name="show_sql">false</property>
-		<!-- Cấu hình CurrentSessionContext sử dụng thread -->
-<!--         <property name="current_session_context_class">thread</property>
- -->        <!-- Cấu hình loại giao dịch -->
-<!--         <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
-		Cấu hình Session Factory
-        <property name="sessionFactoryName">sessionFactory</property>
-        Cấu hình giao dịch tự động
-        <property name="hibernate.current_session_context_class">thread</property> -->
- 
+		<property name="hibernate.current_session_context_class">org.hibernate.context.internal.ThreadLocalSessionContext</property>
+		<!-- Cấu hình loại giao dịch -->
+		<!-- <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property> 
+			Cấu hình Session Factory <property name="sessionFactoryName">sessionFactory</property> 
+			Cấu hình giao dịch tự động <property name="hibernate.current_session_context_class">thread</property> -->
+
 		<!-- List of XML mapping files -->
-		<mapping class = "ecofarm.entity.Province"/>
-		<mapping class ="ecofarm.entity.Account"/>
-		<mapping class ="ecofarm.entity.Address"/>
-		<mapping class ="ecofarm.entity.Cart"/>
-		<mapping class ="ecofarm.entity.CartId"/>
-		<mapping class ="ecofarm.entity.Category"/>
+		<mapping class="ecofarm.entity.Province" />
+		<mapping class="ecofarm.entity.Account" />
+		<mapping class="ecofarm.entity.Address" />
+		<mapping class="ecofarm.entity.Cart" />
+		<mapping class="ecofarm.entity.CartId" />
+		<mapping class="ecofarm.entity.Category" />
 		<!-- <mapping class ="ecofarm.entity.Coupon"/> -->
-		<mapping class ="ecofarm.entity.Coupon"/>
-		<mapping class ="ecofarm.entity.District"/>
-		<mapping class ="ecofarm.entity.Feedback"/>
-		<mapping class ="ecofarm.entity.OrderDetail"/>
-		<mapping class ="ecofarm.entity.OrderDetailId"/>
-		<mapping class ="ecofarm.entity.Orders"/>
-		<mapping class ="ecofarm.entity.Product"/>
-		<mapping class ="ecofarm.entity.Role"/>
-		<mapping class ="ecofarm.entity.Ward"/>
-		<mapping class ="ecofarm.entity.Wishlist"/>
-		<mapping class ="ecofarm.entity.WishlistId"/>
-		
+		<mapping class="ecofarm.entity.Coupon" />
+		<mapping class="ecofarm.entity.District" />
+		<mapping class="ecofarm.entity.Feedback" />
+		<mapping class="ecofarm.entity.OrderDetail" />
+		<mapping class="ecofarm.entity.OrderDetailId" />
+		<mapping class="ecofarm.entity.Orders" />
+		<mapping class="ecofarm.entity.Product" />
+		<mapping class="ecofarm.entity.Role" />
+		<mapping class="ecofarm.entity.Ward" />
+		<mapping class="ecofarm.entity.Wishlist" />
+		<mapping class="ecofarm.entity.WishlistId" />
+
 
 	</session-factory>
 </hibernate-configuration>

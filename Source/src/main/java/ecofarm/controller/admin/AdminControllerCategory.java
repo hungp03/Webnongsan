@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/category")
 public class AdminControllerCategory {
 	
 	//Chuyển hướng từ trang /index sang trang chủ admin /admin/dashboard
