@@ -47,6 +47,8 @@ public class Account {
 
 	@Column(name = "Password", nullable = false)
 	private String password;
+	
+
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
 	private Set<Address> addresses = new HashSet<>(0);
@@ -112,7 +114,7 @@ public class Account {
 	public String toString() {
 		return String.format("Account ID: {0}", accountId);
 	}
-
+	
 	public int getAccountId() {
 		return accountId;
 	}

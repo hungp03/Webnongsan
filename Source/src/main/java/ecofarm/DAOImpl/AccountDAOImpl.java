@@ -163,7 +163,6 @@ public class AccountDAOImpl implements IAccountDAO {
 		} finally {
 			session.close();
 		}
-//		System.out.println(accounts.get(0).getAccountId());
 		if (accounts.size() > 0) {
 			return accounts.get(0);
 		}
@@ -174,16 +173,19 @@ public class AccountDAOImpl implements IAccountDAO {
 	@Override
 	public boolean forgotPassword(String username, String password) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction tr = session.beginTransaction();
 		try {
 			Account account = getAccountByEmail(username);
 			if (account != null) {
 				account.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(12)));
 				session.update(account);
 			}
-			Transaction tr = session.beginTransaction();
 			tr.commit();
 			return true;
 		} catch (Exception e) {
+			tr.rollback();
+			System.out.println(e.getMessage());
+		}finally {
 			session.close();
 		}
 		return false;

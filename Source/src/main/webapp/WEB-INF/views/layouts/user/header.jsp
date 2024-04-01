@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/layouts/user/common.jsp"%>
 
+
+
 <!-- Page Preloder -->
 <div id="preloder">
 	<div class="loader"></div>
@@ -17,7 +19,11 @@
 	<div class="humberger__menu__cart">
 		<ul>
 			<li><a href="<c:url value="/assets/user/#"/>"><i
-					class="fa fa-heart"></i> <span>1</span></a></li>
+					class="fa fa-heart"></i> <span> <c:if
+							test="${not empty userInfo }">
+						${wishlist.size() }
+					</c:if>
+				</span></a></li>
 			<li><a href="<c:url value="/assets/user/#"/>"><i
 					class="fa fa-shopping-bag"></i> <span> <c:if
 							test="${not empty userInfo }">
@@ -93,30 +99,46 @@
 
 				</nav>
 			</div>
-			<div class="col-lg-3">
-				<div class="header__cart">
-					<ul>
-
-						<li style="margin-right: 5px"><a
-							href="<c:url value="/login.htm"/>"
-							style="color: #000000; line-height: 13px;"><i
-								class="fa fa-user"></i> <c:if test="${empty userInfo }">
-							Login
-						</c:if> <c:if test="${not empty userInfo }">
-							${userInfo.getName() }
-						</c:if> </a></li>
-
+			<div class="col-lg-3" style="padding-right: 0;padding-left: 0">
+				<div class="header__cart" style="display: flex; align-items: center">
+					<ul style="display: flex;margin-right:10px">
+						<c:if test="${empty userInfo}">
+							<li style="margin-right: 5px"><a
+								href="<c:url value="/login.htm"/>"
+								style="color: #000000; line-height: 13px;"><i
+									class="fa fa-user"></i>Login</a></li>
+						</c:if>
+						<c:if test="${not empty userInfo and userInfo.avatar != null}">
+							<div class="user-nav__user">
+								<img
+									src="<c:url value="/assets/user/img/account/${userInfo.avatar }"/>"
+									alt="User photo" class="user-nav__user-photo"> <span
+									class="user-nav__user-name" style="margin-right: 5px">${userInfo.getName() }</span>
+							</div>
+						</c:if>
+						<c:if test="${not empty userInfo and userInfo.avatar == null}">
+							<li style="margin-right: 5px"><a
+								href="<c:url value="/login.htm"/>"
+								style="color: #000000; line-height: 13px;"><i
+									class="fa fa-user"></i>${userInfo.getName() }</a></li>
+						</c:if>
 
 						<li><a href="<c:url value="/wishlist.htm"/>"><i
-								class="fa fa-heart"></i> <span>1</span></a></li>
+								class="fa fa-heart"></i> <span> <c:if
+										test="${not empty userInfo }">${wishlist.size() }</c:if> <c:if
+										test="${empty userInfo }">0</c:if>
+							</span></a></li>
 						<li><a href="<c:url value="/cart.htm"/>"><i
 								class="fa fa-shopping-bag"></i> <span> <c:if
-										test="${not empty userInfo }">${carts.size() }</c:if>
+										test="${not empty userInfo }">${carts.size() }</c:if> <c:if
+										test="${empty userInfo }">0</c:if>
 							</span></a></li>
 
 					</ul>
 					<div class="header__cart__price">
-						total: <span><c:if test="${not empty userInfo }">${totalPrice }</c:if></span>
+						total: <span> <c:if test="${not empty userInfo }">${totalPrice }</c:if>
+							<c:if test="${empty userInfo }">0.0</c:if>
+						</span>
 					</div>
 				</div>
 			</div>

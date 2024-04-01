@@ -19,7 +19,7 @@ public class CategoryDAOImpl implements ICategoryDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Category> getAllCategories() {
-		List<Category> list = new ArrayList();
+		List<Category> list = new ArrayList<>();
 		try {
 			SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 			if(sessionFactory!=null) {

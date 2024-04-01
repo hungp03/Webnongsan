@@ -13,7 +13,7 @@ public class PaginateDAOImpl implements IPaginateDAO {
 		paginate.setTotalPage(getTotalPages(totalData, limit));
 		paginate.setStart(getStart(currentPage, limit));
 		paginate.setEnd(getEnd(currentPage, limit, totalData));
-		System.out.println(paginate.getCurrentPage());
+
 		return paginate;
 	}
 	private int checkCurrentPage(int currentPage, int totalPages) {

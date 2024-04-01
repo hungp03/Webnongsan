@@ -28,4 +28,6 @@
 
 	<!-- Cấu hình resources -->
 	<!-- <mvc:resources mapping="/assets/**" location="/assets/" /> -->
+	
+	
 </beans>
