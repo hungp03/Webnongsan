@@ -26,6 +26,7 @@ public class UserController {
 
 	@Autowired
 	Mailer mailer;
+	
 	@Autowired
 	@Qualifier("accountImgDir")
 	UploadFile baseUploadFile;
@@ -132,11 +133,14 @@ public class UserController {
 				Cookie cookie = new Cookie("userEmail", loggedInUser.getEmail());
 				Cookie cookie_role = new Cookie("userRole", loggedInUser.getRole().getRoleId());
 				cookie.setMaxAge(24*60*60);
+				cookie_role.setMaxAge(24*3600);
 				response.addCookie(cookie);
 				response.addCookie(cookie_role);
 			}else {
 				Cookie cookie = new Cookie("userEmail", loggedInUser.getEmail());
+				Cookie cookie_role = new Cookie("userRole", loggedInUser.getRole().getRoleId());
 				cookie.setMaxAge(-1);
+				cookie_role.setMaxAge(-1);
 				response.addCookie(cookie);
 			}
 			request.setAttribute("status","Đăng nhập tài khoản thành công");

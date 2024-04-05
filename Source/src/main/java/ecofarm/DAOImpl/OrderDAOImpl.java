@@ -13,7 +13,6 @@ import ecofarm.entity.OrderDetail;
 import ecofarm.entity.Orders;
 import ecofarm.utility.HibernateUtil;
 
-
 public class OrderDAOImpl implements IOrderDAO {
 
 	@Override
@@ -201,17 +200,17 @@ public class OrderDAOImpl implements IOrderDAO {
 
 	@Override
 	public List<Orders> getOrders() {
-		 try {
-		        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		        session.beginTransaction(); 
-		        String hql = "From Orders";
-		        Query query = session.createQuery(hql);
-		        @SuppressWarnings("unchecked")
-		        List<Orders> listOrders = query.list();
-		        session.getTransaction().commit();
-		        return listOrders;
-		    } catch (HibernateException ex) {
-		        throw ex; 
-		    }
+		try {
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session.beginTransaction();
+			String hql = "From Orders";
+			Query query = session.createQuery(hql);
+			@SuppressWarnings("unchecked")
+			List<Orders> listOrders = query.list();
+			session.getTransaction().commit();
+			return listOrders;
+		} catch (HibernateException ex) {
+			throw ex;
+		}
 	}
 }

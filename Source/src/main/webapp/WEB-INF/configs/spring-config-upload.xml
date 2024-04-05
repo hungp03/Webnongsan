@@ -26,6 +26,11 @@
 			value="D:\\Program\\Thuc Tap Co So\\WebTest 3_22_2024\\Webnongsan\\Source\\src\\main\\webapp\\assets\\user\\img\\account\"></property>
 	</bean>
 	
+	<bean id="categoryImgDir" class="ecofarm.bean.UploadFile">
+		<property name="basePath"
+			value="D:\\Project\\Java\\Webnongsan\\Source\\src\\main\\webapp\\assets\\user\\img\\category\"></property>
+	</bean>
+	
 </beans>
 
 

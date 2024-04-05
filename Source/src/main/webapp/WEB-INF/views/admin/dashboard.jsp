@@ -1,9 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/layouts/admin/admin-lib.jsp"%>
 
 <body>
 
 	<div class="row">
-		<div class="col-md-1"></div>
 		<!-- Sidebar -->
 		<div class="col-1 d-none d-lg-inline col-lg-2">
 			<%@include file="/WEB-INF/views/layouts/admin/admin-headernav.jsp"%>
@@ -22,7 +23,7 @@
 									<nav aria-label="breadcrumb">
 										<ol class="breadcrumb mb-0 text-muted fs-6 fw-semibold">
 											<li class="breadcrumb-item"><a href="admin/index.htm"
-												class="text-decoration-none text-success">Dashboard</a></li>
+												class="brc-link">Dashboard</a></li>
 										</ol>
 									</nav>
 								</div>

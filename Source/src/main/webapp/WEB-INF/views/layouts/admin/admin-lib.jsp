@@ -46,6 +46,7 @@
 
 <!-- Custom Css-->
 <link rel="stylesheet" href="assets/admin/css/main.css" type="text/css">
+<link rel="stylesheet" href="assets/admin/css/custom.css" type="text/css">
 <!-- <link rel="stylesheet" href="assets/owlcarousel/owl.carousel.min.css"
 	type="text/css">
 <link rel="stylesheet"

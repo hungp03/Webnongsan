@@ -9,11 +9,13 @@
 	--footerColor: #001E2B;
 	--catagoryColor: #21313C;
 	--iconColor1: #7fad39;
+	
 }
 
 :root {
 	scroll-behavior: smooth;
 	font-size: 14px;
+	
 }
 
 
@@ -36,6 +38,7 @@
 	-webkit-appearance: none;
 	appearance: none;
 }
+
 
 .search-and-icons form input {
 	border-radius: 25px;
