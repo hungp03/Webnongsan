@@ -42,8 +42,6 @@
 		<mapping class="ecofarm.entity.Cart" />
 		<mapping class="ecofarm.entity.CartId" />
 		<mapping class="ecofarm.entity.Category" />
-		<!-- <mapping class ="ecofarm.entity.Coupon"/> -->
-		<mapping class="ecofarm.entity.Coupon" />
 		<mapping class="ecofarm.entity.District" />
 		<mapping class="ecofarm.entity.Feedback" />
 		<mapping class="ecofarm.entity.OrderDetail" />

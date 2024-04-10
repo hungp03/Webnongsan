@@ -60,7 +60,7 @@ public class UserController {
 		account.setPhoneNumber(phoneNumber);
 		if(!avatar.isEmpty()) {
 			try {
-				account.setAvatar(baseUploadFile.uploadUserAvatar(avatar));
+				account.setAvatar(baseUploadFile.uploadImage(avatar));
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
@@ -128,7 +128,7 @@ public class UserController {
 		if(isLogin) {
 			 // Lưu thông tin người dùng vào phiên nếu đăng nhập thành công
 			Account loggedInUser = accountDAO.getAccountByEmail(account.getEmail());
-			
+			session.setAttribute("userInfo", loggedInUser);
 			if(checkRemember!= null) {
 				Cookie cookie = new Cookie("userEmail", loggedInUser.getEmail());
 				Cookie cookie_role = new Cookie("userRole", loggedInUser.getRole().getRoleId());

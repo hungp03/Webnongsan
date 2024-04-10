@@ -60,14 +60,12 @@ public class Product {
 	
 	@Column(name = "Reviews")
 	private int reviews;
-
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "CouponID")
-//	private Coupon coupon;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "CouponID")
-	private Coupon coupon;
+	/*
+	 * @ManyToOne(fetch = FetchType.EAGER)
+	 * 
+	 * @JoinColumn(name = "CouponID") private Coupon coupon;
+	 */
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "AccountID", nullable = false)
@@ -210,13 +208,11 @@ public class Product {
 		this.unit = unit;
 	}
 
-	public Coupon getCoupon() {
-		return coupon;
-	}
-
-	public void setCoupon(Coupon coupon) {
-		this.coupon = coupon;
-	}
+	/*
+	 * public Coupon getCoupon() { return coupon; }
+	 * 
+	 * public void setCoupon(Coupon coupon) { this.coupon = coupon; }
+	 */
 
 	public Account getAccount() {
 		return account;

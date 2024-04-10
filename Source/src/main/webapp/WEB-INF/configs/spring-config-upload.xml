@@ -31,6 +31,10 @@
 			value="D:\\Project\\Java\\Webnongsan\\Source\\src\\main\\webapp\\assets\\user\\img\\category\"></property>
 	</bean>
 	
+	<bean id="productImgDir" class="ecofarm.bean.UploadFile">
+		<property name="basePath"
+			value="D:\\Project\\Java\\Webnongsan\\Source\\src\\main\\webapp\\assets\\user\\img\\products\"></property>
+	</bean>
 </beans>
 
 

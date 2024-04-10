@@ -135,11 +135,6 @@
 							</span></a></li>
 
 					</ul>
-					<div class="header__cart__price">
-						total: <span> <c:if test="${not empty userInfo }">${totalPrice }</c:if>
-							<c:if test="${empty userInfo }">0.0</c:if>
-						</span>
-					</div>
 				</div>
 			</div>
 		</div>

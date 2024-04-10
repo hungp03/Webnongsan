@@ -16,26 +16,12 @@ public class UploadFile {
 	public void setBasePath(String basePath) {
 		this.basePath = basePath;
 	}
-	public String uploadUserAvatar(MultipartFile file) {
+	public String uploadImage(MultipartFile file) {
 		try {
 			String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMddHHmmss-"));
 			String photoName = date + file.getOriginalFilename();
 			String photoPath = this.getBasePath() + File.separator + photoName;
 			file.transferTo(new File(photoPath));
-			return photoName;
-		} catch (Exception e) {
-			// TODO: handle exception
-			throw new RuntimeException(e);
-		}
-	}
-	
-	public String uploadCategoryImage(MultipartFile file) {
-		try {
-			String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMddHHmmss-"));
-			String photoName = date + file.getOriginalFilename();
-			String photoPath = this.getBasePath() + File.separator + photoName;
-			file.transferTo(new File(photoPath));
-
 			return photoName;
 		} catch (Exception e) {
 			// TODO: handle exception

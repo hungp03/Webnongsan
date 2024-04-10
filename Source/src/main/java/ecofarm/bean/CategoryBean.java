@@ -3,6 +3,8 @@ package ecofarm.bean;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import ecofarm.entity.Category;
@@ -10,6 +12,7 @@ import ecofarm.entity.Product;
 
 public class CategoryBean {
 	private int id;
+	
 	private String name;
 	private String image;
 	private MultipartFile fileImage;

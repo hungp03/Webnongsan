@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import ecofarm.DAO.IProductDAO;
+import ecofarm.entity.Category;
 import ecofarm.entity.Product;
 import ecofarm.utility.HibernateUtil;
 
@@ -137,7 +138,7 @@ public class ProductDAOImpl implements IProductDAO {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-		}finally {
+		} finally {
 			session.close();
 		}
 		return list;
@@ -156,10 +157,75 @@ public class ProductDAOImpl implements IProductDAO {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-		}finally {
+		} finally {
 			session.close();
 		}
 		return list;
 	}
 
+	@Override
+	public List<Product> searchProducts(String likeName) {
+		Session ss = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = ss.beginTransaction();
+		likeName = (likeName == null) ? "%" : "%" + likeName + "%";
+		String hql = "FROM Product WHERE productName LIKE :name";
+		Query query = ss.createQuery(hql);
+		query.setParameter("name", likeName);
+		@SuppressWarnings("unchecked")
+		List<Product> list = query.list();
+		t.commit();
+		ss.close();
+		return list;
+	}
+	
+	@Override
+	public boolean insertProduct(Product product) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		try {
+			session.save(product);
+			t.commit();
+			return true;
+		} catch (Exception ex) {
+			System.out.println(ex);
+			t.rollback();
+		} finally {
+			session.close();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteProduct(Product product) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		try {
+			session.delete(product);
+			t.commit();
+			return true;
+		} catch (Exception ex) {
+			System.out.println("Delete product failed" + ex.getMessage());
+			t.rollback();
+		} finally {
+			session.close();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean updateProduct(Product product) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		try {
+			session.update(product);
+			t.commit();
+			return true;
+		} catch (Exception ex) {
+			System.out.println(ex);
+			t.rollback();
+		} finally {
+			session.close();
+		}
+		return false;
+	}
 }

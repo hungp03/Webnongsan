@@ -16,13 +16,13 @@
 		</div>
 
 	</c:if>
-
+	<div class="container-fluid">
 	<div class="row">
 		<!-- Sidebar -->
-		<div class="col-1 d-none d-lg-inline col-lg-2">
+		<div class="col-lg-2 d-none d-lg-inline">
 			<%@include file="/WEB-INF/views/layouts/admin/admin-headernav.jsp"%>
 		</div>
-		<div class="col-lg-8 col-md-10 col-sm-12 mx-auto">
+		<div class="col-lg-10">
 			<div id="content-wrapper" class="d-flex flex-column">
 				<div class="container">
 					<!-- Breadcrum -->
@@ -187,6 +187,7 @@
 					</ul>
 				</nav>
 			</c:if>
+		</div>
 		</div>
 	</div>
 </body>

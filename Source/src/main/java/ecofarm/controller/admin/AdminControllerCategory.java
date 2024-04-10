@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,21 +80,19 @@ public class AdminControllerCategory {
 	UploadFile baseUploadFile;
 
 	@RequestMapping("addcategory")
-	public String gCategoryAdd(ModelMap modelMap) {
-		Category category = new Category();
-		CategoryBean categoryBean = new CategoryBean(category.getCategoryId(), category.getName(), category.getImage());
-		modelMap.addAttribute("addCate", categoryBean);
+	public String gCategoryAdd(ModelMap model) {
+		CategoryBean categoryBean = new CategoryBean();
+		model.addAttribute("addCate", categoryBean);
 		return "admin/category-form";
 	}
 
 	@RequestMapping(value = "addcategory", method = RequestMethod.POST)
-	public String addCategory(@ModelAttribute("addCate") CategoryBean categoryBean,RedirectAttributes re) {
+	public String addCategory(@ModelAttribute("addCate") CategoryBean categoryBean,RedirectAttributes re, BindingResult errors) {
 		if (categoryBean != null) {
 			Category category = new Category();
-
 			category.setName(categoryBean.getName());
 			if (!categoryBean.getFileImage().isEmpty()) {
-				String photoName = baseUploadFile.uploadCategoryImage(categoryBean.getFileImage());
+				String photoName = baseUploadFile.uploadImage(categoryBean.getFileImage());
 				category.setImage(photoName);
 
 				try {
@@ -102,8 +101,10 @@ public class AdminControllerCategory {
 					e.printStackTrace();
 				}
 			}
-
-			categoryDAO.addCategory(category);
+			boolean done = categoryDAO.addCategory(category);
+			if (!done) {
+				re.addFlashAttribute("mess", "Add failed");
+			}
 			re.addFlashAttribute("mess", "Add successful");
 		}
 
@@ -129,7 +130,7 @@ public class AdminControllerCategory {
 			try {
 				// nếu có cập nhật ảnh mới
 				if (!categoryBean.getFileImage().isEmpty()) {
-					String newImage = baseUploadFile.uploadCategoryImage(categoryBean.getFileImage());
+					String newImage = baseUploadFile.uploadImage(categoryBean.getFileImage());
 					// nếu có ảnh cũ, xóa nó đi
 					if (category.getImage() != null) {
 						File oldImage = new File(baseUploadFile.getBasePath() + category.getImage());
@@ -144,8 +145,8 @@ public class AdminControllerCategory {
 			} catch (Exception e) {
 				e.printStackTrace();
 				model.addAttribute("mess", "An error occurred");
-				model.addAttribute("categoryBean", categoryBean);
-				return "admin/admin-category-form";
+				model.addAttribute("updateCate", categoryBean);
+				return "admin/category-form";
 			}
 			categoryDAO.updateCategory(category);
 			re.addFlashAttribute("mess", "Update successful");

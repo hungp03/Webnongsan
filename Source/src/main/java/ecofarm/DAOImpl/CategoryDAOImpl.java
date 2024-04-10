@@ -126,20 +126,14 @@ public class CategoryDAOImpl implements ICategoryDAO {
 	public List<Category> searchCategory(String alikeName) {
 		Session ss = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = ss.beginTransaction();
-
 		alikeName = (alikeName == null) ? "%" : "%" + alikeName + "%";
-
 		String hql = "FROM Category WHERE Name LIKE :name";
-
 		Query query = ss.createQuery(hql);
 		query.setParameter("name", alikeName);
-
 		@SuppressWarnings("unchecked")
 		List<Category> list = query.list();
-
 		t.commit();
 		ss.close();
-
 		return list;
 	}
 
