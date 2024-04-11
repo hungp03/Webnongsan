@@ -33,7 +33,10 @@ public class PaginateDAOImpl implements IPaginateDAO {
 		return totalData > totalPages * limit ? totalPages+1:totalPages;
 	}
 	private int getEnd(int currentPage, int limit, int totalData) {
-		return (currentPage*limit) > totalData ? totalData: (currentPage*limit);
+	    int end = currentPage * limit;
+	    if (end > totalData) {
+	        end = totalData;
+	    }
+	    return end;
 	}
-
 }

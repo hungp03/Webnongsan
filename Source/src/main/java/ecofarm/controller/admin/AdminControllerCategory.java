@@ -1,6 +1,7 @@
 package ecofarm.controller.admin;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,15 +33,17 @@ public class AdminControllerCategory {
 	private PaginateDAOImpl paginateDAO = new PaginateDAOImpl();
 
 	@RequestMapping()
-	public String getCategoryList(ModelMap model,
+	public String getCategoryList(ModelMap model, @RequestParam(required = false, value = "search") String search,
 			@RequestParam(value = "crrPage", required = false, defaultValue = "1") int crrPage,
 			@RequestParam(value = "filter", defaultValue = "0") int filter) {
+		List<Category> categories = new ArrayList<Category>();
+		if (search != null && !search.isEmpty()) {
+			categories = categoryDAO.searchCategory(search);
+		} else {
+			// Lấy danh sách tất cả các categories
+			categories = categoryDAO.getAllCategories();
+		}
 
-		// Lấy danh sách tất cả các categories
-		List<Category> categories = categoryDAO.getAllCategories();
-
-		// Tính toán tổng số lượng danh mục dựa trên danh sách đã lọc
-		int totalCategories = categories.size();
 		// Áp dụng filter
 		if (filter == 1) {
 			categories = categories.stream().filter(r -> r.getProducts().size() == 0).collect(Collectors.toList());
@@ -47,6 +51,8 @@ public class AdminControllerCategory {
 			categories = categories.stream().filter(r -> r.getProducts().size() > 0).collect(Collectors.toList());
 		}
 
+		// Tính toán tổng số lượng danh mục dựa trên danh sách đã lọc
+		int totalCategories = categories.size();
 		// Lấy thông tin phân trang
 		Paginate paginate = paginateDAO.getInfoPaginate(totalCategories, CATE_PER_PAGE, crrPage);
 
@@ -56,21 +62,6 @@ public class AdminControllerCategory {
 		model.addAttribute("paginate", paginate);
 		model.addAttribute("categories", cates);
 		model.addAttribute("filter", filter);
-
-		return "admin/category-list";
-	}
-
-	@RequestMapping("searchCategory")
-	public String gCategoryWithSearch(@RequestParam(required = false, value = "search") String search,
-			@RequestParam(required = false, value = "crrPage", defaultValue = "1") int crrPage, ModelMap model) {
-		List<Category> categories = categoryDAO.searchCategory(search);
-		Paginate paginate = paginateDAO.getInfoPaginate(categories.size(), CATE_PER_PAGE, crrPage);
-
-		// Lấy danh sách category cho trang hiện tại
-		List<Category> cates = categories.subList(paginate.getStart(), paginate.getEnd());
-
-		model.addAttribute("paginate", paginate);
-		model.addAttribute("categories", cates);
 
 		return "admin/category-list";
 	}
@@ -87,8 +78,17 @@ public class AdminControllerCategory {
 	}
 
 	@RequestMapping(value = "addcategory", method = RequestMethod.POST)
-	public String addCategory(@ModelAttribute("addCate") CategoryBean categoryBean,RedirectAttributes re, BindingResult errors) {
-		if (categoryBean != null) {
+	public String addCategory(@Validated @ModelAttribute("addCate") CategoryBean categoryBean, BindingResult errors,
+			ModelMap model, RedirectAttributes re) {
+		if (categoryBean.getName() == null || categoryBean.getName().isEmpty()
+				|| !categoryBean.getName().matches("^[a-zA-Z0-9\\p{L} ]+$")) {
+			errors.rejectValue("name", "categoryBean", "Tên không được bỏ trống và không chấp nhận kí tự đặc biệt");
+		}
+		if (errors.hasErrors()) {
+			model.addAttribute("mess", "Tên category không hợp lệ.");
+			return "admin/category-form";
+		} else {
+			// Tiếp tục xử lý khi không có lỗi
 			Category category = new Category();
 			category.setName(categoryBean.getName());
 			if (!categoryBean.getFileImage().isEmpty()) {
@@ -107,7 +107,6 @@ public class AdminControllerCategory {
 			}
 			re.addFlashAttribute("mess", "Add successful");
 		}
-
 		return "redirect:/admin/category.htm";
 	}
 
@@ -120,11 +119,21 @@ public class AdminControllerCategory {
 	}
 
 	@RequestMapping(value = "update_category{id}", method = RequestMethod.POST)
-	public String pUpdateCate(@ModelAttribute("updateCate") CategoryBean categoryBean, ModelMap model, RedirectAttributes re) {
+	public String pUpdateCate(@ModelAttribute("updateCate") CategoryBean categoryBean, ModelMap model, BindingResult errors,
+			RedirectAttributes re) {
 		// Lấy cate được chọn
 		Category category = categoryDAO.getCategory(categoryBean.getId());
 		// nếu có cate trả về
 		if (category != null) {
+			if (categoryBean.getName() == null || categoryBean.getName().isEmpty()
+					|| !categoryBean.getName().matches("^[a-zA-Z0-9\\p{L} ]+$")) {
+				errors.rejectValue("name", "categoryBean", "Tên không được bỏ trống và không chấp nhận kí tự đặc biệt");
+			}
+			if (errors.hasErrors()) {
+				model.addAttribute("mess", "Tên category không hợp lệ.");
+				model.addAttribute("updateCate", categoryBean);
+				return "admin/category-form";
+			}
 			// Đặt tên mới
 			category.setName(categoryBean.getName());
 			try {
@@ -153,19 +162,19 @@ public class AdminControllerCategory {
 		}
 		return "redirect:/admin/category.htm";
 	}
-	
-	@RequestMapping(value="delete",  method = RequestMethod.POST)
+
+	@RequestMapping(value = "delete", method = RequestMethod.POST)
 	public String deleteCate(@RequestParam("id") int id, RedirectAttributes re) {
 		Category category = categoryDAO.getCategory(id);
 		if (categoryDAO.deleteCategory(category)) {
 			try {
-					// nếu có ảnh, xóa nó đi
-					if (category.getImage() != null) {
-						File oldImage = new File(baseUploadFile.getBasePath() + category.getImage());
-						if (oldImage.exists()) {
-							oldImage.delete();
-						}
+				// nếu có ảnh, xóa nó đi
+				if (category.getImage() != null) {
+					File oldImage = new File(baseUploadFile.getBasePath() + category.getImage());
+					if (oldImage.exists()) {
+						oldImage.delete();
 					}
+				}
 			} catch (Exception e) {
 				re.addFlashAttribute("mess", "Check category image again");
 			}

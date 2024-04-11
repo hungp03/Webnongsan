@@ -65,7 +65,9 @@
 										<label for="inputNameProduct" class="form-label mb-2 fw-bold">Product
 											Name</label>
 										<form:input path="productName" class="form-control"
-											id="inputNameProduct" />
+											id="inputNameProduct" required="true"/>
+											<form:errors path="productName" style="color: red;" />
+											
 									</div>
 									<div class="col-md-5">
 										<label for="inputCategory" class="form-label mb-2 fw-bold">Category
@@ -77,7 +79,9 @@
 									<div class="col-md-3 mt-2">
 										<label for="inputQuantity" class="form-label mb-2 fw-bold">Quantity</label>
 										<form:input path="quantity" type="number" class="form-control"
-											id="inputQuantity" />
+											id="inputQuantity" min="0"/>
+											<form:errors path="quantity" style="color: red;" />
+											
 									</div>
 									<div class="col-md-3 mt-2">
 										<label for="inputUnit" class="form-label mb-2 fw-bold">Unit</label>
@@ -100,7 +104,9 @@
 									<div class="col-md-5 mt-2">
 										<label for="inputPrice" class="form-label mb-2 fw-bold">Price</label>
 										<form:input path="price" type="number" class="form-control"
-											id="inputPrice" inputmode="numeric" />
+											id="inputPrice" min="0" step="1000"/>
+										<form:errors path="price" style="color: red;" />
+										
 									</div>
 									<div class="col-md-12 mt-2">
 										<div class="form-floating mb-3">

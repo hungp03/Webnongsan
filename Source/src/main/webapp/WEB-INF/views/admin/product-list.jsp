@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <%@include file="/WEB-INF/views/layouts/admin/admin-lib.jsp"%>
 
 <body>
@@ -56,11 +57,34 @@
 									<div class="row justify-content-between">
 										<div class="col-lg-4 col-md-6 col-12 mb-2 mb-md-0">
 											<form class="d-flex" role="search"
-												action="admin/products/searchProduct.htm">
+												action="admin/products.htm">
 												<input class="form-control" type="search"
 													placeholder="Search Products" aria-label="Search"
-													name="search">
+													name="search" required>
 											</form>
+										</div>
+										<div class="col-xl-2 col-md-4 col-12">
+											<div class="dropdown">
+												<button class="btn btn-custom dropdown-toggle" type="button"
+													data-bs-toggle="dropdown" aria-expanded="false">
+													<c:if test="${ sort == 'none' }">Default</c:if>
+													<c:if test="${sort == 'name' }">Name</c:if>
+													<c:if test="${sort == 'price' }">Price</c:if>
+												</button>
+												<ul class="dropdown-menu">
+													<c:set var="baseURL" value="admin/products.htm" />
+													<c:if test="${not empty param.search}">
+														<c:set var="baseURL"
+															value="${baseURL}?search=${param.search}" />
+													</c:if>
+													<li><a class="dropdown-item" href="${baseURL}">Default</a></li>
+													<li><a class="dropdown-item"
+														href="${baseURL}&sort=name">Name</a></li>
+													<li><a class="dropdown-item"
+														href="${baseURL}&sort=price">Price</a></li>
+												</ul>
+
+											</div>
 										</div>
 									</div>
 								</div>
@@ -137,25 +161,43 @@
 								<ul class="pagination d-flex justify-content-center ms-2">
 									<li
 										class="page-item ${(paginate.currentPage == 1) ? 'disabled' : ''}">
-										<a class="page-link mx-1" aria-label="Previous"
-										href="admin/products.htm?crrPage=${paginate.currentPage - 1}">
-											<span aria-hidden="true">&laquo;</span>
+										<c:url var="prevPageURL" value="admin/products.htm">
+											<c:param name="crrPage" value="${paginate.currentPage - 1}" />
+											<c:param name="sort" value="${sort}" />
+											<c:if test="${not empty param.search}">
+												<c:param name="search" value="${param.search}" />
+											</c:if>
+										</c:url> <a class="page-link mx-1" aria-label="Previous"
+										href="${prevPageURL}"> <span aria-hidden="true">&laquo;</span>
 									</a>
 									</li>
 									<c:forEach var="i" begin="1" end="${paginate.totalPage}"
 										varStatus="in">
-										<li class="page-item"><a
+										<li class="page-item"><c:url var="pageURL"
+												value="admin/products.htm">
+												<c:param name="crrPage" value="${in.count}" />
+												<c:param name="sort" value="${sort}" />
+												<c:if test="${not empty param.search}">
+													<c:param name="search" value="${param.search}" />
+												</c:if>
+											</c:url> <a
 											class="page-link mx-1 ${(paginate.currentPage == in.count) ? 'active' : '' }"
-											href="admin/products.htm?crrPage=${in.count}">${in.count}</a>
-										</li>
+											href="${pageURL}"> ${in.count} </a></li>
 									</c:forEach>
-									<li class="page-item"><a
-										class="page-link mx-1 text-body ${(paginate.currentPage == paginate.totalPage) ? 'disabled' : '' }"
-										aria-label="Next"
-										href="admin/products.htm?crrPage=${paginate.currentPage + 1}">
-											<span aria-hidden="true">&raquo;</span>
-									</a></li>
+									<li
+										class="page-item ${(paginate.currentPage == paginate.totalPage) ? 'disabled' : '' }">
+										<c:url var="nextPageURL" value="admin/products.htm">
+											<c:param name="crrPage" value="${paginate.currentPage + 1}" />
+											<c:param name="sort" value="${sort}" />
+											<c:if test="${not empty param.search}">
+												<c:param name="search" value="${param.search}" />
+											</c:if>
+										</c:url> <a class="page-link mx-1 text-body" aria-label="Next"
+										href="${nextPageURL}"> <span aria-hidden="true">&raquo;</span>
+									</a>
+									</li>
 								</ul>
+
 							</nav>
 						</c:if>
 					</div>

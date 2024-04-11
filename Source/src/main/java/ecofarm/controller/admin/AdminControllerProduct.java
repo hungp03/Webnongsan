@@ -1,6 +1,10 @@
 package ecofarm.controller.admin;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -9,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,29 +42,47 @@ public class AdminControllerProduct {
 
 	@RequestMapping()
 	public String getListProduct(ModelMap model,
-			@RequestParam(value = "crrPage", required = false, defaultValue = "1") int crrPage) {
-		List<Product> products = productDAO.getAllProducts();
+			@RequestParam(value = "crrPage", required = false, defaultValue = "1") int crrPage,
+			@RequestParam(value = "sort", required = false, defaultValue = "none") String sort,
+			@RequestParam(required = false, value = "search") String search) {
+		List<Product> products = new ArrayList<Product>();
+		if (search != null && !search.isEmpty()) {
+			products = productDAO.searchProducts(search);
+		}
+		else {
+			products = productDAO.getAllProducts();
+		}
+		
 		int totalProducts = products.size();
+		
+		if ("name".equals(sort)) {
+	        Collections.sort(products, new Comparator<Product>() {
+	            public int compare(Product p1, Product p2) {
+	                return p1.getProductName().compareTo(p2.getProductName());
+	            }
+	        });
+	    }
+		
+		if ("price".equals(sort)) {
+		    Collections.sort(products, new Comparator<Product>() {
+		        public int compare(Product p1, Product p2) {
+		          
+		            BigDecimal price1 = BigDecimal.valueOf(p1.getPrice());
+		            BigDecimal price2 = BigDecimal.valueOf(p2.getPrice());
+		         
+		            return price1.compareTo(price2);
+		        }
+		    });
+		}
+
 		Paginate paginate = paginateDAO.getInfoPaginate(totalProducts, PROD_PER_PAGE, crrPage);
 		List<Product> prods = products.subList(paginate.getStart(), paginate.getEnd());
 		model.addAttribute("paginate", paginate);
 		model.addAttribute("products", prods);
-
+		model.addAttribute("sort", sort);
 		return "admin/product-list";
 	}
 
-	@RequestMapping("searchProduct")
-	public String searchProduct(@RequestParam(required = false, value = "search") String search,
-			@RequestParam(required = false, value = "crrPage", defaultValue = "1") int crrPage, ModelMap model) {
-		List<Product> products = productDAO.searchProducts(search);
-		// System.out.println(products.size());
-		Paginate paginate = paginateDAO.getInfoPaginate(products.size(), PROD_PER_PAGE, crrPage);
-		List<Product> prods = products.subList(paginate.getStart(), paginate.getEnd());
-		model.addAttribute("paginate", paginate);
-		model.addAttribute("products", prods);
-
-		return "admin/product-list";
-	}
 
 	@Autowired
 	@Qualifier("productImgDir")
@@ -76,7 +99,7 @@ public class AdminControllerProduct {
 	}
 
 	@RequestMapping(value = "create-product", method = RequestMethod.POST)
-	public String postAddProduct(@ModelAttribute("addProdBean") ProductBean product, HttpSession session,
+	public String postAddProduct(@ModelAttribute("addProdBean") ProductBean product, HttpSession session, BindingResult errors,
 			RedirectAttributes re, ModelMap model) {
 
 		Account acc = (Account) session.getAttribute("userInfo");
@@ -84,7 +107,30 @@ public class AdminControllerProduct {
 			System.out.print("Khong co user");
 			return "redirect:/logout.htm";
 		}
+		
+		String productName = product.getProductName();
+		if (productName.isEmpty() || !productName.matches("^[a-zA-Z0-9\\p{L} ]+$")) {
+			errors.rejectValue("productName", "product", "Không được bỏ trống và không chấp nhận kí tự đặc biệt");
+	    }
+		
+		 // Kiểm tra quantity
+	    int quantity = product.getQuantity();
+	    if (quantity < 0) {
+	    	errors.rejectValue("quantity", "product", "Số lượng tối thiểu là 0");
+	    }
 
+	    // Kiểm tra price
+	    double price = product.getPrice();
+	    if (price <= 0) {
+	    	errors.rejectValue("price", "product", "Giá tối thiểu phải lớn hơn 0");
+	    }
+	    
+	    if (errors.hasErrors()) {
+	    	model.addAttribute("mess", "Thêm mới thất bại! ");
+	    	List<Category> cates = categoryDAO.getAllCategories();
+	        model.addAttribute("categories", cates);
+	    	return "admin/product-form";
+	    }
 		Product newProduct = new Product();
 		newProduct.setAccount(acc);
 		Category category = categoryDAO.getCategory(product.getCategoryId());
@@ -152,8 +198,31 @@ public class AdminControllerProduct {
 	}
 
 	@RequestMapping(value = "update_product/{id}", method = RequestMethod.POST)
-	public String postUpdateProduct(@ModelAttribute("updateProdBean") ProductBean product, RedirectAttributes re,
+	public String postUpdateProduct(@ModelAttribute("updateProdBean") ProductBean product, RedirectAttributes re, BindingResult errors,
 			ModelMap model) {
+		String productName = product.getProductName();
+		if (productName.isEmpty() || !productName.matches("^[a-zA-Z0-9\\p{L} ]+$")) {
+			errors.rejectValue("productName", "product", "Không được bỏ trống và không chấp nhận kí tự đặc biệt");
+	    }
+		
+		 // Kiểm tra quantity
+	    int quantity = product.getQuantity();
+	    if (quantity < 0) {
+	    	errors.rejectValue("quantity", "product", "Số lượng tối thiểu là 0");
+	    }
+
+	    // Kiểm tra price
+	    double price = product.getPrice();
+	    if (price <= 0) {
+	    	errors.rejectValue("price", "product", "Giá tối thiểu phải lớn hơn 0");
+	    }
+	    
+	    if (errors.hasErrors()) {
+	    	model.addAttribute("mess", "Cập nhật thất bại! ");
+	    	List<Category> cates = categoryDAO.getAllCategories();
+	        model.addAttribute("categories", cates);
+	    	return "admin/product-form";
+	    }
 		Product foundProd = productDAO.getProductByID(product.getProductId());
 		if (foundProd != null) {
 			Category category = categoryDAO.getCategory(product.getCategoryId());

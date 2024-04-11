@@ -67,7 +67,9 @@
 										<label for="name-category" class="mb-2 fw-bold">Name
 											Category</label>
 										<form:input type="text" class="form-control"
-											id="name-category" path="name" />
+											id="name-category" path="name" required="true"/>
+											<form:errors path="name" style="color: red;" />
+											
 									</div>
 									<c:if test="${not empty updateCate }">
 										<div class="form-group mt-3">
