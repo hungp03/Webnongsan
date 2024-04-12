@@ -240,7 +240,7 @@ public class AdminControllerProduct {
 							oldImage.delete();
 						}
 					}
-					// Cập nhật ảnh mới cho cate
+					// Cập nhật ảnh mới cho product
 					foundProd.setImage(newImage);
 					Thread.sleep(2000);
 				}

@@ -30,16 +30,89 @@ public class FeedbackDAOImpl implements IFeedbackDAO {
 			tr.rollback();
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-		}finally {
+		} finally {
 			session.close();
 		}
-		if(list.size() > 0) return list;
+		if (list.size() > 0)
+			return list;
 		return null;
 	}
 
 	@Override
 	public boolean addFeedback(int productId, int accountId) {
 		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<Feedback> getAllFeedbacks() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		String hql = "FROM Feedback";
+		Query query = session.createQuery(hql);
+		@SuppressWarnings("unchecked")
+		List<Feedback> feedback = query.list();
+		return feedback;
+	}
+	
+	@Override
+	public List<Feedback> searchFeedback(String search) {
+	    Session session = HibernateUtil.getSessionFactory().openSession();
+	    session.beginTransaction();
+	    
+	    String hql;
+	    Query query;
+	    
+	    try {
+	        // Kiểm tra xem search có thể chuyển đổi thành số nguyên hay không
+	        int feedbackId = Integer.parseInt(search);
+	        // Nếu thành công, tìm kiếm theo feedbackId
+	        hql = "FROM Feedback WHERE feedbackId = :id OR feedbackContent LIKE :content";
+	        query = session.createQuery(hql);
+	        query.setParameter("id", feedbackId);
+	        query.setParameter("content", "%" + search + "%");
+	    } catch (NumberFormatException e) {
+	        // Nếu không thể chuyển đổi thành số nguyên, tìm kiếm theo feedbackContent
+	        hql = "FROM Feedback WHERE feedbackContent LIKE :content";
+	        query = session.createQuery(hql);
+	        query.setParameter("content", "%" + search + "%");
+	    }
+	    
+	    @SuppressWarnings("unchecked")
+	    List<Feedback> list = query.list();
+	    session.getTransaction().commit();
+	    session.close();
+
+	    return list;
+	}
+
+
+	@Override
+	public Feedback getFeedBackById(int fid) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		String hql = "FROM Feedback WHERE feedbackId LIKE :fid";
+		Query query = session.createQuery(hql);
+		query.setInteger("fid", fid);
+		Feedback feedback = (Feedback) query.uniqueResult();
+		session.getTransaction().commit();
+		session.close();
+		return feedback;
+	}
+
+	@Override
+	public boolean updateFeedback(Feedback feedback) {
+		Session ss = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = ss.beginTransaction();
+		try {
+			ss.update(feedback);
+			t.commit();
+			return true;
+		} catch (Exception e) {
+			System.out.println("Update feedback failed: " + e.getCause());
+			t.rollback();
+		} finally {
+			ss.close();
+		}
 		return false;
 	}
 
