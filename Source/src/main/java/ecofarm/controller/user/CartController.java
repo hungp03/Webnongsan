@@ -42,7 +42,12 @@ public class CartController {
 			return "user/login";
 		}	
 		Account account = accountDAO.getAccountByEmail(userEmail);
-		cartDAO.addToCart(productId,account.getAccountId());
+		if(account!=null) {
+			cartDAO.addToCart(productId,account.getAccountId());
+			List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
+			session.setAttribute("carts", list);
+			session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
+		}
 		return "redirect:"+request.getHeader("Referer");
 	}
 	
@@ -57,7 +62,12 @@ public class CartController {
 		}	
 
 		Account account = accountDAO.getAccountByEmail(userEmail);
-		cartDAO.addToCart(productId,account.getAccountId(),Integer.parseInt(quantity));
+		if(account!=null) {
+			cartDAO.addToCart(productId,account.getAccountId(),Integer.parseInt(quantity));
+			List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
+			session.setAttribute("carts", list);
+			session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
+		}
 		return "redirect:"+request.getHeader("Referer");
 	}
 	

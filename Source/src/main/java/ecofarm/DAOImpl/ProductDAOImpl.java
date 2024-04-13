@@ -1,6 +1,8 @@
 package ecofarm.DAOImpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -9,11 +11,12 @@ import org.hibernate.Transaction;
 
 import ecofarm.DAO.IProductDAO;
 import ecofarm.entity.Category;
+import ecofarm.entity.Feedback;
 import ecofarm.entity.Product;
 import ecofarm.utility.HibernateUtil;
 
 public class ProductDAOImpl implements IProductDAO {
-
+	private FeedbackDAOImpl feedbackDAO = new FeedbackDAOImpl();
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getAllProducts() {
@@ -74,6 +77,8 @@ public class ProductDAOImpl implements IProductDAO {
 		}
 
 		if (products.size() > 0) {
+			setRatingStar(products.get(0));
+			setReviews(products.get(0));
 			return products.get(0);
 		}
 		return null;
@@ -125,41 +130,29 @@ public class ProductDAOImpl implements IProductDAO {
 		return list;
 	}
 
-	@SuppressWarnings("unchecked")
+
 	@Override
 	public List<Product> getReviewProduct() {
-		List<Product> list = new ArrayList<>();
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		try {
-			Transaction tr = session.beginTransaction();
-			String hql = "FROM Product ORDER BY Reviews DESC";
-			list = session.createQuery(hql).list();
-			tr.commit();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
+		List<Product> list = getAllProducts();
+		list.forEach(product->{
+			setRatingStar(product);
+			setReviews(product);
+		});
+		var ratingComparator = Comparator.comparing(Product::getRatingStar);
+		Collections.sort(list,ratingComparator);
 		return list;
 	}
 
-	@SuppressWarnings("unchecked")
+
 	@Override
 	public List<Product> getRatedProduct() {
-		List<Product> list = new ArrayList<>();
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		try {
-			Transaction tr = session.beginTransaction();
-			String hql = "FROM Product ORDER BY RatingStar DESC";
-			list = session.createQuery(hql).list();
-			tr.commit();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
+		List<Product> list = getAllProducts();
+		list.forEach(product->{
+			setRatingStar(product);
+			setReviews(product);
+		});
+		var reviewComparator = Comparator.comparing(Product::getReviews);
+		Collections.sort(list,reviewComparator);
 		return list;
 	}
 
@@ -227,5 +220,25 @@ public class ProductDAOImpl implements IProductDAO {
 			session.close();
 		}
 		return false;
+	}
+
+	@Override
+	public void setRatingStar(Product product) {
+		List<Feedback> feedbacks = feedbackDAO.getFeedbackByProduct(product.getProductId());
+		product.setRatingStar(0);
+		if(feedbacks!= null) {
+			feedbacks.forEach(feedback -> {
+				product.setRatingStar(feedback.getRatingStar() / feedbacks.size() + product.getRatingStar());
+			});
+		}
+	}
+
+	@Override
+	public void setReviews(Product product) {
+		product.setReviews(0);
+		List<Feedback> feedbacks = feedbackDAO.getFeedbackByProduct(product.getProductId());
+		if(feedbacks!=null) {
+			product.setReviews(feedbacks.size());
+		}
 	}
 }
