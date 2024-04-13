@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -55,10 +56,9 @@ public class Product {
 	@Column(name = "Unit")
 	private String unit;
 	
-	@Column(name = "RatingStar")
+	@Transient
 	private double ratingStar;
-	
-	@Column(name = "Reviews")
+	@Transient	
 	private int reviews;
 	
 	/*
