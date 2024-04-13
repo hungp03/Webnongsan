@@ -148,7 +148,7 @@
 														class="btn btn-success" type="button">
 														<c:choose>
 															<c:when test="${item.status == 0}">
-																<i class="bi bi-lock-fill "></i>
+																<i class="bi bi-lock-fill text-warning "></i>
 															</c:when>
 															<c:otherwise>
 																<i class="bi bi-unlock-fill "></i>

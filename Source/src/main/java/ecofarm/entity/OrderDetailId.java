@@ -1,5 +1,4 @@
 package ecofarm.entity;
-// Generated Apr 8, 2023, 3:38:47 PM by Hibernate Tools 3.6.2.Final
 
 import java.io.Serializable;
 
@@ -12,9 +11,6 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class OrderDetailId implements Serializable {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "ProductID", nullable = false)

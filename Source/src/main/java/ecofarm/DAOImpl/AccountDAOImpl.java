@@ -193,30 +193,34 @@ public class AccountDAOImpl implements IAccountDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Account> listAccountWithRole(EnumRoleID roleID) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction t = session.beginTransaction();
-		List<Account> list = null;
-		try {
-
-			String hql = "FROM Account WHERE RoleID = :roleID";
-			Query query = session.createQuery(hql);
-			query.setParameter("roleID", roleID.toString());
-			list = query.list();
-
-			t.commit();
-		} catch (HibernateException e) {
-			if (session != null && session.getTransaction() != null) {
-				t.rollback(); // Rollback nếu có lỗi
-			}
-			e.printStackTrace(); // Xử lý hoặc ghi log lỗi
-		} finally {
-			if (session != null && session.isOpen()) {
-				session.close(); // Đóng session
-			}
-		}
-		return list;
-	}
+	public List<Account> listAccountWithRole(EnumRole roleID, String search) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction t = session.beginTransaction();
+        List<Account> list = null;
+        try {
+            String hql = "FROM Account WHERE RoleID = :roleID";
+            if (search != null && !search.isEmpty()) {
+                hql += " AND (CONCAT(lastName, ' ', firstName) LIKE :search OR email LIKE :search)";
+            }
+            Query query = session.createQuery(hql);
+            query.setParameter("roleID", roleID.toString());
+            if (search != null && !search.isEmpty()) {
+                query.setParameter("search", "%" + search + "%");
+            }
+            list = query.list();
+            t.commit();
+        } catch (HibernateException e) {
+            if (session != null && session.getTransaction() != null) {
+                t.rollback(); // Rollback nếu có lỗi
+            }
+            e.printStackTrace(); // Xử lý hoặc ghi log lỗi
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close(); // Đóng session
+            }
+        }
+        return list;
+    }
 
 	@Override
 	public List<Account> listAccounts() {

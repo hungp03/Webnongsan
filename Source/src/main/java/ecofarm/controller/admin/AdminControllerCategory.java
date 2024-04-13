@@ -110,15 +110,15 @@ public class AdminControllerCategory {
 		return "redirect:/admin/category.htm";
 	}
 
-	@RequestMapping("update_category{id}")
-	public String gUpdateCate(@PathVariable("id") int id, ModelMap model) {
+	@RequestMapping("update_category")
+	public String gUpdateCate(@RequestParam("id") int id, ModelMap model) {
 		Category cate = categoryDAO.getCategory(id);
 		CategoryBean categoryBean = new CategoryBean(cate);
 		model.addAttribute("updateCate", categoryBean);
 		return "admin/category-form";
 	}
 
-	@RequestMapping(value = "update_category{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "update_category", method = RequestMethod.POST)
 	public String pUpdateCate(@ModelAttribute("updateCate") CategoryBean categoryBean, ModelMap model, BindingResult errors,
 			RedirectAttributes re) {
 		// Lấy cate được chọn
@@ -130,6 +130,7 @@ public class AdminControllerCategory {
 				errors.rejectValue("name", "categoryBean", "Tên không được bỏ trống và không chấp nhận kí tự đặc biệt");
 			}
 			if (errors.hasErrors()) {
+				categoryBean.setImage(category.getImage());
 				model.addAttribute("mess", "Tên category không hợp lệ.");
 				model.addAttribute("updateCate", categoryBean);
 				return "admin/category-form";
@@ -153,6 +154,7 @@ public class AdminControllerCategory {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+				categoryBean.setImage(category.getImage());
 				model.addAttribute("mess", "An error occurred");
 				model.addAttribute("updateCate", categoryBean);
 				return "admin/category-form";

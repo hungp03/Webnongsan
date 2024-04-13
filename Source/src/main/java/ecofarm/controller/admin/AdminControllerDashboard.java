@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ecofarm.DAO.IAccountDAO.EnumRoleID;
+import ecofarm.DAO.IAccountDAO.EnumRole;
 import ecofarm.DAOImpl.AccountDAOImpl;
 import ecofarm.DAOImpl.OrderDAOImpl;
 import ecofarm.entity.Account;
@@ -27,7 +27,7 @@ public class AdminControllerDashboard {
 		}
 
 		// Role role = accountDAO.getRoleViaEnum(EnumRoleID.GUEST);
-		List<Account> client = accountDAO.listAccountWithRole(EnumRoleID.GUEST);
+		List<Account> client = accountDAO.listAccountWithRole(EnumRole.GUEST, null);
 		// client = client.stream().filter(rate ->
 		// rate.getRole().equals(role)).collect(Collectors.toList());
 

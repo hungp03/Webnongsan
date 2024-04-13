@@ -18,12 +18,12 @@ public interface IAccountDAO {
 
 	public boolean forgotPassword(String username, String password);
 
-	public static enum EnumRoleID {
+	public static enum EnumRole {
 		GUEST, ADMIN, EMPLOYEE,
 	}
 	
 
-	public List<Account> listAccountWithRole(EnumRoleID roleID);
+	public List<Account> listAccountWithRole(EnumRole role, String search);
 
 	public List<Account> listAccounts();
 

@@ -53,7 +53,7 @@ public class AdminControllerFeedback {
 	public String modifyStatus(@RequestParam("id") int id, RedirectAttributes re) {
 		Feedback feedback = feedbackDAO.getFeedBackById(id);
 		if (feedback != null) {
-			System.out.println(feedback.getStatus());
+			//System.out.println(feedback.getStatus());
 			if (feedback.getStatus() == 1)
 				feedback.setStatus(0);
 			else if (feedback.getStatus() == 0)

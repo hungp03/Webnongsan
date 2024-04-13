@@ -136,7 +136,7 @@
 													class="text-dark">${item.name}</a></td>
 												<td class="align-middle">${item.products.size()}</td>
 												<td class="align-middle"><a
-													href="admin/category/update_category${item.categoryId}.htm"
+													href="admin/category/update_category.htm?id=${item.categoryId}"
 													class="btn btn-warning btn-sm"> Update</a></td>
 												<td class="align-middle">
 													<form action="admin/category/delete.htm" method="post">
