@@ -12,13 +12,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ecofarm.DAOImpl.CategoryDAOImpl;
+import ecofarm.DAO.ICategoryDAO;
 import ecofarm.DAOImpl.PaginateDAOImpl;
 import ecofarm.bean.CategoryBean;
 import ecofarm.bean.UploadFile;
@@ -29,7 +28,8 @@ import ecofarm.utility.Paginate;
 @RequestMapping("/admin/category")
 public class AdminControllerCategory {
 	private final int CATE_PER_PAGE = 5;
-	private CategoryDAOImpl categoryDAO = new CategoryDAOImpl();
+	@Autowired
+	private ICategoryDAO categoryDAO;
 	private PaginateDAOImpl paginateDAO = new PaginateDAOImpl();
 
 	@RequestMapping()

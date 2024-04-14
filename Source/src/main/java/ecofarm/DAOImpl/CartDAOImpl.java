@@ -5,31 +5,43 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
+import ecofarm.DAO.IAccountDAO;
 import ecofarm.DAO.ICartDAO;
+import ecofarm.DAO.IProductDAO;
 import ecofarm.entity.Account;
 import ecofarm.entity.Cart;
 import ecofarm.entity.CartId;
 import ecofarm.entity.Product;
-import ecofarm.utility.HibernateUtil;
 
+@Transactional
 public class CartDAOImpl implements ICartDAO {
-	private ProductDAOImpl productDAO = new ProductDAOImpl();
-	private AccountDAOImpl accountDAO = new AccountDAOImpl();
+	@Autowired
+	private IProductDAO productDAO;
+	@Autowired
+	private IAccountDAO accountDAO;
+	
+	private SessionFactory sessionFactory;
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Cart> getCartByAccountID(int accountID) {
 		List<Cart> list = new ArrayList<>();
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
-			Transaction tr = session.beginTransaction();
+
 			String hql = "FROM Cart WHERE AccountID = :accountID";
 			Query query = session.createQuery(hql);
 			query.setParameter("accountID", accountID);
 			list = query.list();
-			tr.commit();
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
@@ -56,7 +68,7 @@ public class CartDAOImpl implements ICartDAO {
 			cart.setId(cartId);
 			if(checkCart==null) {
 				cart.setQuantity(1);
-				Session session = HibernateUtil.getSessionFactory().openSession();
+				Session session = sessionFactory.openSession();
 				try {
 					Transaction tr = session.beginTransaction();
 					session.save(cart);
@@ -71,7 +83,7 @@ public class CartDAOImpl implements ICartDAO {
 				}
 			}else {
 				cart.setQuantity(checkCart.getQuantity()+1);
-				Session session = HibernateUtil.getSessionFactory().openSession();
+				Session session = sessionFactory.openSession();
 				try {
 					Transaction tr = session.beginTransaction();
 					session.update(cart);
@@ -91,15 +103,15 @@ public class CartDAOImpl implements ICartDAO {
 	@SuppressWarnings("unchecked")
 	private Cart getCartByID(int productID, int accountID) {
 		List<Cart> list = new ArrayList<>();
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
-			Transaction tr = session.beginTransaction();
+
 			String hql = "FROM Cart WHERE AccountID =:accountID AND ProductID =:productID";
 			Query query = session.createQuery(hql);
 			query.setParameter("accountID", accountID);
 			query.setParameter("productID", productID);
 			list = query.list();
-			tr.commit();
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
@@ -114,7 +126,7 @@ public class CartDAOImpl implements ICartDAO {
 		boolean isEdit = false;
 		Cart checkCart = getCartByID(productID, accountID);
 		if (checkCart != null) {
-			Session session = HibernateUtil.getSessionFactory().openSession();
+			Session session = sessionFactory.openSession();
 			try {
 				Transaction tr = session.beginTransaction();
 				checkCart.setQuantity(quantity);
@@ -136,7 +148,7 @@ public class CartDAOImpl implements ICartDAO {
 		boolean isDeleted = false;
 		Cart checkCart = getCartByID(productID, accountID);
 		if (checkCart != null) {
-			Session session = HibernateUtil.getSessionFactory().openSession();
+			Session session = sessionFactory.openSession();
 			try {
 				Transaction tr = session.beginTransaction();
 				session.delete(checkCart);
@@ -186,7 +198,7 @@ public class CartDAOImpl implements ICartDAO {
 			}else {
 				cart.setQuantity(checkCart.getQuantity()+quantity);
 			}
-			Session session = HibernateUtil.getSessionFactory().openSession();
+			Session session = sessionFactory.openSession();
 			try {
 				Transaction tr = session.beginTransaction();
 				session.update(cart);

@@ -5,33 +5,34 @@ import java.util.List;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.transaction.annotation.Transactional;
 
 import ecofarm.DAO.ICategoryDAO;
 import ecofarm.entity.Category;
-import ecofarm.utility.HibernateUtil;
 
+@Transactional
 public class CategoryDAOImpl implements ICategoryDAO {
+	private SessionFactory sessionFactory;
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Category> getAllCategories() {
 		List<Category> list = new ArrayList<>();
+		Session session = sessionFactory.getCurrentSession();
 		try {
-			SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-			if (sessionFactory != null) {
-				Session session = sessionFactory.openSession();
-				Transaction tr = session.beginTransaction();
-				String hql = "from Category";
-				Query query = session.createQuery(hql);
-				list = query.list();
-				tr.commit();
-				session.close();
-			}
+			String hql = "from Category";
+			Query query = session.createQuery(hql);
+			list = query.list();
+
 		} catch (Exception e) {
+
 			e.printStackTrace();
 		}
 		return list;
@@ -39,7 +40,7 @@ public class CategoryDAOImpl implements ICategoryDAO {
 
 	@Override
 	public boolean deleteCategory(Category category) {
-		Session ss = HibernateUtil.getSessionFactory().openSession();
+		Session ss = sessionFactory.openSession();
 		Transaction t = ss.beginTransaction();
 		try {
 			ss.delete(category);
@@ -56,7 +57,7 @@ public class CategoryDAOImpl implements ICategoryDAO {
 
 	@Override
 	public boolean addCategory(Category newCategory) {
-		Session ss = HibernateUtil.getSessionFactory().openSession();
+		Session ss = sessionFactory.openSession();
 		Transaction t = ss.beginTransaction();
 		try {
 			ss.save(newCategory);
@@ -74,13 +75,13 @@ public class CategoryDAOImpl implements ICategoryDAO {
 	@Override
 	public List<Category> getListCategoriesHasProduct() {
 		try {
-			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-			Transaction t = session.beginTransaction();
+			Session session = sessionFactory.getCurrentSession();
+
 			String hql = "FROM Category WHERE SIZE(products) > 0";
 			Query query = session.createQuery(hql);
 			@SuppressWarnings("unchecked")
 			List<Category> list = query.list();
-			t.commit();
+
 			return list;
 		} catch (Exception e) {
 			throw e;
@@ -91,14 +92,14 @@ public class CategoryDAOImpl implements ICategoryDAO {
 	@Override
 	public Category getCategory(int id) {
 		String hql = "FROM Category WHERE id = :id";
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction t = session.beginTransaction();
+		Session session = sessionFactory.getCurrentSession();
+
 		Query query = session.createQuery(hql);
 		query.setParameter("id", id);
 		Category category = null;
 		try {
 			category = (Category) query.uniqueResult();
-			t.commit();
+
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -107,7 +108,7 @@ public class CategoryDAOImpl implements ICategoryDAO {
 
 	@Override
 	public boolean updateCategory(Category category) {
-		Session ss = HibernateUtil.getSessionFactory().openSession();
+		Session ss = sessionFactory.openSession();
 		Transaction t = ss.beginTransaction();
 		try {
 			ss.update(category);
@@ -124,22 +125,19 @@ public class CategoryDAOImpl implements ICategoryDAO {
 
 	@Override
 	public List<Category> searchCategory(String alikeName) {
-		Session ss = HibernateUtil.getSessionFactory().openSession();
-		Transaction t = ss.beginTransaction();
+		Session ss = sessionFactory.getCurrentSession();
 		alikeName = (alikeName == null) ? "%" : "%" + alikeName + "%";
 		String hql = "FROM Category WHERE Name LIKE :name";
 		Query query = ss.createQuery(hql);
 		query.setParameter("name", alikeName);
 		@SuppressWarnings("unchecked")
 		List<Category> list = query.list();
-		t.commit();
-		ss.close();
 		return list;
 	}
 
 	@Override
 	public Category fetchCategory(Category category) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.openSession();
 		Transaction t = session.beginTransaction();
 		Category fc = null;
 

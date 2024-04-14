@@ -82,15 +82,18 @@
 .mb-100 {
 	margin-bottom: 100px
 }
-.comment-footer .date{
-	margin-right:10px
+
+.comment-footer .date {
+	margin-right: 10px
 }
-.comment-text h5{
-	padding-top:5px
+
+.comment-text h5 {
+	padding-top: 5px
 }
-.comment-widgets img{
-	height:40px !important;
-	width:40px !important;
+
+.comment-widgets img {
+	height: 40px !important;
+	width: 40px !important;
 }
 </style>
 </head>
@@ -201,17 +204,19 @@
 						</div>
 
 						<div class="product__details__price">${product.price }</div>
-						<form action="AddCart.htm?productId=${product.productId }" method="post" style="display: inline-block;">
-						<div class="product__details__quantity">
-							<div class="quantity">
-								<div class="pro-qty">
-									<input name="quantity" type="text" value="1">
+						<form action="AddCart.htm?productId=${product.productId }"
+							method="post" style="display: inline-block;">
+							<div class="product__details__quantity">
+								<div class="quantity">
+									<div class="pro-qty">
+										<input name="quantity" type="text" value="1">
+									</div>
 								</div>
 							</div>
-						</div>
-						<button type="submit" class="primary-btn" style="border:none">ADD TO CARD</button>
+							<button type="submit" class="primary-btn" style="border: none">ADD
+								TO CARD</button>
 						</form>
-							 <a
+						<a
 							href="<c:url value="/AddWishlist.htm?productId=${product.productId }"/>"
 							class="heart-icon"><span class="icon_heart_alt"></span></a>
 						<ul>
@@ -280,20 +285,31 @@
 									<div class="d-flex comment-row" style="flex-direction: column">
 										<c:forEach var="item" items="${feedbacks }" varStatus="loop">
 											<div class="comment-widgets m-b-20">
-
-
 												<div class="p-2">
-													<span class="round">
-                        								<img src="<c:url value="/assets/user/img/account/${item.account.avatar }"/>" alt="User photo" class="user-nav__user-photo">
-                    								</span>
+													<span class="round"> <img
+														src="<c:url value="/assets/user/img/account/${item.account.avatar }"/>"
+														alt="User photo" class="user-nav__user-photo">
+													</span>
 												</div>
 												<div class="comment-text w-100 active">
 													<h5>${item.account.getName() }</h5>
+													<div>
+														<c:set var="countStar" value="0"></c:set>
+														<c:forEach begin="1" end="${item.ratingStar }">
+															<i class="fa fa-star"
+																style="font-size: 16px;height:17px;width:18px;margin-right:-2px;color:#EDBB0E;"></i>
+															<c:set var="countStar" value="${countStar + 1 }"></c:set>
+														</c:forEach>
+														<c:if test="${item.ratingStar > countStar }">
+															<i class="fa fa-star-half-o"
+																style="font-size: 16px; height: 17px; width: 18px;"></i>
+														</c:if>
+													</div>
 													<div class="comment-footer">
 														<span class="date">${item.postingDate }</span> <span
 															class="label label-success">Đã mua hàng</span> <span
-															class="action-icons"> <a href="#"
-															data-abc="true"><i class="fa fa-heart"></i></a>
+															class="action-icons"> <a href="#" data-abc="true"><i
+																class="fa fa-heart"></i></a>
 														</span>
 													</div>
 													<p class="m-b-5 m-t-10">${item.feedbackContent }</p>

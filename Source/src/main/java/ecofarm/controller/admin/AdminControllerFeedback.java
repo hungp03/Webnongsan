@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ecofarm.DAOImpl.FeedbackDAOImpl;
+import ecofarm.DAO.IFeedbackDAO;
 import ecofarm.DAOImpl.PaginateDAOImpl;
 import ecofarm.entity.Feedback;
 import ecofarm.utility.Paginate;
@@ -19,7 +20,8 @@ import ecofarm.utility.Paginate;
 @RequestMapping("admin/feedback")
 public class AdminControllerFeedback {
 	private final int FB_PER_PAGE = 10;
-	private FeedbackDAOImpl feedbackDAO = new FeedbackDAOImpl();
+	@Autowired
+	private IFeedbackDAO feedbackDAO;
 	private PaginateDAOImpl paginateDAO = new PaginateDAOImpl();
 	
 	@RequestMapping()

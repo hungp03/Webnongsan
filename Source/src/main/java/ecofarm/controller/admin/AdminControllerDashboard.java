@@ -1,21 +1,25 @@
 package ecofarm.controller.admin;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ecofarm.DAO.IAccountDAO;
 import ecofarm.DAO.IAccountDAO.EnumRole;
-import ecofarm.DAOImpl.AccountDAOImpl;
-import ecofarm.DAOImpl.OrderDAOImpl;
+import ecofarm.DAO.IOrderDAO;
 import ecofarm.entity.Account;
 import ecofarm.entity.Orders;
 
 @Controller
 @RequestMapping("/admin/dashboard")
 public class AdminControllerDashboard {
-	private AccountDAOImpl accountDAO = new AccountDAOImpl();
-	private OrderDAOImpl orderDAO = new OrderDAOImpl();
+	@Autowired
+	private IAccountDAO accountDAO;
+	@Autowired
+	private IOrderDAO orderDAO;
 	@RequestMapping()
 	public String index(ModelMap model) {
 

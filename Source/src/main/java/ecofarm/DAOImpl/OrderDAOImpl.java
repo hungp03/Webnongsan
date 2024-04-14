@@ -6,18 +6,25 @@ import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.transaction.annotation.Transactional;
 
 import ecofarm.DAO.IOrderDAO;
 import ecofarm.entity.OrderDetail;
 import ecofarm.entity.Orders;
-import ecofarm.utility.HibernateUtil;
 
+@Transactional
 public class OrderDAOImpl implements IOrderDAO {
+	private SessionFactory sessionFactory;
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
 	@Override
 	public List<Orders> getOrderFromAccount(int accountId) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
 			String hql = "FROM Orders WHERE account.accountID = :accountId";
 			Query query = session.createQuery(hql);
@@ -32,22 +39,20 @@ public class OrderDAOImpl implements IOrderDAO {
 
 	@Override
 	public List<OrderDetail> getOrderDetail(int orderId) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		try {
-			String hql = "FROM OrderDetail WHERE order.orderId = :orderId";
-			Query query = session.createQuery(hql);
-			query.setParameter("orderId", orderId);
-			@SuppressWarnings("unchecked")
-			List<OrderDetail> list = query.list();
-			return list;
-		} finally {
-			session.close();
-		}
+		Session session = sessionFactory.getCurrentSession();
+
+		String hql = "FROM OrderDetail WHERE order.orderId = :orderId";
+		Query query = session.createQuery(hql);
+		query.setParameter("orderId", orderId);
+		@SuppressWarnings("unchecked")
+		List<OrderDetail> list = query.list();
+		return list;
+
 	}
 
 	@Override
 	public boolean insertOrder(Orders order) {
-		Session ss = HibernateUtil.getSessionFactory().openSession();
+		Session ss = sessionFactory.openSession();
 		Transaction t = ss.beginTransaction();
 		try {
 			ss.save(order);
@@ -65,7 +70,7 @@ public class OrderDAOImpl implements IOrderDAO {
 
 	@Override
 	public boolean insertOrderDetail(OrderDetail orderDetail) {
-		Session ss = HibernateUtil.getSessionFactory().openSession();
+		Session ss = sessionFactory.openSession();
 		Transaction t = ss.beginTransaction();
 		try {
 
@@ -85,7 +90,7 @@ public class OrderDAOImpl implements IOrderDAO {
 
 	@Override
 	public boolean updateOrder(Orders order) {
-		Session ss = HibernateUtil.getSessionFactory().openSession();
+		Session ss = sessionFactory.openSession();
 		Transaction t = ss.beginTransaction();
 		try {
 
@@ -106,7 +111,7 @@ public class OrderDAOImpl implements IOrderDAO {
 	@Override
 	public List<Orders> getUnresolveOrders() {
 		String hql = "From Orders where status = 0";
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery(hql);
 		@SuppressWarnings("unchecked")
 		List<Orders> listOrders = query.list();
@@ -116,7 +121,7 @@ public class OrderDAOImpl implements IOrderDAO {
 	@Override
 	public List<Orders> getMovingOrders() {
 		String hql = "From Orders where status = 1";
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery(hql);
 		@SuppressWarnings("unchecked")
 		List<Orders> listOrders = query.list();
@@ -126,7 +131,7 @@ public class OrderDAOImpl implements IOrderDAO {
 	@Override
 	public List<Orders> getResolveOrders() {
 		String hql = "From Orders where StatusOrder = 2";
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery(hql);
 		@SuppressWarnings("unchecked")
 		List<Orders> listOrders = query.list();
@@ -136,7 +141,7 @@ public class OrderDAOImpl implements IOrderDAO {
 	@Override
 	public List<Orders> getCancelOrders() {
 		String hql = "From Orders where StatusOrder = 3";
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery(hql);
 		@SuppressWarnings("unchecked")
 		List<Orders> listOrders = query.list();
@@ -145,7 +150,7 @@ public class OrderDAOImpl implements IOrderDAO {
 
 	@Override
 	public boolean update(Orders order) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.openSession();
 		Transaction t = session.beginTransaction();
 		try {
 
@@ -165,7 +170,7 @@ public class OrderDAOImpl implements IOrderDAO {
 
 	@Override
 	public Orders fetchOrderDetail(Orders order) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		Orders tOrder = null;
 		try {
@@ -186,7 +191,7 @@ public class OrderDAOImpl implements IOrderDAO {
 	@Override
 	public Orders findOrder(int id) {
 		String hql = "FROM Orders WHERE orderId = :id";
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery(hql);
 		query.setParameter("id", id);
 		Orders order = null;
@@ -201,13 +206,13 @@ public class OrderDAOImpl implements IOrderDAO {
 	@Override
 	public List<Orders> getOrders() {
 		try {
-			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-			session.beginTransaction();
+			Session session = sessionFactory.getCurrentSession();
+//			session.beginTransaction();
 			String hql = "From Orders";
 			Query query = session.createQuery(hql);
 			@SuppressWarnings("unchecked")
 			List<Orders> listOrders = query.list();
-			session.getTransaction().commit();
+//			session.getTransaction().commit();
 			return listOrders;
 		} catch (HibernateException ex) {
 			throw ex;

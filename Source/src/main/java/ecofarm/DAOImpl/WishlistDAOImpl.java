@@ -5,31 +5,39 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
+import ecofarm.DAO.IAccountDAO;
+import ecofarm.DAO.IProductDAO;
 import ecofarm.DAO.IWishlistDAO;
 import ecofarm.entity.Account;
 import ecofarm.entity.Product;
 import ecofarm.entity.Wishlist;
 import ecofarm.entity.WishlistId;
-import ecofarm.utility.HibernateUtil;
 
+@Transactional
 public class WishlistDAOImpl implements IWishlistDAO {
-	private ProductDAOImpl productDAO = new ProductDAOImpl();
-	private AccountDAOImpl accountDAO = new AccountDAOImpl();
-
+	@Autowired
+	private IProductDAO productDAO;
+	@Autowired
+	private IAccountDAO accountDAO;
+	private SessionFactory sessionFactory;
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Wishlist> getWishlistByAccountID(int accountID) {
 		List<Wishlist> list = new ArrayList<>();
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
-			Transaction tr = session.beginTransaction();
 			String hql = "FROM Wishlist WHERE AccountID = :accountID";
 			Query query = session.createQuery(hql);
 			query.setParameter("accountID", accountID);
 			list = query.list();
-			tr.commit();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -40,15 +48,13 @@ public class WishlistDAOImpl implements IWishlistDAO {
 	@SuppressWarnings("unchecked")
 	private Wishlist getWishlistbyID(int productID, int accountID) {
 		List<Wishlist> list = new ArrayList<>();
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.getCurrentSession();
 		try {
-			Transaction tr = session.beginTransaction();
 			String hql = "FROM Wishlist WHERE AccountID =:accountID AND ProductID =:productID";
 			Query query = session.createQuery(hql);
 			query.setParameter("accountID", accountID);
 			query.setParameter("productID", productID);
 			list = query.list();
-			tr.commit();
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
@@ -76,7 +82,7 @@ public class WishlistDAOImpl implements IWishlistDAO {
 			wishlist.setAccount(account);
 			wishlist.setProduct(product);
 			wishlist.setId(wishlistId);
-			Session session = HibernateUtil.getSessionFactory().openSession();
+			Session session = sessionFactory.openSession();
 			try {
 				Transaction tr = session.beginTransaction();
 				session.save(wishlist);
@@ -96,7 +102,7 @@ public class WishlistDAOImpl implements IWishlistDAO {
 		boolean isDeleted = false;
 		Wishlist checkWishlist = getWishlistbyID(wishlistID, accountID);
 		if (checkWishlist != null) {
-			Session session = HibernateUtil.getSessionFactory().openSession();
+			Session session = sessionFactory.openSession();
 			try {
 				Transaction tr = session.beginTransaction();
 				session.delete(checkWishlist);

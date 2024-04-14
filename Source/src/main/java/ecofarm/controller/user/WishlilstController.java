@@ -5,22 +5,23 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ecofarm.DAOImpl.AccountDAOImpl;
-import ecofarm.DAOImpl.CartDAOImpl;
-import ecofarm.DAOImpl.WishlistDAOImpl;
+import ecofarm.DAO.IAccountDAO;
+import ecofarm.DAO.IWishlistDAO;
 import ecofarm.entity.Account;
-import ecofarm.entity.Cart;
 import ecofarm.entity.Wishlist;
 
 @Controller
 public class WishlilstController {
-	private AccountDAOImpl accountDAO = new AccountDAOImpl();
-	private WishlistDAOImpl wishlistDAO = new WishlistDAOImpl();
+	@Autowired
+	private IAccountDAO accountDAO;
+	@Autowired
+	private IWishlistDAO wishlistDAO;
 
 	@RequestMapping("/wishlist")
 	public String Index(HttpServletRequest request, HttpSession session,

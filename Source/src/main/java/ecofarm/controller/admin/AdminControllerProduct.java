@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ecofarm.DAOImpl.CategoryDAOImpl;
+import ecofarm.DAO.ICategoryDAO;
+import ecofarm.DAO.IProductDAO;
 import ecofarm.DAOImpl.PaginateDAOImpl;
-import ecofarm.DAOImpl.ProductDAOImpl;
 import ecofarm.bean.ProductBean;
 import ecofarm.bean.UploadFile;
 import ecofarm.entity.Account;
@@ -36,9 +36,11 @@ import ecofarm.utility.TimeUtil;
 @RequestMapping("admin/products")
 public class AdminControllerProduct {
 	private final int PROD_PER_PAGE = 5;
-	private CategoryDAOImpl categoryDAO = new CategoryDAOImpl();
+	@Autowired
+	private ICategoryDAO categoryDAO;
+	@Autowired
+	private IProductDAO productDAO;
 	private PaginateDAOImpl paginateDAO = new PaginateDAOImpl();
-	private ProductDAOImpl productDAO = new ProductDAOImpl();
 
 	@RequestMapping()
 	public String getListProduct(ModelMap model,
