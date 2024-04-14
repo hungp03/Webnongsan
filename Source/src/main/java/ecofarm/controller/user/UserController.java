@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import ecofarm.DAOImpl.AccountDAOImpl;
+import ecofarm.DAO.IAccountDAO;
 import ecofarm.bean.UploadFile;
 import ecofarm.entity.Account;
 import ecofarm.utility.Mailer;
@@ -30,8 +30,8 @@ public class UserController {
 	@Autowired
 	@Qualifier("accountImgDir")
 	UploadFile baseUploadFile;
-
-	private AccountDAOImpl accountDAO = new AccountDAOImpl();
+	@Autowired
+	private IAccountDAO accountDAO;
 	private String validateCodeFP = "";
 	private String emailValidate = "";
 	private String validateCodeRegister = "";

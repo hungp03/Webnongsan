@@ -1,6 +1,5 @@
 package ecofarm.controller.admin;
 
-import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ecofarm.DAO.IAccountDAO;
 import ecofarm.DAO.IAccountDAO.EnumRole;
-import ecofarm.DAOImpl.AccountDAOImpl;
 import ecofarm.DAOImpl.PaginateDAOImpl;
 import ecofarm.bean.UploadFile;
 import ecofarm.bean.UserBean;
@@ -30,7 +29,8 @@ import ecofarm.utility.Paginate;
 @RequestMapping("admin/user")
 public class AdminControllerUser {
 	private final int USER_PER_PAGE = 10;
-	private AccountDAOImpl accountDAO = new AccountDAOImpl();
+	@Autowired
+	private IAccountDAO accountDAO;
 	private PaginateDAOImpl paginateDAO = new PaginateDAOImpl();
 
 	@RequestMapping()

@@ -2,9 +2,12 @@ package ecofarm.DAO;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import ecofarm.entity.Account;
 import ecofarm.entity.Role;
 
+@Transactional
 public interface IAccountDAO {
 	public boolean createAccount(Account account);
 

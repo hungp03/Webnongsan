@@ -22,4 +22,31 @@
 		<property name="openTime" value="8:00"/>
 		<property name="closeTime" value="21:00"/>
 	</bean>
+	
+	<!-- CSDL -->
+	<bean id="ProductDAO" class="ecofarm.DAOImpl.ProductDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="CategoryDAO" class="ecofarm.DAOImpl.CategoryDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="CartDAO" class="ecofarm.DAOImpl.CartDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="AccountDAO" class="ecofarm.DAOImpl.AccountDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="OrderDAO" class="ecofarm.DAOImpl.OrderDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="WishlistDAO" class="ecofarm.DAOImpl.WishlistDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="FeedbackDAO" class="ecofarm.DAOImpl.FeedbackDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 </beans>

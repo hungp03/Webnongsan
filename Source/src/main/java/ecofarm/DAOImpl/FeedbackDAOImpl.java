@@ -5,33 +5,36 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.transaction.annotation.Transactional;
 
 import ecofarm.DAO.IFeedbackDAO;
 import ecofarm.entity.Feedback;
-import ecofarm.utility.HibernateUtil;
-
+@Transactional
 public class FeedbackDAOImpl implements IFeedbackDAO {
 
+	private SessionFactory sessionFactory;
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Feedback> getFeedbackByProduct(int productId) {
 		List<Feedback> list = new ArrayList<>();
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction tr = session.beginTransaction();
+		Session session = sessionFactory.getCurrentSession();
+
 		try {
 			String hql = "FROM Feedback WHERE ProductID = :productId";
 			Query query = session.createQuery(hql);
 			query.setParameter("productId", productId);
 			list = query.list();
-			tr.commit();
+
 		} catch (Exception e) {
 			// TODO: handle exception
-			tr.rollback();
+
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-		} finally {
-			session.close();
 		}
 		if (list.size() > 0)
 			return list;
@@ -46,7 +49,7 @@ public class FeedbackDAOImpl implements IFeedbackDAO {
 
 	@Override
 	public List<Feedback> getAllFeedbacks() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.getCurrentSession();
 		String hql = "FROM Feedback";
 		Query query = session.createQuery(hql);
 		@SuppressWarnings("unchecked")
@@ -56,7 +59,7 @@ public class FeedbackDAOImpl implements IFeedbackDAO {
 	
 	@Override
 	public List<Feedback> searchFeedback(String search) {
-	    Session session = HibernateUtil.getSessionFactory().openSession();
+	    Session session = sessionFactory.openSession();
 	    session.beginTransaction();
 	    
 	    String hql;
@@ -88,20 +91,20 @@ public class FeedbackDAOImpl implements IFeedbackDAO {
 
 	@Override
 	public Feedback getFeedBackById(int fid) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
+		Session session = sessionFactory.getCurrentSession();
+//		session.beginTransaction();
 		String hql = "FROM Feedback WHERE feedbackId LIKE :fid";
 		Query query = session.createQuery(hql);
 		query.setInteger("fid", fid);
 		Feedback feedback = (Feedback) query.uniqueResult();
-		session.getTransaction().commit();
-		session.close();
+//		session.getTransaction().commit();
+//		session.close();
 		return feedback;
 	}
 
 	@Override
 	public boolean updateFeedback(Feedback feedback) {
-		Session ss = HibernateUtil.getSessionFactory().openSession();
+		Session ss = sessionFactory.openSession();
 		Transaction t = ss.beginTransaction();
 		try {
 			ss.update(feedback);

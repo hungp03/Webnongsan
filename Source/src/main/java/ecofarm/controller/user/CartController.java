@@ -5,12 +5,15 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ecofarm.DAO.IAccountDAO;
+import ecofarm.DAO.ICartDAO;
 import ecofarm.DAOImpl.AccountDAOImpl;
 import ecofarm.DAOImpl.CartDAOImpl;
 import ecofarm.entity.Account;
@@ -18,8 +21,11 @@ import ecofarm.entity.Cart;
 
 @Controller
 public class CartController {
-	private AccountDAOImpl accountDAO = new AccountDAOImpl();
-	private CartDAOImpl cartDAO = new CartDAOImpl();
+	@Autowired
+	private IAccountDAO accountDAO;
+	@Autowired
+	private ICartDAO cartDAO;
+	
 	@RequestMapping("cart")
 	public String Index(HttpServletRequest request,HttpSession session,
 			@CookieValue(value = "userEmail",defaultValue = "",required = false) String userEmail) {

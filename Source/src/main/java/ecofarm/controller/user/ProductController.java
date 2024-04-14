@@ -2,21 +2,25 @@ package ecofarm.controller.user;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import ecofarm.DAOImpl.CategoryDAOImpl;
+import ecofarm.DAO.ICategoryDAO;
+import ecofarm.DAO.IProductDAO;
 import ecofarm.DAOImpl.PaginateDAOImpl;
-import ecofarm.DAOImpl.ProductDAOImpl;
 import ecofarm.entity.Product;
 
 @Controller
 @RequestMapping("/product")
 public class ProductController {
-	private ProductDAOImpl productDAO = new ProductDAOImpl();
-	private CategoryDAOImpl categoryDAO = new CategoryDAOImpl();
+	@Autowired
+	private IProductDAO productDAO;
+	@Autowired
+	private ICategoryDAO categoryDAO;
+
 	private PaginateDAOImpl paginateDAO = new PaginateDAOImpl();
 
 	@RequestMapping()
