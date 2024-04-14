@@ -1,17 +1,29 @@
 package ecofarm.controller.admin;
 
+import java.io.File;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ecofarm.DAO.IAccountDAO.EnumRole;
 import ecofarm.DAOImpl.AccountDAOImpl;
 import ecofarm.DAOImpl.PaginateDAOImpl;
+import ecofarm.bean.UploadFile;
+import ecofarm.bean.UserBean;
 import ecofarm.entity.Account;
+import ecofarm.entity.Role;
 import ecofarm.utility.Paginate;
 
 @Controller
@@ -74,5 +86,60 @@ public class AdminControllerUser {
 		}
 		return String.format("redirect:/admin/user/get-%s.htm", role);
 	}
+	
+	@RequestMapping(value = {"create-guest", "create-employee"}, method = RequestMethod.GET)
+	public String getCreateUser(HttpServletRequest request,ModelMap model) {
+		UserBean acc = new UserBean();
+		String uri = request.getRequestURI();
+		String role = uri.contains("guest") ? "Guest" : uri.contains("employee") ? "Employee" : "";
+		model.addAttribute("role", role);
+		model.addAttribute("userbean", acc);
+		return "admin/register-user";
+	}
+	
+	@Autowired
+	@Qualifier("accountImgDir")
+	UploadFile accountImgUpload;
+	
+	@RequestMapping(value = {"create-guest", "create-employee"}, method = RequestMethod.POST)
+	public String createEmployee(HttpServletRequest request, @Validated @ModelAttribute("userbean") UserBean user,
+			BindingResult errors, RedirectAttributes reAttributes, ModelMap model) {
+		String uri = request.getRequestURI();
+	    String _role = uri.contains("create-guest") ? "Guest" : uri.contains("create-employee") ? "Employee" : "";
+		Role role = _role.equals("Employee") ? accountDAO.getRoleByEnum(EnumRole.EMPLOYEE) : accountDAO.getRoleByEnum(EnumRole.GUEST);
+		Account account = null;
+		String photoName = null;
+		if (!errors.hasErrors()) {
+			if (!user.getAvatar().isEmpty()) {
+				photoName = accountImgUpload.uploadImage(user.getAvatar());
+				System.out.println("Account photo: " + photoName);
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			account = new Account(role, user.getLastName(), user.getFirstName(), user.getEmail(), user.getPhoneNumber(),
+					photoName, user.getPassword());
+			if (!user.getAvatarDir().isEmpty()) {
+				account.setAvatar(user.getAvatarDir());
+			}
 
+			if (accountDAO.getAccountByEmail(user.getEmail())!=null) {
+				model.addAttribute("userbean", user);
+				model.addAttribute("role", _role);
+				model.addAttribute("mess", "Thông tin đã tồn tại trên hệ thống");
+				return "admin/register-user";
+			}
+
+			if (accountDAO.createAccount(account)) {
+				reAttributes.addFlashAttribute("mess", "Tạo tài khoản thành công");
+				return String.format("redirect:/admin/user/get-%s.htm", _role.toLowerCase());
+			}
+		}
+		model.addAttribute("userbean", user);
+		model.addAttribute("role", _role);
+		return "admin/register-user";
+	}
+	
 }

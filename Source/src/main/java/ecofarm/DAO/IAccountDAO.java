@@ -30,4 +30,6 @@ public interface IAccountDAO {
 	public boolean updateAccount(Account account);
 
 	public boolean deleteAccount(Account account);
+	
+	public Role getRoleByEnum(EnumRole role);
 }

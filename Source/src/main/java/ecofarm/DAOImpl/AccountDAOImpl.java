@@ -23,8 +23,6 @@ public class AccountDAOImpl implements IAccountDAO {
 	public boolean createAccount(Account account) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		account.setPassword(BCrypt.hashpw(account.getPassword(), BCrypt.gensalt(12)));
-		account.setStatus(0);
-		account.setRole(getRoleByID("GUEST"));
 		boolean isCreated = false;
 		try {
 			Transaction tr = session.beginTransaction();
@@ -40,56 +38,25 @@ public class AccountDAOImpl implements IAccountDAO {
 		return isCreated;
 	}
 
-	@SuppressWarnings("unchecked")
-	private Role getRoleByID(String roleID) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Role> list = new ArrayList<>();
-		try {
-			Transaction tr = session.beginTransaction();
-			String hql = "FROM Role WHERE RoleID = :roleID";
-			Query query = session.createQuery(hql);
-			query.setParameter("roleID", roleID);
-			list = query.list();
-			tr.commit();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
-		if (list.size() > 0) {
-			return list.get(0);
-		} else {
-			return null;
-		}
-	}
-
-	@SuppressWarnings("unchecked")
 	@Override
 	public Account getAccountByEmail(String email) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Account> list = new ArrayList<>();
-		try {
-			Transaction tr = session.beginTransaction();
-			String hql = "FROM Account WHERE Email = :email";
-			Query query = session.createQuery(hql);
-			query.setParameter("email", email);
-			list = query.list();
-			tr.commit();
-		} catch (Exception e) {
-			logger.error("Error getting account by email: " + e.getMessage(), e);
-			throw new RuntimeException("Error getting account by email", e);
-		} finally {
-			session.close();
-		}
-
-		if (list.size() > 0) {
-			return list.get(0);
-		} else {
-			return null;
-		}
-
+	    Session session = HibernateUtil.getSessionFactory().openSession();
+	    try {
+	        Transaction tr = session.beginTransaction();
+	        String hql = "FROM Account WHERE Email = :email";
+	        Query query = session.createQuery(hql);
+	        query.setParameter("email", email);
+	        Account account = (Account) query.uniqueResult(); 
+	        tr.commit();
+	        return account; 
+	    } catch (Exception e) {
+	        logger.error("Error getting account by email: " + e.getMessage(), e);
+	        throw new RuntimeException("Error getting account by email", e);
+	    } finally {
+	        session.close();
+	    }
 	}
+
 
 	@Override
 	public boolean checkAccountRegister(Account account) {
@@ -185,7 +152,7 @@ public class AccountDAOImpl implements IAccountDAO {
 		} catch (Exception e) {
 			tr.rollback();
 			System.out.println(e.getMessage());
-		}finally {
+		} finally {
 			session.close();
 		}
 		return false;
@@ -194,33 +161,33 @@ public class AccountDAOImpl implements IAccountDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Account> listAccountWithRole(EnumRole roleID, String search) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction t = session.beginTransaction();
-        List<Account> list = null;
-        try {
-            String hql = "FROM Account WHERE RoleID = :roleID";
-            if (search != null && !search.isEmpty()) {
-                hql += " AND (CONCAT(lastName, ' ', firstName) LIKE :search OR email LIKE :search)";
-            }
-            Query query = session.createQuery(hql);
-            query.setParameter("roleID", roleID.toString());
-            if (search != null && !search.isEmpty()) {
-                query.setParameter("search", "%" + search + "%");
-            }
-            list = query.list();
-            t.commit();
-        } catch (HibernateException e) {
-            if (session != null && session.getTransaction() != null) {
-                t.rollback(); // Rollback nếu có lỗi
-            }
-            e.printStackTrace(); // Xử lý hoặc ghi log lỗi
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close(); // Đóng session
-            }
-        }
-        return list;
-    }
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction t = session.beginTransaction();
+		List<Account> list = null;
+		try {
+			String hql = "FROM Account WHERE RoleID = :roleID";
+			if (search != null && !search.isEmpty()) {
+				hql += " AND (CONCAT(lastName, ' ', firstName) LIKE :search OR email LIKE :search)";
+			}
+			Query query = session.createQuery(hql);
+			query.setParameter("roleID", roleID.toString());
+			if (search != null && !search.isEmpty()) {
+				query.setParameter("search", "%" + search + "%");
+			}
+			list = query.list();
+			t.commit();
+		} catch (HibernateException e) {
+			if (session != null && session.getTransaction() != null) {
+				t.rollback(); // Rollback nếu có lỗi
+			}
+			e.printStackTrace(); // Xử lý hoặc ghi log lỗi
+		} finally {
+			if (session != null && session.isOpen()) {
+				session.close(); // Đóng session
+			}
+		}
+		return list;
+	}
 
 	@Override
 	public List<Account> listAccounts() {
@@ -262,6 +229,33 @@ public class AccountDAOImpl implements IAccountDAO {
 			ss.close();
 		}
 		return false;
+	}
+
+	@Override
+	public Role getRoleByEnum(EnumRole role) {
+
+		Role _role = null;
+
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction t = session.beginTransaction();
+
+		try {
+			String hql = "From Role Where RoleID = :roleID";
+			Query query = session.createQuery(hql);
+			query.setString("roleID", role.toString());
+			_role = (Role) query.uniqueResult();
+			t.commit();
+		} catch (HibernateException e) {
+			if (session != null && session.getTransaction() != null) {
+				t.rollback(); // Rollback nếu có lỗi
+			}
+			e.printStackTrace(); // Xử lý hoặc ghi log lỗi
+		} finally {
+			if (session != null && session.isOpen()) {
+				session.close(); // Đóng session
+			}
+		}
+		return _role;
 	}
 
 }

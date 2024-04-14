@@ -23,7 +23,7 @@
 	<!-- 	Thay đổi vị trí theo tùy máy  -->
 	<bean id="accountImgDir" class="ecofarm.bean.UploadFile">
 		<property name="basePath"
-			value="D:\\Program\\Thuc Tap Co So\\WebTest 3_22_2024\\Webnongsan\\Source\\src\\main\\webapp\\assets\\user\\img\\account\"></property>
+			value="D:\\Project\\Java\\Webnongsan\\Source\\src\\main\\webapp\\assets\\user\\img\\account\"></property>
 	</bean>
 	
 	<bean id="categoryImgDir" class="ecofarm.bean.UploadFile">
@@ -35,6 +35,7 @@
 		<property name="basePath"
 			value="D:\\Project\\Java\\Webnongsan\\Source\\src\\main\\webapp\\assets\\user\\img\\products\"></property>
 	</bean>
+	
 </beans>
 
 
