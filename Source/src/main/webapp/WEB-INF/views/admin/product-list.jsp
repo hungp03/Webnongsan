@@ -63,8 +63,10 @@
 													name="search" required>
 											</form>
 										</div>
-										<div class="col-xl-2 col-md-4 col-12">
+										<div class="col-xl-2 col-md-4 col-12 d-flex flex-col">
+										<p class="mr-4 p-1">Sort</p>
 											<div class="dropdown">
+											
 												<button class="btn btn-custom dropdown-toggle" type="button"
 													data-bs-toggle="dropdown" aria-expanded="false">
 													<c:if test="${ sort == 'none' }">Default</c:if>

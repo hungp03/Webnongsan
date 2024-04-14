@@ -9,7 +9,7 @@
 <c:if test="${not empty updateCate }">
 	<c:set var="crrBean" value="${updateCate}" />
 	<c:set var="nameBean" value="updateCate" />
-	<c:set var="actionString" value="admin/category/update_category.htm" />
+	<c:set var="actionString" value="admin/category/update_category.htm?id=${crrBean.id}" />
 	<c:set var="title" value="Update Category" />
 </c:if>
 <body>

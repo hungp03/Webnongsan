@@ -81,9 +81,10 @@ public class AdminControllerCategory {
 	public String addCategory(@Validated @ModelAttribute("addCate") CategoryBean categoryBean, BindingResult errors,
 			ModelMap model, RedirectAttributes re) {
 		if (categoryBean.getName() == null || categoryBean.getName().isEmpty()
-				|| !categoryBean.getName().matches("^[a-zA-Z0-9\\p{L} ]+$")) {
-			errors.rejectValue("name", "categoryBean", "Tên không được bỏ trống và không chấp nhận kí tự đặc biệt");
-		}
+			    || !categoryBean.getName().matches("^[a-zA-Z0-9\\p{L} \\-'\",.;!?]+$")) {
+			    errors.rejectValue("name", "categoryBean", "Tên không được bỏ trống và không chấp nhận kí tự đặc biệt");
+			}
+
 		if (errors.hasErrors()) {
 			model.addAttribute("mess", "Tên category không hợp lệ.");
 			return "admin/category-form";
@@ -126,9 +127,9 @@ public class AdminControllerCategory {
 		// nếu có cate trả về
 		if (category != null) {
 			if (categoryBean.getName() == null || categoryBean.getName().isEmpty()
-					|| !categoryBean.getName().matches("^[a-zA-Z0-9\\p{L} ]+$")) {
-				errors.rejectValue("name", "categoryBean", "Tên không được bỏ trống và không chấp nhận kí tự đặc biệt");
-			}
+				    || !categoryBean.getName().matches("^[a-zA-Z0-9\\p{L} \\-'\",.;!?]+$")) {
+				    errors.rejectValue("name", "categoryBean", "Tên không được bỏ trống và không chấp nhận kí tự đặc biệt");
+				}
 			if (errors.hasErrors()) {
 				categoryBean.setImage(category.getImage());
 				model.addAttribute("mess", "Tên category không hợp lệ.");

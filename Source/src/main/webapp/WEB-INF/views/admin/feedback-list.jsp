@@ -57,15 +57,15 @@
 												action="admin/feedback.htm">
 												<label for="search"></label>
 												<input class="form-control" type="search"
-													placeholder="Search Content or ID" aria-label="Search"
+													placeholder="Search Review or ID" aria-label="Search"
 													name="search" required>
 											</form>
 										</div>
 										<div class="col-xl-2 col-md-4 col-12 d-flex flex-col">
-											<p class="mr-4">Star</p>
+											<p class="mr-4 p-1">Star</p>
 											<div class="dropdown">
 											
-											<button class="btn btn-success dropdown-toggle" type="button"
+											<button class="btn btn-custom dropdown-toggle" type="button"
 												data-bs-toggle="dropdown" aria-expanded="false">
 												<c:if test="${star == null}">All</c:if>
 												<c:if test="${star == 1 }">One</c:if>
@@ -104,7 +104,7 @@
 										<th>Product</th>
 										<th>Product Name</th>
 										<th>Customer</th>
-										<th>Reviews</th>
+										<th>Review</th>
 										<th>Rating</th>
 										<th>Date</th>
 										<th>Status</th>

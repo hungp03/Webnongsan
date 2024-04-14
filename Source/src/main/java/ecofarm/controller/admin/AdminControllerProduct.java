@@ -109,7 +109,7 @@ public class AdminControllerProduct {
 		}
 		
 		String productName = product.getProductName();
-		if (productName.isEmpty() || !productName.matches("^[a-zA-Z0-9\\p{L} ]+$")) {
+		if (productName.isEmpty() || !productName.matches("^[a-zA-Z0-9\\p{L} \\-'\",.;!?]+$")) {
 			errors.rejectValue("productName", "product", "Không được bỏ trống và không chấp nhận kí tự đặc biệt");
 	    }
 		
@@ -200,8 +200,9 @@ public class AdminControllerProduct {
 	@RequestMapping(value = "update_product/{id}", method = RequestMethod.POST)
 	public String postUpdateProduct(@ModelAttribute("updateProdBean") ProductBean product, RedirectAttributes re, BindingResult errors,
 			ModelMap model) {
+		Product foundProd = productDAO.getProductByID(product.getProductId());
 		String productName = product.getProductName();
-		if (productName.isEmpty() || !productName.matches("^[a-zA-Z0-9\\p{L} ]+$")) {
+		if (productName.isEmpty() || !productName.matches("^[a-zA-Z0-9\\p{L} \\-'\",.;!?]+$")) {
 			errors.rejectValue("productName", "product", "Không được bỏ trống và không chấp nhận kí tự đặc biệt");
 	    }
 		
@@ -221,9 +222,10 @@ public class AdminControllerProduct {
 	    	model.addAttribute("mess", "Cập nhật thất bại! ");
 	    	List<Category> cates = categoryDAO.getAllCategories();
 	        model.addAttribute("categories", cates);
+	        product.setImage(foundProd.getImage());
+	        model.addAttribute("updateProdBean", product);
 	    	return "admin/product-form";
 	    }
-		Product foundProd = productDAO.getProductByID(product.getProductId());
 		if (foundProd != null) {
 			Category category = categoryDAO.getCategory(product.getCategoryId());
 			if (category != null) {
@@ -246,7 +248,8 @@ public class AdminControllerProduct {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				model.addAttribute("mess", "An error occurred");
+				model.addAttribute("mess", "Cập nhật thất bại");
+				product.setImage(foundProd.getImage());
 				model.addAttribute("updateProdBean", product);
 				return "admin/product-form";
 			}
