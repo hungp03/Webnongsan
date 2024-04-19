@@ -194,10 +194,12 @@ public class AccountDAOImpl implements IAccountDAO {
 			ss.update(account);
 			t.commit();
 			return true;
-		} catch (Exception e) {
+		} catch (HibernateException e) {
 			System.out.println("Update Account - error: " + e.getMessage());
 			t.rollback();
-		} finally {
+		}
+
+		finally {
 			ss.close();
 		}
 		return false;
@@ -238,5 +240,22 @@ public class AccountDAOImpl implements IAccountDAO {
 		}
 		return _role;
 	}
+	
+	@Override
+	public boolean isEmailUsedByOtherAccounts(String email, int accountId) {
+	    Session session = sessionFactory.getCurrentSession();
+	    try {
+	        String hql = "SELECT COUNT(*) FROM Account WHERE Email = :email AND AccountID != :accountId";
+	        Query query = session.createQuery(hql);
+	        query.setParameter("email", email);
+	        query.setParameter("accountId", accountId);
+	        Long count = (Long) query.uniqueResult(); 
+	        return count > 0; 
+	    } catch (Exception e) {
+	        logger.error("Error checking if email is used by other accounts: " + e.getMessage(), e);
+	        throw new RuntimeException("Error checking if email is used by other accounts", e);
+	    }
+	}
+
 
 }

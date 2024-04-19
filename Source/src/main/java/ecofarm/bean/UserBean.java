@@ -1,19 +1,28 @@
 package ecofarm.bean;
 
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;
 
 public class UserBean {
 	
+	@NotBlank(message = "Email is required")
+	@Email(message = "Email is not valid")
 	private String email;
 
-	
 	private String password;
 
+	@NotBlank(message = "First name is required")
 	private String firstName;
-
+	
+	@NotBlank(message = "Last name is required")
 	private String lastName;
-
+	
+	@Pattern(regexp = "^0\\d{9}$|^$", message = "Invalid phone number format, number phone must be: 0xxxxxxxxx")
 	private String phoneNumber;
 
 	private MultipartFile avatar;
@@ -104,4 +113,11 @@ public class UserBean {
 		this.phoneNumber = phoneNumber;
 	}
 	
+	public UserBean(String email, String firstName, String lastName, String phoneNumber, String avatar) {
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
+		this.avatarDir = avatar;
+	}
 }

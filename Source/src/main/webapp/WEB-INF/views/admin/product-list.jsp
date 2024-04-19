@@ -64,14 +64,15 @@
 											</form>
 										</div>
 										<div class="col-xl-2 col-md-4 col-12 d-flex flex-col">
-										<p class="mr-4 p-1">Sort</p>
+											<p class="mr-4 p-1">Sort</p>
 											<div class="dropdown">
-											
 												<button class="btn btn-custom dropdown-toggle" type="button"
 													data-bs-toggle="dropdown" aria-expanded="false">
-													<c:if test="${ sort == 'none' }">Default</c:if>
-													<c:if test="${sort == 'name' }">Name</c:if>
-													<c:if test="${sort == 'price' }">Price</c:if>
+													<c:choose>
+														<c:when test="${sort == 'none'}">Default</c:when>
+														<c:when test="${sort == 'name'}">Name</c:when>
+														<c:when test="${sort == 'price'}">Price</c:when>
+													</c:choose>
 												</button>
 												<ul class="dropdown-menu">
 													<c:set var="baseURL" value="admin/products.htm" />
@@ -79,14 +80,24 @@
 														<c:set var="baseURL"
 															value="${baseURL}?search=${param.search}" />
 													</c:if>
-													<li><a class="dropdown-item" href="${baseURL}">Default</a></li>
+													<c:choose>
+														<c:when test="${empty param.search}">
+															<c:set var="separator" value="?" />
+														</c:when>
+														<c:otherwise>
+															<c:set var="separator" value="&" />
+														</c:otherwise>
+													</c:choose>
 													<li><a class="dropdown-item"
-														href="${baseURL}&sort=name">Name</a></li>
+														href="<c:url value='${baseURL}${separator}sort=default' />">Default</a></li>
 													<li><a class="dropdown-item"
-														href="${baseURL}&sort=price">Price</a></li>
+														href="<c:url value='${baseURL}${separator}sort=name' />">Name</a></li>
+													<li><a class="dropdown-item"
+														href="<c:url value='${baseURL}${separator}sort=price' />">Price</a></li>
 												</ul>
-
 											</div>
+
+
 										</div>
 									</div>
 								</div>

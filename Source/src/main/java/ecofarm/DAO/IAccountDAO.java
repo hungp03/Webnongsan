@@ -35,4 +35,6 @@ public interface IAccountDAO {
 	public boolean deleteAccount(Account account);
 	
 	public Role getRoleByEnum(EnumRole role);
+	
+	public boolean isEmailUsedByOtherAccounts(String email, int accountId);
 }

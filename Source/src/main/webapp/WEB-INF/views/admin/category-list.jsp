@@ -66,7 +66,7 @@
 											</form>
 										</div>
 										<div class="col-xl-2 col-md-4 col-12 d-flex flex-col">
-										<p class="mr-4 p-1">Filter</p>
+											<p class="mr-4 p-1">Filter</p>
 											<div class="dropdown">
 												<button class="btn btn-custom dropdown-toggle" type="button"
 													data-bs-toggle="dropdown" aria-expanded="false">
@@ -80,13 +80,22 @@
 														<c:set var="baseURL"
 															value="${baseURL}?search=${param.search}" />
 													</c:if>
-													<li><a class="dropdown-item" href="${baseURL}&filter=0">All</a></li>
+													<c:choose>
+														<c:when test="${empty param.search}">
+															<c:set var="separator" value="?" />
+														</c:when>
+														<c:otherwise>
+															<c:set var="separator" value="&" />
+														</c:otherwise>
+													</c:choose>
 													<li><a class="dropdown-item"
-														href="${baseURL}&filter=1">Unpublished</a></li>
+														href="${baseURL}${separator}filter=0">All</a></li>
 													<li><a class="dropdown-item"
-														href="${baseURL}&filter=2">Published</a></li>
+														href="${baseURL}${separator}filter=1">Unpublished</a></li>
+													<li><a class="dropdown-item"
+														href="${baseURL}${separator}filter=2">Published</a></li>
 												</ul>
-									
+
 											</div>
 										</div>
 									</div>
@@ -97,12 +106,7 @@
 					<!-- End Search  Filter -->
 					<!-- table -->
 					<div class="table-responsive ">
-						<c:choose>
-							<c:when test="${categories.size() == 0}">
-								<p style="text-align: center; font-size: 22px; color: red;">Không
-									có danh mục</p>
-							</c:when>
-							<c:otherwise>
+						
 								<table class="table ">
 									<thead class="position-sticky top-0 ">
 										<tr class="table-success">
@@ -160,60 +164,58 @@
 
 									</tbody>
 								</table>
-							</c:otherwise>
-						</c:choose>
+					
 
 					</div>
 				</div>
 			</div>
 
 			<div class="d-flex justify-content-center">
-    <c:if test="${categories.size() > 0}">
-        <nav>
-            <ul class="pagination d-flex justify-content-center ms-2">
-                <li class="page-item ${paginate.currentPage == 1 ? 'disabled' : ''}">
-                    <c:url var="prevPageURL" value="admin/category.htm">
-                        <c:param name="crrPage" value="${paginate.currentPage - 1}" />
-                        <c:param name="filter" value="${filter}" />
-                        <c:if test="${not empty param.search}">
-                            <c:param name="search" value="${param.search}" />
-                        </c:if>
-                    </c:url>
-                    <a class="page-link mx-1" aria-label="Previous" href="${prevPageURL}">
-                        <span aria-hidden="true">«</span>
-                    </a>
-                </li>
-                <c:forEach var="i" begin="1" end="${paginate.totalPage}" varStatus="in">
-                    <li class="page-item">
-                        <c:url var="pageURL" value="admin/category.htm">
-                            <c:param name="crrPage" value="${in.count}" />
-                            <c:param name="filter" value="${filter}" />
-                            <c:if test="${not empty param.search}">
-                                <c:param name="search" value="${param.search}" />
-                            </c:if>
-                        </c:url>
-                        <a class="page-link mx-1 ${paginate.currentPage == in.count ? 'active' : ''}" href="${pageURL}">
-                            ${in.count}
-                        </a>
-                    </li>
-                </c:forEach>
-                <li class="page-item">
-                    <c:url var="nextPageURL" value="admin/category.htm">
-                        <c:param name="crrPage" value="${paginate.currentPage + 1}" />
-                        <c:param name="filter" value="${filter}" />
-                        <c:if test="${not empty param.search}">
-                            <c:param name="search" value="${param.search}" />
-                        </c:if>
-                    </c:url>
-                    <a class="page-link mx-1 text-body ${paginate.currentPage == paginate.totalPage ? 'disabled' : ''}" aria-label="Next" href="${nextPageURL}">
-                        <span aria-hidden="true">»</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </c:if>
-</div>
-		</div>		
+				<c:if test="${categories.size() > 0}">
+					<nav>
+						<ul class="pagination d-flex justify-content-center ms-2">
+							<li
+								class="page-item ${paginate.currentPage == 1 ? 'disabled' : ''}">
+								<c:url var="prevPageURL" value="admin/category.htm">
+									<c:param name="crrPage" value="${paginate.currentPage - 1}" />
+									<c:param name="filter" value="${filter}" />
+									<c:if test="${not empty param.search}">
+										<c:param name="search" value="${param.search}" />
+									</c:if>
+								</c:url> <a class="page-link mx-1" aria-label="Previous"
+								href="${prevPageURL}"> <span aria-hidden="true">«</span>
+							</a>
+							</li>
+							<c:forEach var="i" begin="1" end="${paginate.totalPage}"
+								varStatus="in">
+								<li class="page-item"><c:url var="pageURL"
+										value="admin/category.htm">
+										<c:param name="crrPage" value="${in.count}" />
+										<c:param name="filter" value="${filter}" />
+										<c:if test="${not empty param.search}">
+											<c:param name="search" value="${param.search}" />
+										</c:if>
+									</c:url> <a
+									class="page-link mx-1 ${paginate.currentPage == in.count ? 'active' : ''}"
+									href="${pageURL}"> ${in.count} </a></li>
+							</c:forEach>
+							<li class="page-item"><c:url var="nextPageURL"
+									value="admin/category.htm">
+									<c:param name="crrPage" value="${paginate.currentPage + 1}" />
+									<c:param name="filter" value="${filter}" />
+									<c:if test="${not empty param.search}">
+										<c:param name="search" value="${param.search}" />
+									</c:if>
+								</c:url> <a
+								class="page-link mx-1 text-body ${paginate.currentPage == paginate.totalPage ? 'disabled' : ''}"
+								aria-label="Next" href="${nextPageURL}"> <span
+									aria-hidden="true">»</span>
+							</a></li>
+						</ul>
+					</nav>
+				</c:if>
+			</div>
+		</div>
 	</div>
 </body>
 <script src="<c:url value="/assets/js/admin/AlertHandler.js"/>"></script>

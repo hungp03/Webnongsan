@@ -207,13 +207,11 @@ public class OrderDAOImpl implements IOrderDAO {
 	public List<Orders> getOrders() {
 		try {
 			Session session = sessionFactory.getCurrentSession();
-//			session.beginTransaction();
 			String hql = "From Orders";
 			Query query = session.createQuery(hql);
 			@SuppressWarnings("unchecked")
-			List<Orders> listOrders = query.list();
-//			session.getTransaction().commit();
-			return listOrders;
+			List<Orders> list = query.list();
+			return list;
 		} catch (HibernateException ex) {
 			throw ex;
 		}

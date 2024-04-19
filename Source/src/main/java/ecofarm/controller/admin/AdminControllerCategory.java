@@ -71,7 +71,7 @@ public class AdminControllerCategory {
 	UploadFile baseUploadFile;
 
 	@RequestMapping("addcategory")
-	public String gCategoryAdd(ModelMap model) {
+	public String getCategoryAdd(ModelMap model) {
 		CategoryBean categoryBean = new CategoryBean();
 		model.addAttribute("addCate", categoryBean);
 		return "admin/category-form";

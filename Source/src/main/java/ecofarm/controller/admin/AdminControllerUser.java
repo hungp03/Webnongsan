@@ -1,9 +1,11 @@
 package ecofarm.controller.admin;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -55,7 +57,7 @@ public class AdminControllerUser {
 	@RequestMapping("get-guest")
 	public String getListGuest(ModelMap model,
 			@RequestParam(value = "crrPage", required = false, defaultValue = "1") int crrPage,
-		 @RequestParam(required = false, value = "search") String search) {
+			@RequestParam(required = false, value = "search") String search) {
 		List<Account> accounts = accountDAO.listAccountWithRole(EnumRole.GUEST, search);
 
 		int totalFeedbacks = accounts.size();
@@ -86,29 +88,33 @@ public class AdminControllerUser {
 		}
 		return String.format("redirect:/admin/user/get-%s.htm", role);
 	}
-	
-	@RequestMapping(value = {"create-guest", "create-employee"}, method = RequestMethod.GET)
-	public String getCreateUser(HttpServletRequest request,ModelMap model) {
+
+	@RequestMapping(value = { "create-guest", "create-employee" }, method = RequestMethod.GET)
+	public String getCreateUser(HttpServletRequest request, ModelMap model) {
 		UserBean acc = new UserBean();
 		String uri = request.getRequestURI();
 		String role = uri.contains("guest") ? "Guest" : uri.contains("employee") ? "Employee" : "";
 		model.addAttribute("role", role);
-		model.addAttribute("userbean", acc);
-		return "admin/register-user";
+		model.addAttribute("adduser", acc);
+		return "admin/user-form";
 	}
-	
+
 	@Autowired
 	@Qualifier("accountImgDir")
 	UploadFile accountImgUpload;
-	
-	@RequestMapping(value = {"create-guest", "create-employee"}, method = RequestMethod.POST)
-	public String createEmployee(HttpServletRequest request, @Validated @ModelAttribute("userbean") UserBean user,
-			BindingResult errors, RedirectAttributes reAttributes, ModelMap model) {
+
+	@RequestMapping(value = { "create-guest", "create-employee" }, method = RequestMethod.POST)
+	public String createEmployee(HttpServletRequest request, @Validated @ModelAttribute("adduser") UserBean user,
+			BindingResult errors, RedirectAttributes ra, ModelMap model) {
 		String uri = request.getRequestURI();
-	    String _role = uri.contains("create-guest") ? "Guest" : uri.contains("create-employee") ? "Employee" : "";
-		Role role = _role.equals("Employee") ? accountDAO.getRoleByEnum(EnumRole.EMPLOYEE) : accountDAO.getRoleByEnum(EnumRole.GUEST);
+		String _role = uri.contains("create-guest") ? "Guest" : uri.contains("create-employee") ? "Employee" : "";
+		Role role = _role.equals("Employee") ? accountDAO.getRoleByEnum(EnumRole.EMPLOYEE)
+				: accountDAO.getRoleByEnum(EnumRole.GUEST);
 		Account account = null;
 		String photoName = null;
+		if (user.getPassword() == null || user.getPassword().length() < 6 || user.getPassword().length() > 50) {
+	        errors.rejectValue("password", "userbean", "Mật khẩu phải từ 6 đến 50 kí tự");
+	    }
 		if (!errors.hasErrors()) {
 			if (!user.getAvatar().isEmpty()) {
 				photoName = accountImgUpload.uploadImage(user.getAvatar());
@@ -125,21 +131,113 @@ public class AdminControllerUser {
 				account.setAvatar(user.getAvatarDir());
 			}
 
-			if (accountDAO.getAccountByEmail(user.getEmail())!=null) {
-				model.addAttribute("userbean", user);
+			if (accountDAO.getAccountByEmail(user.getEmail()) != null) {
+				model.addAttribute("adduser", user);
 				model.addAttribute("role", _role);
 				model.addAttribute("mess", "Thông tin đã tồn tại trên hệ thống");
-				return "admin/register-user";
+				return "admin/user-form";
 			}
 
 			if (accountDAO.createAccount(account)) {
-				reAttributes.addFlashAttribute("mess", "Tạo tài khoản thành công");
+				ra.addFlashAttribute("mess", "Tạo tài khoản thành công");
 				return String.format("redirect:/admin/user/get-%s.htm", _role.toLowerCase());
 			}
 		}
-		model.addAttribute("userbean", user);
+		model.addAttribute("adduser", user);
 		model.addAttribute("role", _role);
-		return "admin/register-user";
+		return "admin/user-form";
 	}
-	
+
+	@RequestMapping(value = "edit", method = RequestMethod.GET)
+	public String editUser(ModelMap model, @RequestParam("id") int id) {
+		Account account = accountDAO.getAccountByID(id);
+		String role = "";
+		if (account.getRole().getRoleId().equals("GUEST")) {
+			role = "Guest";
+		} else if (account.getRole().getRoleId().equals("EMPLOYEE")) {
+			role = "Employee";
+		}
+		UserBean userBean = new UserBean(account.getEmail(), account.getFirstName(), account.getLastName(),
+				account.getPhoneNumber(), account.getAvatar());
+		model.addAttribute("updateuser", userBean);
+		model.addAttribute("id", id);
+		//System.out.print("id:" + id);
+		model.addAttribute("role", role);
+		return "admin/edit-user";
+	}
+
+	@RequestMapping(value = "edit", method = RequestMethod.POST)
+	public String postEditUser(RedirectAttributes ra, @Validated @ModelAttribute("updateuser") UserBean user,
+			BindingResult errors, ModelMap model, @RequestParam("id") int id) {
+		Account account = accountDAO.getAccountByID(id);
+		String role = "";
+		if (account.getRole().getRoleId().equals("GUEST")) {
+			role = "Guest";
+		} else if (account.getRole().getRoleId().equals("EMPLOYEE")) {
+			role = "Employee";
+		}
+		
+		if (!user.getPassword().trim().isEmpty() && (user.getPassword().length() < 6 || user.getPassword().length() > 50)) {
+	        errors.rejectValue("password", "userbean", "Mật khẩu phải từ 6 đến 50 kí tự");
+	    }
+		
+		if (errors.hasErrors()) {
+			model.addAttribute("mess", "Update failed");
+			model.addAttribute("id", id);
+			model.addAttribute("role", role);
+			return "admin/edit-user";
+		}
+		
+		if (accountDAO.isEmailUsedByOtherAccounts(user.getEmail(), id)) {
+			model.addAttribute("updateuser", user);
+			model.addAttribute("id", id);
+			model.addAttribute("role", role);
+			model.addAttribute("mess", "Email đã tồn tại trên hệ thống");
+			return "admin/edit-user";
+		}
+		if (!user.getPassword().trim().isEmpty() && user.getPassword().length() >= 6 && user.getPassword().length() <= 50) {
+			account.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12)));
+		}
+		account.setLastName(user.getLastName());
+		account.setFirstName(user.getFirstName());
+		account.setPhoneNumber(user.getPhoneNumber());
+		account.setEmail(user.getEmail());
+		try {
+			// nếu có cập nhật ảnh mới
+			if (!user.getAvatar().isEmpty()) {
+				String newImage = accountImgUpload.uploadImage(user.getAvatar());
+				// nếu có ảnh cũ, xóa nó đi
+				if (account.getAvatar() != null) {
+					File oldImage = new File(accountImgUpload.getBasePath() + account.getAvatar());
+					if (oldImage.exists()) {
+						oldImage.delete();
+					}
+				}
+				// Cập nhật ảnh mới
+				account.setAvatar(newImage);
+				Thread.sleep(2000);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			user.setAvatarDir(account.getAvatar());
+			model.addAttribute("mess", "An error occurred while processing image");
+			model.addAttribute("updateuser", user);
+			return "admin/edit-user";
+		}
+
+		if (accountDAO.updateAccount(account)) {
+			ra.addFlashAttribute("mess", "Update successful");
+			if (account.getRole().getRoleName().equals("Guest"))
+
+				return "redirect:/admin/user/get-guest.htm";
+
+			else
+				return "redirect:/admin/user/get-employee.htm";
+
+		}
+		model.addAttribute("mess", "Update failed");
+		model.addAttribute("updateuser", user);
+		return "admin/edit-user";
+	}
+
 }
