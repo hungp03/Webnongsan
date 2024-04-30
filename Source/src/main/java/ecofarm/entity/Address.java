@@ -46,6 +46,12 @@ public class Address {
 		this.account = account;
 
 	}
+	public Address(Ward ward, Account account,String name) {
+		this.ward = ward;
+		this.account = account;
+		this.name = name;
+
+	}
 
 	public Address(int addressId, Ward ward, String name) {
 		this.addressId = addressId;

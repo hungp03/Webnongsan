@@ -3,6 +3,21 @@
 <%@include file="/WEB-INF/views/layouts/user/common.jsp"%>
 
 
+    <style>
+        a.avatar {
+            color: black; /* Màu đen */
+            text-decoration: none; /* Loại bỏ gạch chân */
+        }
+        /* Định dạng liên kết khi di chuột qua */
+        a.avatar:hover {
+            /* Không làm gì cả */
+        }
+        /* Định dạng liên kết đã truy cập */
+        a.avatar:visited {
+            /* Không làm gì cả */
+        }
+    </style>
+
 
 <!-- Page Preloder -->
 <div id="preloder">
@@ -108,7 +123,47 @@
 								style="color: #000000; line-height: 13px;"><i
 									class="fa fa-user"></i>Login</a></li>
 						</c:if>
+						
+					
+						<c:if test="${userInfo.getRole().getRoleId().equals('GUEST')}">
 						<c:if test="${not empty userInfo and userInfo.avatar != null}">
+							<div class="user-nav__user"><a href="<c:url value='/account/ProfilePage.htm'/>" class="avatar">
+								<img
+									src="<c:url value="/assets/user/img/account/${userInfo.avatar }"/>"
+									alt="User photo" class="user-nav__user-photo"> <span
+									class="user-nav__user-name" style="margin-right: 5px">${userInfo.getName() }</span>
+							</a>
+							</div>
+							
+						</c:if>
+						<c:if test="${not empty userInfo and userInfo.avatar == null}">
+							<li style="margin-right: 5px"><a
+								href="<c:url value="/login.htm"/>"
+								style="color: #000000; line-height: 13px;"><i
+									class="fa fa-user"></i>${userInfo.getName() }</a></li>
+						</c:if>
+						</c:if>
+						
+						<c:if test="${userInfo.getRole().getRoleId().equals('ADMIN')}">
+						<c:if test="${not empty userInfo and userInfo.avatar != null}">
+							<div class="user-nav__user"><a href="<c:url value='/admin/dashboard.htm'/>" class="avatar">
+								<img
+									src="<c:url value="/assets/user/img/account/${userInfo.avatar }"/>"
+									alt="User photo" class="user-nav__user-photo"> <span
+									class="user-nav__user-name" style="margin-right: 5px">${userInfo.getName() }</span>
+							</a>
+							</div>
+							
+						</c:if>
+						<c:if test="${not empty userInfo and userInfo.avatar == null}">
+							<li style="margin-right: 5px"><a
+								href="<c:url value="/login.htm"/>"
+								style="color: #000000; line-height: 13px;"><i
+									class="fa fa-user"></i>${userInfo.getName() }</a></li>
+						</c:if>
+						</c:if>
+						
+						<%-- <c:if test="${not empty userInfo and userInfo.avatar != null}">
 							<div class="user-nav__user">
 								<img
 									src="<c:url value="/assets/user/img/account/${userInfo.avatar }"/>"
@@ -121,7 +176,7 @@
 								href="<c:url value="/login.htm"/>"
 								style="color: #000000; line-height: 13px;"><i
 									class="fa fa-user"></i>${userInfo.getName() }</a></li>
-						</c:if>
+						</c:if> --%>
 
 						<li><a href="<c:url value="/wishlist.htm"/>"><i
 								class="fa fa-heart"></i> <span> <c:if

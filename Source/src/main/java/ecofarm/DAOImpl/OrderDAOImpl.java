@@ -216,4 +216,22 @@ public class OrderDAOImpl implements IOrderDAO {
 			throw ex;
 		}
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Orders> getOrderFromAccountId(int accountId) {
+		Session session = sessionFactory.openSession();
+		List<Orders> orders = null;
+		try {
+			String hql = "FROM Orders WHERE AccountID = :accountId";
+			Query query = session.createQuery(hql);
+			query.setParameter("accountId",accountId);
+			orders = query.list();
+		}catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			session.close();
+		}
+		return orders;
+	}
 }

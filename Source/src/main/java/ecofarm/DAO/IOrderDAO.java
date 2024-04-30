@@ -31,4 +31,6 @@ public interface IOrderDAO {
 	public List<Orders> getCancelOrders();
 
 	public List<Orders> getOrders();
+	
+	public List<Orders> getOrderFromAccountId(int accountId);
 }
