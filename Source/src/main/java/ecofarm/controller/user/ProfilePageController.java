@@ -132,36 +132,6 @@ public class ProfilePageController {
 		return "redirect:/account/ProfilePage.htm";
 	}
 
-//	
-//	@RequestMapping(value = "/account/ChangePassword", method = RequestMethod.GET)
-//	public String ChangePasswordPage(@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
-//			HttpServletRequest request,ModelMap modelMap) {
-//		if (userEmail.equals("")) {
-//			request.setAttribute("user", new Account());
-//			return "user/login";
-//		}else {
-//			modelMap.addAttribute("changePassword",new ChangePassword());
-//			return "user/account/changePassword";
-//		}
-//	}
-//	
-//	@RequestMapping(value = "/account/ChangePassword", method = RequestMethod.POST)
-//	public String userChangePassword(@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
-//			HttpSession session,ModelMap modelMap,HttpServletRequest request,@RequestParam("newPassWord") String newPassWord,
-//			@RequestParam("oldPassWord") String oldPassWord,HttpServletResponse response,@ModelAttribute("changePassword") ChangePassword password) {
-//		if (userEmail.equals("")) {
-//			request.setAttribute("user", new Account());
-//			return "user/login";
-//		}
-//		Account account = accountDAO.getAccountByEmail(userEmail);
-//		int accountId = account.getAccountId();
-//		boolean isPasswordCorrect = profileDAO.checkPassword(accountId,oldPassWord);
-//		if (isPasswordCorrect) {
-//			profileDAO.changePassword(account, newPassWord);
-//		}
-//		return "redirect:/account/ChangePassword";
-//	}
-//	
 	@RequestMapping(value = "/account/ChangePassword", method = RequestMethod.GET)
 	public String changePassword(
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,

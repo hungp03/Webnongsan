@@ -19,13 +19,8 @@ public interface IProfileDAO {
 	public boolean changeProfileInfo(int accountID, Account changeInfo);
 	public List<Address> getAllAddressInfo(Account account);
 	public boolean deleteAddress(int deletedAddressId);
-	public List<OrderDetail> getAllOrderDetail(Account account); 
 	public List<Feedback> getAllFeedbackDetail(Account account);
 	public List<Province> getAllProvince();
-	public Ward getWard(int wardId);
-	public List<District> getDistrict(int provinceId);
 	public boolean addNewAddress (Address newAddress);
-	public boolean checkPassword(int accountId,String password);
-//	public boolean changePassword(Account account,String password);
-	
+	public Ward getWard(int wardId);
 }

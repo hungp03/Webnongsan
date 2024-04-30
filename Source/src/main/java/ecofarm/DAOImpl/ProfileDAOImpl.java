@@ -62,7 +62,6 @@ public class ProfileDAOImpl implements IProfileDAO{
 		} finally {
 			session.close();
 		}
-//		System.out.println(accounts.get(0).getAccountId());
 		if (accounts.size() > 0) {
 			return accounts.get(0);
 		}
@@ -164,43 +163,7 @@ public class ProfileDAOImpl implements IProfileDAO{
 		}
 		return isDeleted;
 	}
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<District> getDistrict(int provinceId) {
-		List<District> allDistrict = new ArrayList<>();
-		Session session = sessionFactory.openSession();
-		try {
-			String hql = "FROM District WHERE ProvinceID =:provinceId";
-			Query query = session.createQuery(hql);
-			query.setParameter("provinceId", provinceId);
-			allDistrict = query.list();
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
-		return allDistrict;
-	}
-	@Override
-	public Ward getWard(int wardId) {
-		Session session = sessionFactory.openSession();
-		Ward ward = null;
-		try {
-			String hql = "FROM Ward WHERE WardID =:wardId";
-			Query query = session.createQuery(hql);
-			query.setParameter("wardId", wardId);
-			ward = (Ward) query.uniqueResult();
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
-		return ward;
-	}
+
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -221,25 +184,6 @@ public class ProfileDAOImpl implements IProfileDAO{
 		return allProvince;
 	}
 	
-	@Override
-	public List<OrderDetail> getAllOrderDetail(Account account) {
-		Session session = sessionFactory.openSession();
-		try {
-			int accountID = account.getAccountId();
-			String hql = "FROM Order WHERE AccountID =:accountID ";
-			Query query = session.createQuery(hql);
-			query.setParameter("accountID", accountID);
-
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-
-		} finally {
-			session.close();
-		}
-		return null;
-	}
 
 
 	@Override
@@ -267,54 +211,21 @@ public class ProfileDAOImpl implements IProfileDAO{
 		return isCreate;
 	}
 	@Override
-	public boolean checkPassword(int accountId,String password) {
-		Account account = getAccountByID(accountId);
-		boolean isSameAsOldPassword = false;
-		String encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
-		if(encryptedPassword.equals(account.getPassword())) {
-			isSameAsOldPassword = true;
+	public Ward getWard(int wardId) {
+		Session session = sessionFactory.openSession();
+		Ward ward = null;
+		try {
+			String hql = "FROM Ward WHERE WardID =:wardId";
+			Query query = session.createQuery(hql);
+			query.setParameter("wardId", wardId);
+			ward = (Ward) query.uniqueResult();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} finally {
+			session.close();
 		}
-		return isSameAsOldPassword;
+		return ward;
 	}
-//	@Override
-//	public boolean changePassword(int accountId, String password) {
-//		// TODO Auto-generated method stub
-//		Session session = sessionFactory.openSession();
-//		Transaction tr = session.beginTransaction();
-//		boolean isChange = false;
-//		try {
-//			Account account = getAccountByID(accountId);
-//			account.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(12)));
-//			session.save(account);
-//			tr.commit();
-//			isChange = true;
-//		}catch (Exception e) {
-//			// TODO: handle exception
-//			System.out.println(e.getMessage());
-//			e.printStackTrace();
-//		}finally {
-//			session.close();
-//		}
-//		return false;
-//	}
-	
-//	public boolean checkPassword(int accountId,String password) {
-//		Session session = sessionFactory.openSession();
-//		boolean isSameAsOldPassword = false;
-//		try {
-//			String hql = "FROM Account WHERE AccountID = :accountId";
-//			Query query = session.createQuery(hql);
-//			Account account = (Account) query.uniqueResult();
-//			
-//			Transaction tr = session.beginTransaction();
-////			String encryptedPassword = BCrypt.hashpw(account.getPassword(), BCrypt.gensalt(12));
-//		}catch (Exception e) {
-//			// TODO: handle exception
-//			System.out.println(e.getMessage());
-//			e.printStackTrace();
-//		}finally {
-//			session.close();
-//		}
-//		return false;
-//	}
 }
