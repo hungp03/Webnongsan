@@ -130,6 +130,9 @@ public class UserController {
 			 // Lưu thông tin người dùng vào phiên nếu đăng nhập thành công
 			Account loggedInUser = accountDAO.getAccountByEmail(account.getEmail());
 			session.setAttribute("userInfo", loggedInUser);
+			//Thêm role vào khi đăng nhập 
+			Cookie cookie_role_name = new Cookie("userRole", loggedInUser.getRole().getRoleName().toUpperCase());
+			response.addCookie(cookie_role_name);
 			if(checkRemember!= null) {
 				Cookie cookie = new Cookie("userEmail", loggedInUser.getEmail());
 				Cookie cookie_role = new Cookie("userRole", BCrypt.hashpw(loggedInUser.getRole().getRoleId(), BCrypt.gensalt(10)));
@@ -160,6 +163,10 @@ public class UserController {
 		cookie.setMaxAge(0);
 		response.addCookie(cookie);
 		 // Xóa thông tin người dùng khỏi phiên
+		Cookie cookie_role = new Cookie("userRole",null);
+		cookie_role.setMaxAge(0);
+		response.addCookie(cookie_role);
+		// Xóa user role ra khỏi phiên
 	    session.removeAttribute("userInfo");
 	    session.invalidate(); // Hủy phiên đăng nhập hiện tại
 		return "redirect:"+request.getHeader("Referer");

@@ -1,5 +1,5 @@
 package ecofarm.entity;
-// Generated Apr 8, 2023, 3:38:47 PM by Hibernate Tools 3.6.2.Final
+
 
 import java.util.HashSet;
 import java.util.Set;
@@ -81,5 +81,5 @@ public class Ward {
 	public void setAddresses(Set<Address> addresses) {
 		this.addresses = addresses;
 	}
-
+	
 }
