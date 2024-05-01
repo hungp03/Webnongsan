@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -131,7 +132,7 @@ public class UserController {
 			session.setAttribute("userInfo", loggedInUser);
 			if(checkRemember!= null) {
 				Cookie cookie = new Cookie("userEmail", loggedInUser.getEmail());
-				Cookie cookie_role = new Cookie("userRole", loggedInUser.getRole().getRoleId());
+				Cookie cookie_role = new Cookie("userRole", BCrypt.hashpw(loggedInUser.getRole().getRoleId(), BCrypt.gensalt(10)));
 				cookie.setMaxAge(24*60*60);
 				cookie_role.setMaxAge(24*3600);
 				response.addCookie(cookie);

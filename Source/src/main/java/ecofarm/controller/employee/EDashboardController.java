@@ -1,4 +1,4 @@
-package ecofarm.controller.admin;
+package ecofarm.controller.employee;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ import ecofarm.entity.Account;
 import ecofarm.entity.Orders;
 
 @Controller
-@RequestMapping(value = "/admin/dashboard")
-public class AdminControllerDashboard {
+@RequestMapping(value = "employee/dashboard")
+public class EDashboardController {
 	@Autowired
 	private IAccountDAO accountDAO;
 	@Autowired
@@ -39,7 +39,7 @@ public class AdminControllerDashboard {
 		model.addAttribute("totalEarning", totalOrder);
 		model.addAttribute("totalClient", client.size());
 
-		return "admin/dashboard";
+		return "employee/emp-dashboard";
 
 	}
 }
