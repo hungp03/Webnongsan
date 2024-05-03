@@ -32,15 +32,7 @@
 				</div>
 				<div class="col-lg-9">
 					<div class="hero__search">
-						<div class="hero__search__form">
-							<form action="#">
-								<div class="hero__search__categories">
-									All Categories <span class="arrow_carrot-down"></span>
-								</div>
-								<input type="text" placeholder="What do yo u need?">
-								<button type="submit" class="site-btn">SEARCH</button>
-							</form>
-						</div>
+						<%@ include file="/WEB-INF/views/layouts/user/searchbox.jsp"%>
 						<div class="hero__search__phone">
 							<div class="hero__search__phone__icon">
 								<i class="fa fa-phone"></i>
@@ -221,12 +213,14 @@
 												data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
 												<div class="product__discount__percent">-20%</div>
 												<ul class="product__item__pic__hover">
-													<li><a href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
+													<li><a
+														href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
 															class="fa fa-heart"></i></a></li>
 													<li><a
 														href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
 															class="fa fa-retweet"></i></a></li>
-													<li><a href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
+													<li><a
+														href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
 															class="fa fa-shopping-cart"></i></a></li>
 												</ul>
 											</div>
@@ -301,12 +295,14 @@
 									<div class="product__item__pic set-bg"
 										data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
 										<ul class="product__item__pic__hover">
-											<li><a href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
+											<li><a
+												href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
 													class="fa fa-heart"></i></a></li>
 											<li><a
 												href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
 													class="fa fa-retweet"></i></a></li>
-											<li><a href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
+											<li><a
+												href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
 													class="fa fa-shopping-cart"></i></a></li>
 										</ul>
 									</div>

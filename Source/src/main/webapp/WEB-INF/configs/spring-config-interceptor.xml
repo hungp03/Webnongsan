@@ -13,24 +13,19 @@
 	<!-- Cấu hình interceptor -->
 
 	<mvc:interceptors>
-		<!-- Lọc tất cả các URL -->
-
-		<!--<bean class="ecofarm.interceptor.GlobalInterceptor" /> -->
-
-		<!-- <mvc:interceptor> -->
-		<!-- CHƯA đăng nhập thì KHÔNG được truy cập URL bên dưới -->
-		<!-- <mvc:mapping path="/user**"/> -->
-		<!-- <mvc:mapping path="/user/"/> -->
-		<!-- <mvc:exclude-mapping path="/user**" /> -->
-		<!-- <bean class="ecofarm.interceptor.UserInterceptor" /> -->
-		<!-- </mvc:interceptor> -->
+		
 
 		<mvc:interceptor>
 			<!-- CHƯA đăng nhập thì KHÔNG được truy cập URL bên dưới -->
 			<mvc:mapping path="/admin/**" />
 			<bean class="ecofarm.interceptor.AdminInterceptor" />
 		</mvc:interceptor>
-
+		
+		<mvc:interceptor>
+			<!-- CHƯA đăng nhập thì KHÔNG được truy cập URL bên dưới -->
+			<mvc:mapping path="/employee/**" />
+			<bean class="ecofarm.interceptor.EmployeeInterceptor" />
+		</mvc:interceptor>
 		<!-- <mvc:interceptor> -->
 		<!-- Đã đăng nhập thì KHÔNG được truy cập URL bên dưới -->
 		<!-- <mvc:mapping path="/guest/**" /> -->
