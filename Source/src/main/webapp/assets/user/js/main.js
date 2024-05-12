@@ -14,12 +14,6 @@
         Preloader
     --------------------*/
   $(window).on("load", function () {
-    /*        $(".loader").fadeOut();
-        $("#preloder").delay(0).fadeOut("slow");*/
-
-    //      ------------------
-    //          Gallery filter
-    //      --------------------
 
     $(".featured__controls li").on("click", function () {
       $(".featured__controls li").removeClass("active");
@@ -168,23 +162,25 @@
   /*-----------------------
 		Price Range Slider
 	------------------------ */
-  var rangeSlider = $(".price-range"),
+var rangeSlider = $(".price-range"),
     minamount = $("#minamount"),
     maxamount = $("#maxamount"),
     minPrice = rangeSlider.data("min"),
     maxPrice = rangeSlider.data("max");
-  rangeSlider.slider({
+
+rangeSlider.slider({
     range: true,
     min: minPrice,
     max: maxPrice,
     values: [minPrice, maxPrice],
     slide: function (event, ui) {
-      minamount.val("$" + ui.values[0]);
-      maxamount.val("$" + ui.values[1]);
+        minamount.text(ui.values[0] + " đ");
+        maxamount.text(ui.values[1] + " đ");
     },
-  });
-  minamount.val("$" + rangeSlider.slider("values", 0));
-  maxamount.val("$" + rangeSlider.slider("values", 1));
+});
+
+minamount.text(rangeSlider.slider("values", 0)  + " đ");
+maxamount.text(rangeSlider.slider("values", 1) + " đ");
 
   /*--------------------------
         Select

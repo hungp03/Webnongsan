@@ -16,6 +16,12 @@
 	font-weight: 600;
 	color: white;
 }
+
+.price-value{
+	font-size: 16px;
+	color: #dd2222;
+	font-weight: 700;
+}
 </style>
 </head>
 <body>
@@ -83,22 +89,31 @@
 					<div class="sidebar">
 
 						<div class="sidebar__item">
-							<h4>Filter</h4>
-							<div>
+							<h4>Price</h4>
+							<!-- <div>
 								<label>Price</label> <input type="range" min="0" max="5000000"
 									value="0" class="slider" id="priceRange"
 									placeholder="price_filter" style="width: 100%">
-							</div>
-							<div class="price-range-wrap">
+							</div> -->
 
-								<%-- <div class="range-slider">
-									<div class="price-input">
-										<input type="text" id="minamount"
-											value="<fmt:formatNumber value='1000' />₫"> <input
-											type="text" id="maxamount"
-											value="<fmt:formatNumber value='10000000' />₫">
+
+							<div class="price-range-wrap">
+								<div
+									class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+									data-min="1000" data-max="${maxprice }">
+									<div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+									<span tabindex="0"
+										class="ui-slider-handle ui-corner-all ui-state-default"></span>
+									<span tabindex="0"
+										class="ui-slider-handle ui-corner-all ui-state-default"></span>
+								</div>
+								<div class="range-slider">
+									<div class="d-flex justify-content-between">
+										<p class="price-value" id="minamount"></p><p
+											class="price-value" id="maxamount"></p>
 									</div>
-								</div> --%>
+								</div>
+
 								<button class="btn btn-custom mt-4" onclick="filterByPrice()">Filter</button>
 
 							</div>
@@ -117,9 +132,12 @@
 									<div class="filter__sort">
 										<span>Sort By</span> <select id="sort"
 											onchange="sortProducts()">
-											<option value="none">Default</option>
-											<option value="name">Name</option>
-											<option value="price">Price</option>
+											<option value="none"
+												<c:if test="${param.sort eq 'none'}">selected</c:if>>Default</option>
+											<option value="name"
+												<c:if test="${param.sort eq 'name'}">selected</c:if>>Name</option>
+											<option value="price"
+												<c:if test="${param.sort eq 'price'}">selected</c:if>>Price</option>
 										</select>
 									</div>
 								</div>
@@ -168,7 +186,7 @@
 						</div>
 
 					</div>
-					<c:if test="${products.size() > 0}">
+					<c:if test="${total > 6}">
 						<div class="d-flex justify-content-center">
 							<div class="product__pagination">
 								<c:set var="PreviousPage" value="${paginateInfo.currentPage }" />
@@ -232,24 +250,26 @@
 			</div>
 		</div>
 	</section>
+	<script src="<c:url value='/assets/user/js/searchProduct.js'/>"></script>
 	<script>
 		function sortProducts() {
 			var sortValue = document.getElementById("sort").value;
 			var searchValue = getParameterByName("search");
 			var baseUrl = "${pageContext.request.contextPath}/product/";
 			var url = baseUrl + "search.htm?";
-			if (sortValue !== "none") {
-				url += "sort=" + sortValue;
-			}
 			if (searchValue) {
-				url += "&search=" + searchValue;
+				url += "search=" + searchValue;
 			}
+			if (sortValue !== "none") {
+				url += "&sort=" + sortValue;
+			}
+
 			window.location.href = url;
 		}
 
 		function filterByPrice() {
-			var minPrice = 0;
-			var maxPrice = document.getElementById("priceRange").value;
+			var minPrice = parseInt(document.getElementById("minamount").innerText);
+			var maxPrice = parseInt(document.getElementById("maxamount").innerText);
 			var searchValue = getParameterByName("search");
 			var sortValue = getParameterByName("sort");
 			var currentPage = getParameterByName("currentPage");
@@ -266,30 +286,6 @@
 				url += "&currentPage=" + currentPage;
 			}
 			window.location.href = url;
-		}
-
-		function getParameterByName(name, url) {
-			if (!url)
-				url = window.location.href;
-			name = name.replace(/[\[\]]/g, "\\$&");
-			var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex
-					.exec(url);
-			if (!results)
-				return null;
-			if (!results[2])
-				return '';
-			return decodeURIComponent(results[2].replace(/\+/g, " "));
-		}
-	</script>
-
-	<script>
-		// Lấy tham số tìm kiếm từ URL nếu có
-		var urlParams = new URLSearchParams(window.location.search);
-		var searchValue = urlParams.get('search');
-
-		// Đặt giá trị tìm kiếm vào trường input nếu tham số tìm kiếm đã được cung cấp trong URL
-		if (searchValue !== null) {
-			document.getElementById('search').value = searchValue;
 		}
 	</script>
 
