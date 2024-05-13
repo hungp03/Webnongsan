@@ -11,4 +11,5 @@ public interface IFeedbackDAO {
 	public List<Feedback> searchFeedback(String search);
 	public Feedback getFeedBackById(int fid);
 	public boolean updateFeedback(Feedback feedback);
+	public boolean addFeedback(Feedback feedback);
 }

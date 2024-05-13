@@ -118,5 +118,22 @@ public class FeedbackDAOImpl implements IFeedbackDAO {
 		}
 		return false;
 	}
+	@Override
+	public boolean addFeedback(Feedback feedback) {
+		Session session = sessionFactory.openSession();
+		Transaction tr = session.beginTransaction();
+		try {
+			session.save(feedback);
+			tr.commit();
+			return true;
+		} catch (Exception e) {
+			System.out.println("Add feedback failed: " + e.getCause());
+			tr.rollback();
+		} finally {
+			session.close();
+		}
+		return false;
+	}
+	
 
 }
