@@ -55,10 +55,13 @@ public class ProductController {
 			@RequestParam(value = "minPrice", required = false) BigDecimal minPrice,
 	        @RequestParam(value = "maxPrice", required = false) BigDecimal maxPrice) {
 		List<Product> products = productDAO.searchProducts(search);
+		int maxPri = this.getMaxPrice(products);
 		List<Category> cates = categoryDAO.getAllCategories();
 		
 		if (minPrice != null && maxPrice != null) {
-	        products = filterByPriceRange(products, minPrice, maxPrice);
+			if (!(minPrice.compareTo(BigDecimal.ZERO) >= 0 && minPrice.compareTo(new BigDecimal(1000)) < 0 && maxPrice.compareTo(new BigDecimal(maxPri)) == 0)) {
+		        products = filterByPriceRange(products, minPrice, maxPrice);
+		    }
 	    }
 
 	    if ("name".equals(sort)) {
@@ -74,11 +77,14 @@ public class ProductController {
 		Paginate paginate = paginateDAO.getInfoPaginate(totalProducts, 6, crrPage);
 		List<Product> prods = products.subList(paginate.getStart(), paginate.getEnd());
 		model.addAttribute("categories", cates);
+		model.addAttribute("latestProducts", productDAO.getLatestProduct());
 		model.addAttribute("paginateInfo", paginate);
 		model.addAttribute("total", totalProducts);
 		model.addAttribute("products", prods);
 		model.addAttribute("sort", sort);
+		model.addAttribute("maxprice", maxPri);
 		model.addAttribute("search", search);
+		//System.out.println(maxPri);
 		return "user/searchProduct";
 	}
 	
@@ -90,5 +96,15 @@ public class ProductController {
 	            })
 	            .collect(Collectors.toList());
 	}
+	
+	private int getMaxPrice(List<Product> products) {
+        if (products.isEmpty()) {
+            return 1000; // Trả về 1000 (giá mặc định)
+        }
 
+        return (int) products.stream()
+                .mapToDouble(Product::getPrice) // Chuyển đổi danh sách thành danh sách giá
+                .max() // Tìm giá lớn nhất
+                .orElse(1000);
+    }
 }

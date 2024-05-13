@@ -119,20 +119,20 @@ public class ProductDAOImpl implements IProductDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getLatestProduct() {
-		List<Product> list = new ArrayList<>();
-		Session session = sessionFactory.getCurrentSession();
-		try {
-			
-			String hql = "FROM Product ORDER BY PostingDate DESC";
-			Query query = session.createQuery(hql);
-			list = query.list();
-			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
-		return list;
+	    List<Product> list = new ArrayList<>();
+	    Session session = sessionFactory.getCurrentSession();
+	    try {
+	        String hql = "FROM Product ORDER BY PostingDate DESC";
+	        Query query = session.createQuery(hql);
+	        query.setMaxResults(3);
+	        list = query.list();
+	    } catch (Exception e) {
+	        System.out.println(e.getMessage());
+	        e.printStackTrace();
+	    }
+	    return list;
 	}
+
 
 	@Override
 	public List<Product> getReviewProduct() {
