@@ -125,5 +125,35 @@
 							+ newVal;
 				})
 	</script> </content>
+	<content tag="script">
+		<script>
+			$(".pro-qty").on("click", '.qtybtn',function(){
+				var id = $(this).parent().data("id");
+				var $button = $(this);
+		        var oldValue = parseFloat($button.parent().find('input').val());
+		        var newVal;
+		        if ($button.hasClass('inc')) {
+		            newVal = oldValue + 1;
+		            window.location = "EditCart.htm?productId="+id+"&qty="+newVal;
+		        } else {
+		            // Don't allow decrementing below zero
+		            if (oldValue > 1) {
+		                newVal = oldValue - 1;
+		                window.location = "EditCart.htm?productId="+id+"&qty="+newVal;
+		            } else {
+		                var confirmation = confirm("Số lượng hàng hóa hiện tại là 1. Bạn có muốn xóa sản phẩm khỏi giỏ hàng không?")
+		                if(confirmation){
+		                	window.location = "DeleteCart.htm?productId="+id;
+		                }else{
+		                	return;
+		                }
+		            }
+		        }
+		        /* $button.parent().find('input').val(newVal); */
+		        
+			}) 
+
+		</script>
+	</content>
 
 </body>
