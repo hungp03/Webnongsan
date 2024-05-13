@@ -77,6 +77,7 @@ public class ProductController {
 		Paginate paginate = paginateDAO.getInfoPaginate(totalProducts, 6, crrPage);
 		List<Product> prods = products.subList(paginate.getStart(), paginate.getEnd());
 		model.addAttribute("categories", cates);
+		model.addAttribute("latestProducts", productDAO.getLatestProduct());
 		model.addAttribute("paginateInfo", paginate);
 		model.addAttribute("total", totalProducts);
 		model.addAttribute("products", prods);

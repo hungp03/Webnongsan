@@ -117,6 +117,32 @@
 								<button class="btn btn-custom mt-4" onclick="filterByPrice()">Filter</button>
 
 							</div>
+							<div class="sidebar__item mt-2">
+								<div class="latest-product__text">
+								<h4>Latest Products</h4>
+								<div class="latest-product__slider owl-carousel">
+
+									<div class="latest-prdouct__slider__item">
+										<c:forEach var="item" items="${latestProducts}">
+											<a
+												href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"
+												class="latest-product__item">
+												<div class="latest-product__item__pic">
+													<img
+														src="<c:url value="/assets/user/img/products/${item.image }"/>"
+														alt="">
+												</div>
+												<div class="latest-product__item__text">
+													<h6>${item.productName }</h6>
+													<span><fmt:formatNumber value='${item.price }'
+															type='currency' currencySymbol='đ' maxFractionDigits='0' /></span>
+												</div>
+											</a>
+										</c:forEach>
+									</div>
+								</div>
+							</div>
+							</div>
 						</div>
 
 					</div>

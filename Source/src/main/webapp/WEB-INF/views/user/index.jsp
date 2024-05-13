@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/layouts/user/common.jsp"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <head>
 <style>
 .featured__controls ul li a {
@@ -121,10 +122,12 @@
 									<div class="featured__item__pic set-bg"
 										data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
 										<ul class="featured__item__pic__hover">
-											<li><a href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
+											<li><a
+												href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
 													class="fa fa-heart"></i></a></li>
-											<li><a href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
-															class="fa fa-retweet"></i></a></li>
+											<li><a
+												href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
+													class="fa fa-retweet"></i></a></li>
 											<li><a
 												href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
 													class="fa fa-shopping-cart"></i></a></li>
@@ -134,7 +137,10 @@
 										<h6>
 											<a href="<c:url value="/assets/user/#"/>">${item.productName }</a>
 										</h6>
-										<h5>${item.price}</h5>
+										<h5>
+											<fmt:formatNumber value='${item.price }' type='currency'
+												currencySymbol='đ' maxFractionDigits='0' />
+										</h5>
 									</div>
 								</div>
 							</div>
@@ -149,28 +155,35 @@
 							<c:set var="count" value="0" />
 							<c:forEach var="item" items="${products }">
 
-							<c:if test="${item.category.categoryId == category.categoryId and count < 8}">
-								<div class="col-lg-3 col-md-4 col-sm-6">
-									<div class="featured__item">
-										<div class="featured__item__pic set-bg"
-											data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
-											<ul class="featured__item__pic__hover">
-												<li><a href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
-														class="fa fa-heart"></i></a></li>
-												<li><a href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
+								<c:if
+									test="${item.category.categoryId == category.categoryId and count < 8}">
+									<div class="col-lg-3 col-md-4 col-sm-6">
+										<div class="featured__item">
+											<div class="featured__item__pic set-bg"
+												data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
+												<ul class="featured__item__pic__hover">
+													<li><a
+														href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
+															class="fa fa-heart"></i></a></li>
+													<li><a
+														href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
 															class="fa fa-retweet"></i></a></li>
-												<li><a href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
-														class="fa fa-shopping-cart"></i></a></li>
-											</ul>
-										</div>
-										<div class="featured__item__text">
-											<h6>
-												<a href="<c:url value="/assets/user/#"/>">${item.productName }</a>
-											</h6>
-											<h5>${item.price}</h5>
+													<li><a
+														href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
+															class="fa fa-shopping-cart"></i></a></li>
+												</ul>
+											</div>
+											<div class="featured__item__text">
+												<h6>
+													<a href="<c:url value="/assets/user/#"/>">${item.productName }</a>
+												</h6>
+												<h5>
+													<fmt:formatNumber value='${item.price }' type='currency'
+														currencySymbol='đ' maxFractionDigits='0' />
+												</h5>
 
+											</div>
 										</div>
-									</div>
 									</div>
 									<c:set var="count" value="${count+1 }" />
 								</c:if>
@@ -182,156 +195,6 @@
 
 				</c:forEach>
 			</div>
-
-
-			<%-- <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
-					<div class="featured__item">
-						<div class="featured__item__pic set-bg"
-							data-setbg="<c:url value="/assets/user/img/featured/feature-2.jpg"/>">
-							<ul class="featured__item__pic__hover">
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-heart"></i></a></li>
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-retweet"></i></a></li>
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="featured__item__text">
-							<h6>
-								<a href="<c:url value="/assets/user/#"/>">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fresh-meat">
-					<div class="featured__item">
-						<div class="featured__item__pic set-bg"
-							data-setbg="<c:url value="/assets/user/img/featured/feature-3.jpg"/>">
-							<ul class="featured__item__pic__hover">
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-heart"></i></a></li>
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-retweet"></i></a></li>
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="featured__item__text">
-							<h6>
-								<a href="<c:url value="/assets/user/#"/>">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-4 col-sm-6 mix fastfood oranges">
-					<div class="featured__item">
-						<div class="featured__item__pic set-bg"
-							data-setbg="<c:url value="/assets/user/img/featured/feature-4.jpg"/>">
-							<ul class="featured__item__pic__hover">
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-heart"></i></a></li>
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-retweet"></i></a></li>
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="featured__item__text">
-							<h6>
-								<a href="<c:url value="/assets/user/#"/>">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
-					<div class="featured__item">
-						<div class="featured__item__pic set-bg"
-							data-setbg="<c:url value="/assets/user/img/featured/feature-5.jpg"/>">
-							<ul class="featured__item__pic__hover">
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-heart"></i></a></li>
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-retweet"></i></a></li>
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="featured__item__text">
-							<h6>
-								<a href="<c:url value="/assets/user/#"/>">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-4 col-sm-6 mix oranges fastfood">
-					<div class="featured__item">
-						<div class="featured__item__pic set-bg"
-							data-setbg="<c:url value="/assets/user/img/featured/feature-6.jpg"/>">
-							<ul class="featured__item__pic__hover">
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-heart"></i></a></li>
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-retweet"></i></a></li>
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="featured__item__text">
-							<h6>
-								<a href="<c:url value="/assets/user/#"/>">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
-					<div class="featured__item">
-						<div class="featured__item__pic set-bg"
-							data-setbg="<c:url value="/assets/user/img/featured/feature-7.jpg"/>">
-							<ul class="featured__item__pic__hover">
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-heart"></i></a></li>
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-retweet"></i></a></li>
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="featured__item__text">
-							<h6>
-								<a href="<c:url value="/assets/user/#"/>">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables">
-					<div class="featured__item">
-						<div class="featured__item__pic set-bg"
-							data-setbg="<c:url value="/assets/user/img/featured/feature-8.jpg"/>">
-							<ul class="featured__item__pic__hover">
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-heart"></i></a></li>
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-retweet"></i></a></li>
-								<li><a href="<c:url value="/assets/user/#"/>"><i
-										class="fa fa-shopping-cart"></i></a></li>
-							</ul>
-						</div>
-						<div class="featured__item__text">
-							<h6>
-								<a href="<c:url value="/assets/user/#"/>">Crab Pool Security</a>
-							</h6>
-							<h5>$30.00</h5>
-						</div>
-					</div>
-				</div>
-			 --%>
 		</div>
 
 	</section>
@@ -419,7 +282,8 @@
 										</div>
 										<div class="latest-product__item__text">
 											<h6>${item.productName }</h6>
-											<span>${item.price }</span>
+											<span><fmt:formatNumber value='${item.price }'
+													type='currency' currencySymbol='đ' maxFractionDigits='0' /></span>
 										</div>
 									</a>
 									<c:if
@@ -451,7 +315,8 @@
 										</div>
 										<div class="latest-product__item__text">
 											<h6>${item.productName }</h6>
-											<span>${item.price }</span>
+											<span><fmt:formatNumber value='${item.price }'
+													type='currency' currencySymbol='đ' maxFractionDigits='0' /></span>
 										</div>
 									</a>
 									<c:if
@@ -462,33 +327,6 @@
 							</c:if>
 							</c:if>
 							</c:forEach>
-
-							<%-- <a href="<c:url value="/assets/user/#"/>"
-									class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img
-											src="<c:url value="/assets/user/img/latest-product/lp-2.jpg"/>"
-											alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a> 
-								
-								<a href="<c:url value="/assets/user/#"/>"
-									class="latest-product__item">
-									<div class="latest-product__item__pic">
-										<img
-											src="<c:url value="/assets/user/img/latest-product/lp-3.jpg"/>"
-											alt="">
-									</div>
-									<div class="latest-product__item__text">
-										<h6>Crab Pool Security</h6>
-										<span>$30.00</span>
-									</div>
-								</a> --%>
-
 						</div>
 					</div>
 				</div>
