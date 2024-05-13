@@ -105,18 +105,24 @@
 		        var newVal;
 		        if ($button.hasClass('inc')) {
 		            newVal = oldValue + 1;
+		            window.location = "EditCart.htm?productId="+id+"&qty="+newVal;
 		        } else {
 		            // Don't allow decrementing below zero
-		            if (oldValue > 0) {
+		            if (oldValue > 1) {
 		                newVal = oldValue - 1;
+		                window.location = "EditCart.htm?productId="+id+"&qty="+newVal;
 		            } else {
-		                newVal = 0;
+		                var confirmation = confirm("Số lượng hàng hóa hiện tại là 1. Bạn có muốn xóa sản phẩm khỏi giỏ hàng không?")
+		                if(confirmation){
+		                	window.location = "DeleteCart.htm?productId="+id;
+		                }else{
+		                	return;
+		                }
 		            }
 		        }
 		        /* $button.parent().find('input').val(newVal); */
-		        window.location = "EditCart.htm?productId="+id+"&qty="+newVal;
+		        
 			}) 
-
 
 		</script>
 	</content>
