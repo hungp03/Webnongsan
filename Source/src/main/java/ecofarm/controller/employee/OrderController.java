@@ -59,7 +59,7 @@ public class OrderController {
 		model.addAttribute("orders", os);
 		model.addAttribute("filter", filter);
 
-		return "employee/order-list";
+		return "employee/order/order-list";
 	}
 
 	@RequestMapping(value = "update-order")
@@ -83,7 +83,7 @@ public class OrderController {
 		model.addAttribute("order", order);
 		model.addAttribute("orderDetail", orderDetail);
 
-		return "employee/order-detail";
+		return "employee/order/order-detail";
 	}
 
 }

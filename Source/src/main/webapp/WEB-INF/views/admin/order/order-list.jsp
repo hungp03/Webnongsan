@@ -126,7 +126,7 @@
 
 													<td class="align-middle"><fmt:formatNumber
 															value="${item.price }" type="currency"
-															currencySymbol="VND" maxFractionDigits="0" /></td>
+															currencySymbol="đ" maxFractionDigits="0" /></td>
 
 
 												</tr>

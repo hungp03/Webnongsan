@@ -204,11 +204,6 @@ public class Account {
 		this.orders = orders;
 	}
 
-	/*
-	 * public Set<Coupon> getCoupons() { return coupons; }
-	 * 
-	 * public void setCoupons(Set<Coupon> coupons) { this.coupons = coupons; }
-	 */
 
 	public Set<Product> getProducts() {
 		return products;

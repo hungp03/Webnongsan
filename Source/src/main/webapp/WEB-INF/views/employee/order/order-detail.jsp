@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/layouts/admin/admin-lib.jsp"%>
 
 <body>
@@ -8,7 +10,7 @@
 
 		<!-- Sidebar -->
 		<div class="col-2 d-none d-lg-inline "><%@include
-				file="/WEB-INF/views/layouts/admin/admin-headernav.jsp"%></div>
+				file="/WEB-INF/views/layouts/employee/employee-headernav.jsp"%></div>
 		<div class="col-10 col-12-sm col-12-md">
 			<div id="content-wrapper" class="d-flex flex-column">
 				<!-- Main -->
@@ -24,9 +26,9 @@
 									<nav aria-label="breadcrumb">
 										<ol class="breadcrumb mb-0 text-muted fs-6 fw-semibold">
 											<li class="breadcrumb-item  "><a
-												href="admin/dashboard.htm" class="brc-link">Dashboard
+												href="employee/dashboard.htm" class="brc-link">Dashboard
 											</a></li>
-											<li class="breadcrumb-item "><a href="admin/orders.htm"
+											<li class="breadcrumb-item "><a href="employee/orders.htm"
 												class="brc-link">Order </a>
 											<li class="breadcrumb-item active" aria-current="page"
 												class="text-decoration-none">Order Detail</li>
@@ -80,7 +82,7 @@
 																		pattern="dd-MM-yyyy" value="${order.orderTime}" /></span><br>
 																Order Total: <span class="text-dark"><fmt:formatNumber
 																		value="${order.price}" type="currency"
-																		currencySymbol="VND" maxFractionDigits="0" /></span>
+																		currencySymbol="đ" maxFractionDigits="0" /></span>
 															</p>
 														</div>
 													</div>
@@ -119,12 +121,12 @@
 																	</td>
 																	<td><span class="text-dark fw-bold"> <fmt:formatNumber
 																				value="${o.product.price }" type="currency"
-																				currencySymbol="VND" maxFractionDigits="0" />
+																				currencySymbol="đ" maxFractionDigits="0" />
 																	</span></td>
 																	<td>${o.quantity }</td>
 																	<td><span class="text-dark fw-bold"> <fmt:formatNumber
 																				value="${o.product.price * o.quantity }"
-																				type="currency" currencySymbol="VND"
+																				type="currency" currencySymbol="đ"
 																				maxFractionDigits="0" />
 																	</span></td>
 																</tr>
@@ -137,14 +139,14 @@
 																	Total :</td>
 																<td class="fw-medium text-dark "><fmt:formatNumber
 																		value="${order.price - 20000}" type="currency"
-																		currencySymbol="VND" maxFractionDigits="0" /></td>
+																		currencySymbol="đ" maxFractionDigits="0" /></td>
 															</tr>
 															<tr>
 																<td class="border-bottom-0 pb-0"></td>
 																<td class="border-bottom-0 pb-0"></td>
 																<td colspan="1" class="fw-medium text-dark ">Shipping</td>
 																<td class="fw-medium text-dark  "><fmt:formatNumber
-																		value="${20000}" type="currency" currencySymbol="VND"
+																		value="${20000}" type="currency" currencySymbol="đ"
 																		maxFractionDigits="0" /></td>
 															</tr>
 
@@ -156,7 +158,7 @@
 																</td>
 																<td class="fw-semi-bold text-dark "><fmt:formatNumber
 																		value="${order.price}" type="currency"
-																		currencySymbol="VND" maxFractionDigits="0" /></td>
+																		currencySymbol="đ" maxFractionDigits="0" /></td>
 															</tr>
 
 														</tbody>

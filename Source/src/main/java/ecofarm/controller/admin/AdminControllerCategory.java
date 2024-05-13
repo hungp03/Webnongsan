@@ -63,7 +63,7 @@ public class AdminControllerCategory {
 		model.addAttribute("categories", cates);
 		model.addAttribute("filter", filter);
 
-		return "admin/category-list";
+		return "admin/category/category-list";
 	}
 
 	@Autowired
@@ -74,7 +74,7 @@ public class AdminControllerCategory {
 	public String getCategoryAdd(ModelMap model) {
 		CategoryBean categoryBean = new CategoryBean();
 		model.addAttribute("addCate", categoryBean);
-		return "admin/category-form";
+		return "admin/category/category-form";
 	}
 
 	@RequestMapping(value = "addcategory", method = RequestMethod.POST)
@@ -87,7 +87,7 @@ public class AdminControllerCategory {
 
 		if (errors.hasErrors()) {
 			model.addAttribute("mess", "Tên category không hợp lệ.");
-			return "admin/category-form";
+			return "admin/category/category-form";
 		} else {
 			// Tiếp tục xử lý khi không có lỗi
 			Category category = new Category();
@@ -116,7 +116,7 @@ public class AdminControllerCategory {
 		Category cate = categoryDAO.getCategory(id);
 		CategoryBean categoryBean = new CategoryBean(cate);
 		model.addAttribute("updateCate", categoryBean);
-		return "admin/category-form";
+		return "admin/category/category-form";
 	}
 
 	@RequestMapping(value = "update_category", method = RequestMethod.POST)
@@ -134,7 +134,7 @@ public class AdminControllerCategory {
 				categoryBean.setImage(category.getImage());
 				model.addAttribute("mess", "Tên category không hợp lệ.");
 				model.addAttribute("updateCate", categoryBean);
-				return "admin/category-form";
+				return "admin/category/category-form";
 			}
 			// Đặt tên mới
 			category.setName(categoryBean.getName());
@@ -158,7 +158,7 @@ public class AdminControllerCategory {
 				categoryBean.setImage(category.getImage());
 				model.addAttribute("mess", "An error occurred");
 				model.addAttribute("updateCate", categoryBean);
-				return "admin/category-form";
+				return "admin/category/category-form";
 			}
 			categoryDAO.updateCategory(category);
 			re.addFlashAttribute("mess", "Update successful");

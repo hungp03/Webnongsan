@@ -82,7 +82,7 @@ public class AdminControllerProduct {
 		model.addAttribute("paginate", paginate);
 		model.addAttribute("products", prods);
 		model.addAttribute("sort", sort);
-		return "admin/product-list";
+		return "admin/product/product-list";
 	}
 
 
@@ -97,7 +97,7 @@ public class AdminControllerProduct {
 		List<Category> cates = categoryDAO.getAllCategories();
 		model.addAttribute("addProdBean", productBean);
 		model.addAttribute("categories", cates);
-		return "admin/product-form";
+		return "admin/product/product-form";
 	}
 
 	@RequestMapping(value = "create-product", method = RequestMethod.POST)
@@ -131,7 +131,7 @@ public class AdminControllerProduct {
 	    	model.addAttribute("mess", "Thêm mới thất bại! ");
 	    	List<Category> cates = categoryDAO.getAllCategories();
 	        model.addAttribute("categories", cates);
-	    	return "admin/product-form";
+	    	return "admin/product/product-form";
 	    }
 		Product newProduct = new Product();
 		newProduct.setAccount(acc);
@@ -162,7 +162,7 @@ public class AdminControllerProduct {
 		boolean done = productDAO.insertProduct(newProduct);
 		if (!done) {
 			model.addAttribute("mess", "Thêm product thất bại");
-			return "admin/product-form";
+			return "admin/product/product-form";
 		}
 		re.addFlashAttribute("mess", "Thêm thành công");
 		return "redirect:/admin/products.htm";
@@ -196,7 +196,7 @@ public class AdminControllerProduct {
 		ProductBean productBean = new ProductBean(prod);
 		model.addAttribute("categories", cates);
 		model.addAttribute("updateProdBean", productBean);
-		return "admin/product-form";
+		return "admin/product/product-form";
 	}
 
 	@RequestMapping(value = "update_product/{id}", method = RequestMethod.POST)
@@ -253,7 +253,7 @@ public class AdminControllerProduct {
 				model.addAttribute("mess", "Cập nhật thất bại");
 				product.setImage(foundProd.getImage());
 				model.addAttribute("updateProdBean", product);
-				return "admin/product-form";
+				return "admin/product/product-form";
 			}
 			foundProd.setUnit(product.getUnit());
 			foundProd.setProductName(product.getProductName());

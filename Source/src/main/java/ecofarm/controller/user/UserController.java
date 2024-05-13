@@ -131,7 +131,7 @@ public class UserController {
 			Account loggedInUser = accountDAO.getAccountByEmail(account.getEmail());
 			session.setAttribute("userInfo", loggedInUser);
 			//Thêm role vào khi đăng nhập 
-			Cookie cookie_role_name = new Cookie("userRole", loggedInUser.getRole().getRoleName().toUpperCase());
+			Cookie cookie_role_name = new Cookie("userRole", BCrypt.hashpw(loggedInUser.getRole().getRoleId(), BCrypt.gensalt(10)));
 			response.addCookie(cookie_role_name);
 			if(checkRemember!= null) {
 				Cookie cookie = new Cookie("userEmail", loggedInUser.getEmail());
@@ -142,7 +142,7 @@ public class UserController {
 				response.addCookie(cookie_role);
 			}else {
 				Cookie cookie = new Cookie("userEmail", loggedInUser.getEmail());
-				Cookie cookie_role = new Cookie("userRole", loggedInUser.getRole().getRoleId());
+				Cookie cookie_role = new Cookie("userRole", BCrypt.hashpw(loggedInUser.getRole().getRoleId(), BCrypt.gensalt(10)));
 				cookie.setMaxAge(-1);
 				cookie_role.setMaxAge(-1);
 				response.addCookie(cookie);

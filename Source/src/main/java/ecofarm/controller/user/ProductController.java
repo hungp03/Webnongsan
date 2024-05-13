@@ -43,7 +43,7 @@ public class ProductController {
 		mv.addObject("latestProducts", productDAO.getLatestProductsByCaID(id));
 		mv.addObject("categoryID", id);
 		mv.addObject("paginateInfo", paginateDAO.getInfoPaginate(products.size(), 5, currentPage));
-		mv.setViewName("user/product");
+		mv.setViewName("user/product/product");
 		return mv;
 	}
 	
@@ -85,7 +85,7 @@ public class ProductController {
 		model.addAttribute("maxprice", maxPri);
 		model.addAttribute("search", search);
 		//System.out.println(maxPri);
-		return "user/searchProduct";
+		return "user/product/searchProduct";
 	}
 	
 	private List<Product> filterByPriceRange(List<Product> products, BigDecimal minPrice, BigDecimal maxPrice) {

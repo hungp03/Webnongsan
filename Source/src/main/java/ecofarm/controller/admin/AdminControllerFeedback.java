@@ -48,7 +48,7 @@ public class AdminControllerFeedback {
 		model.addAttribute("paginate", paginate);
 		model.addAttribute("feedbacks", feedbacks);
 		model.addAttribute("star", star);
-		return "admin/feedback-list";
+		return "admin/feedback/feedback-list";
 	}
 	
 	@RequestMapping("changestatus")
