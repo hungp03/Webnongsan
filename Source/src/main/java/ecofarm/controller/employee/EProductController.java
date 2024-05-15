@@ -82,7 +82,7 @@ public class EProductController {
 		model.addAttribute("paginate", paginate);
 		model.addAttribute("products", prods);
 		model.addAttribute("sort", sort);
-		return "employee/product-list";
+		return "employee/product/product-list";
 	}
 
 
@@ -97,7 +97,7 @@ public class EProductController {
 		List<Category> cates = categoryDAO.getAllCategories();
 		model.addAttribute("addProdBean", productBean);
 		model.addAttribute("categories", cates);
-		return "employee/product-form";
+		return "employee/product/product-form";
 	}
 
 	@RequestMapping(value = "create-product", method = RequestMethod.POST)
@@ -106,7 +106,7 @@ public class EProductController {
 
 		Account acc = (Account) session.getAttribute("userInfo");
 		if (acc == null) {
-			System.out.print("Khong co user");
+			System.out.print("Khong co tai khoan dang nhap");
 			return "redirect:/logout.htm";
 		}
 		
@@ -131,7 +131,7 @@ public class EProductController {
 	    	model.addAttribute("mess", "Thêm mới thất bại! ");
 	    	List<Category> cates = categoryDAO.getAllCategories();
 	        model.addAttribute("categories", cates);
-	    	return "employee/product-form";
+	    	return "employee/product/product-form";
 	    }
 		Product newProduct = new Product();
 		newProduct.setAccount(acc);
@@ -162,7 +162,7 @@ public class EProductController {
 		boolean done = productDAO.insertProduct(newProduct);
 		if (!done) {
 			model.addAttribute("mess", "Thêm product thất bại");
-			return "employee/product-form";
+			return "employee/product/product-form";
 		}
 		re.addFlashAttribute("mess", "Thêm thành công");
 		return "redirect:/employee/products.htm";
@@ -196,7 +196,7 @@ public class EProductController {
 		ProductBean productBean = new ProductBean(prod);
 		model.addAttribute("categories", cates);
 		model.addAttribute("updateProdBean", productBean);
-		return "employee/product-form";
+		return "employee/product/product-form";
 	}
 
 	@RequestMapping(value = "update_product/{id}", method = RequestMethod.POST)
@@ -226,7 +226,7 @@ public class EProductController {
 	        model.addAttribute("categories", cates);
 	        product.setImage(foundProd.getImage());
 	        model.addAttribute("updateProdBean", product);
-	    	return "employee/product-form";
+	    	return "employee/product/product-form";
 	    }
 		if (foundProd != null) {
 			Category category = categoryDAO.getCategory(product.getCategoryId());
@@ -253,7 +253,7 @@ public class EProductController {
 				model.addAttribute("mess", "Cập nhật thất bại");
 				product.setImage(foundProd.getImage());
 				model.addAttribute("updateProdBean", product);
-				return "employee/product-form";
+				return "employee/product/product-form";
 			}
 			foundProd.setUnit(product.getUnit());
 			foundProd.setProductName(product.getProductName());

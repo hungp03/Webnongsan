@@ -1,10 +1,6 @@
 package ecofarm.controller.admin;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Supplier;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ecofarm.DAO.IOrderDAO;
 import ecofarm.DAOImpl.PaginateDAOImpl;
-import ecofarm.entity.Category;
 import ecofarm.entity.OrderDetail;
 import ecofarm.entity.Orders;
 import ecofarm.utility.Paginate;
@@ -60,7 +55,7 @@ public class AdminControllerOrder {
 		model.addAttribute("orders", os);
 		model.addAttribute("filter", filter);
 
-		return "admin/order-list";
+		return "admin/order/order-list";
 	}
 
 	@RequestMapping(value = "update-order")
@@ -84,7 +79,7 @@ public class AdminControllerOrder {
 		model.addAttribute("order", order);
 		model.addAttribute("orderDetail", orderDetail);
 
-		return "admin/order-detail";
+		return "admin/order/order-detail";
 	}
 
 }

@@ -31,6 +31,6 @@ public class ProductDetailController {
 			request.setAttribute("categories", categoryDAO.getAllCategories());
 			request.setAttribute("feedbacks", feedbackDAO.getFeedbackByProduct(product.getProductId()));
 		}
-		return "user/productDetails";
+		return "user/product/productDetails";
 	}
 }

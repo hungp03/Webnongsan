@@ -51,7 +51,7 @@ public class AdminControllerUser {
 		model.addAttribute("paginate", paginate);
 		model.addAttribute("accounts", accs);
 		model.addAttribute("source", "get-employee.htm");
-		return "admin/user-list";
+		return "admin/user/user-list";
 	}
 
 	@RequestMapping("get-guest")
@@ -66,7 +66,7 @@ public class AdminControllerUser {
 		model.addAttribute("paginate", paginate);
 		model.addAttribute("accounts", accs);
 		model.addAttribute("source", "get-guest.htm");
-		return "admin/user-list";
+		return "admin/user/user-list";
 	}
 
 	@RequestMapping("changestatus")
@@ -96,7 +96,7 @@ public class AdminControllerUser {
 		String role = uri.contains("guest") ? "Guest" : uri.contains("employee") ? "Employee" : "";
 		model.addAttribute("role", role);
 		model.addAttribute("adduser", acc);
-		return "admin/user-form";
+		return "admin/user/user-form";
 	}
 
 	@Autowired
@@ -135,7 +135,7 @@ public class AdminControllerUser {
 				model.addAttribute("adduser", user);
 				model.addAttribute("role", _role);
 				model.addAttribute("mess", "Thông tin đã tồn tại trên hệ thống");
-				return "admin/user-form";
+				return "admin/user/user-form";
 			}
 
 			if (accountDAO.createAccount(account)) {
@@ -145,7 +145,7 @@ public class AdminControllerUser {
 		}
 		model.addAttribute("adduser", user);
 		model.addAttribute("role", _role);
-		return "admin/user-form";
+		return "admin/user/user-form";
 	}
 
 	@RequestMapping(value = "edit", method = RequestMethod.GET)
@@ -163,7 +163,7 @@ public class AdminControllerUser {
 		model.addAttribute("id", id);
 		//System.out.print("id:" + id);
 		model.addAttribute("role", role);
-		return "admin/edit-user";
+		return "admin/user/edit-user";
 	}
 
 	@RequestMapping(value = "edit", method = RequestMethod.POST)
@@ -185,7 +185,7 @@ public class AdminControllerUser {
 			model.addAttribute("mess", "Update failed");
 			model.addAttribute("id", id);
 			model.addAttribute("role", role);
-			return "admin/edit-user";
+			return "admin/user/edit-user";
 		}
 		
 		if (accountDAO.isEmailUsedByOtherAccounts(user.getEmail(), id)) {
@@ -193,7 +193,7 @@ public class AdminControllerUser {
 			model.addAttribute("id", id);
 			model.addAttribute("role", role);
 			model.addAttribute("mess", "Email đã tồn tại trên hệ thống");
-			return "admin/edit-user";
+			return "admin/user/edit-user";
 		}
 		if (!user.getPassword().trim().isEmpty() && user.getPassword().length() >= 6 && user.getPassword().length() <= 50) {
 			account.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12)));
@@ -222,7 +222,7 @@ public class AdminControllerUser {
 			user.setAvatarDir(account.getAvatar());
 			model.addAttribute("mess", "An error occurred while processing image");
 			model.addAttribute("updateuser", user);
-			return "admin/edit-user";
+			return "admin/user/edit-user";
 		}
 
 		if (accountDAO.updateAccount(account)) {
@@ -237,7 +237,7 @@ public class AdminControllerUser {
 		}
 		model.addAttribute("mess", "Update failed");
 		model.addAttribute("updateuser", user);
-		return "admin/edit-user";
+		return "admin/user/edit-user";
 	}
 
 }
