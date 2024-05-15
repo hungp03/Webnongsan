@@ -85,15 +85,15 @@
 											value='${totalPrice }' type='currency' currencySymbol='đ'
 											maxFractionDigits='0' /></span></li>
 								<li>Delivery fee<span><fmt:formatNumber
-											value="20000" type="currency" currencySymbol="đ"
+											value="15000" type="currency" currencySymbol="đ"
 											maxFractionDigits="0" /></span></li>
 								<li>Total <span><fmt:formatNumber
-											value='${totalPrice + 20000 }' type='currency'
+											value='${totalPrice + 15000 }' type='currency'
 											currencySymbol='đ' maxFractionDigits='0' /></span></li>
 							</c:if>
 
 						</ul>
-						<a href="" class="primary-btn">PROCEED TO CHECKOUT</a>
+						<a href="order/checkout.htm" class="primary-btn">THANH TOÁN</a>
 					</div>
 				</div>
 			</div>

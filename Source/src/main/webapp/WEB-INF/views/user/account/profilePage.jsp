@@ -162,7 +162,7 @@
 											<div class="col-sm-12"
 												style="visibility: hidden; background-color: black; width: 300px; height: 300px"></div>
 											<div class="col-sm-12"
-												style="size: 500px; visibility: visibility; border: 2px solid red">
+												style="size: 500px; visibility: visibility;">
 												<div class="col-sm-6">
 													<input type="file" id="customFile" name="file" hidden=""
 														style="border: 2px solid red">
@@ -170,7 +170,6 @@
 												<div class="col-sm-6">
 													<div class="col-sm-3">
 														<label class="btn btn-success"
-															style="border: 2px solid red;" 
 														for="customFile">Upload</label>
 													</div>
 
@@ -180,7 +179,7 @@
 
 											<!-- Content -->
 											<p class="text-muted mt-3 mb-0">
-												<span class="me-1">Note:</span>Minimum size 300px x 300px
+												<span class="text-success">Note: </span>Minimum size 300px x 300px
 											</p>
 										</div>
 									</div>
@@ -196,7 +195,7 @@
 						<thead>
 							<tr>
 								<th scope="col">Địa chỉ</th>
-								<th scope="col">Xóa</th>
+								<th scope="col">Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -207,17 +206,17 @@
 									<td>${address.getFullAddress()}</td>
 									<td><a
 										href="DeleteAddress.htm?addressId=${address.getAddressId()}"><button
-												class="btn btn-danger">Xóa địa chỉ này</button></a></td>
+												class="btn btn-danger">Xóa</button></a></td>
 								</tr>
 							</c:forEach>
 							<!-- Các dòng khác có thể được thêm vào đây -->
 						</tbody>
 					</table>
 				</div>
-				<div class="gap-3 d-md-flex justify-content-md-end text-center">
+				<!-- <div class="gap-3 d-md-flex justify-content-md-end text-center">
 					<button type="button" class="btn btn-primary btn-lg"
 						style="margin-right: 4em;">Thêm địa chỉ</button>
-				</div>
+				</div> -->
 
 				<div>
 

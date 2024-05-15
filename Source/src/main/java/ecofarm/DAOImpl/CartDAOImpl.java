@@ -24,12 +24,13 @@ public class CartDAOImpl implements ICartDAO {
 	private IProductDAO productDAO;
 	@Autowired
 	private IAccountDAO accountDAO;
-	
+
 	private SessionFactory sessionFactory;
+
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Cart> getCartByAccountID(int accountID) {
@@ -57,16 +58,16 @@ public class CartDAOImpl implements ICartDAO {
 		CartId cartId = new CartId();
 		cartId.setAccountId(accountID);
 		cartId.setProductId(productID);
-		
+
 		Product product = productDAO.getProductByID(productID);
 		Account account = accountDAO.getAccountByID(accountID);
-		
+
 		Cart checkCart = getCartByID(productID, accountID);
-		if(product!=null) {
+		if (product != null) {
 			cart.setAccount(account);
 			cart.setProduct(product);
 			cart.setId(cartId);
-			if(checkCart==null) {
+			if (checkCart == null) {
 				cart.setQuantity(1);
 				Session session = sessionFactory.openSession();
 				try {
@@ -78,11 +79,11 @@ public class CartDAOImpl implements ICartDAO {
 					// TODO: handle exception
 					System.out.println(e.getMessage());
 					e.printStackTrace();
-				}finally {
+				} finally {
 					session.close();
 				}
-			}else {
-				cart.setQuantity(checkCart.getQuantity()+1);
+			} else {
+				cart.setQuantity(checkCart.getQuantity() + 1);
 				Session session = sessionFactory.openSession();
 				try {
 					Transaction tr = session.beginTransaction();
@@ -93,13 +94,14 @@ public class CartDAOImpl implements ICartDAO {
 					// TODO: handle exception
 					System.out.println(e.getMessage());
 					e.printStackTrace();
-				}finally {
+				} finally {
 					session.close();
 				}
 			}
 		}
 		return isAdded;
 	}
+
 	@SuppressWarnings("unchecked")
 	private Cart getCartByID(int productID, int accountID) {
 		List<Cart> list = new ArrayList<>();
@@ -117,12 +119,14 @@ public class CartDAOImpl implements ICartDAO {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		if(list.size() > 0) return list.get(0);
-		else return null;
+		if (list.size() > 0)
+			return list.get(0);
+		else
+			return null;
 	}
 
 	@Override
-	public boolean editCart(int productID, int accountID,int quantity) {
+	public boolean editCart(int productID, int accountID, int quantity) {
 		boolean isEdit = false;
 		Cart checkCart = getCartByID(productID, accountID);
 		if (checkCart != null) {
@@ -136,7 +140,7 @@ public class CartDAOImpl implements ICartDAO {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				e.printStackTrace();
-			}finally {
+			} finally {
 				session.close();
 			}
 		}
@@ -157,7 +161,7 @@ public class CartDAOImpl implements ICartDAO {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				e.printStackTrace();
-			}finally {
+			} finally {
 				session.close();
 			}
 		}
@@ -165,10 +169,10 @@ public class CartDAOImpl implements ICartDAO {
 	}
 
 	@Override
-	public double getTotalPrice(List<Cart> cart) {
-		double total = 0;
-		if(cart.size() > 0) {
-			for(Cart item : cart) {
+	public float getTotalPrice(List<Cart> cart) {
+		float total = 0;
+		if (cart.size() > 0) {
+			for (Cart item : cart) {
 				total += item.getQuantity() * item.getProduct().getPrice();
 			}
 			return total;
@@ -183,20 +187,20 @@ public class CartDAOImpl implements ICartDAO {
 		CartId cartId = new CartId();
 		cartId.setAccountId(accountID);
 		cartId.setProductId(productID);
-		
+
 		Product product = productDAO.getProductByID(productID);
 		Account account = accountDAO.getAccountByID(accountID);
-		
+
 		Cart checkCart = getCartByID(productID, accountID);
-		
-		if(product!=null) {
+
+		if (product != null) {
 			cart.setAccount(account);
 			cart.setProduct(product);
 			cart.setId(cartId);
-			if(checkCart==null) {
+			if (checkCart == null) {
 				cart.setQuantity(quantity);
-			}else {
-				cart.setQuantity(checkCart.getQuantity()+quantity);
+			} else {
+				cart.setQuantity(checkCart.getQuantity() + quantity);
 			}
 			Session session = sessionFactory.openSession();
 			try {
@@ -208,11 +212,35 @@ public class CartDAOImpl implements ICartDAO {
 				// TODO: handle exception
 				System.out.println(e.getMessage());
 				e.printStackTrace();
-			}finally {
+			} finally {
 				session.close();
 			}
 		}
 		return isAdded;
+	}
+
+	@Override
+	public boolean removeAllProductinCart(int accountID) {
+		Session session = sessionFactory.openSession();
+		Transaction t = null;
+		try {
+			t = session.beginTransaction();
+
+			String hql = "DELETE FROM Cart c WHERE c.account.accountId = :account";
+			int deletedCount = session.createQuery(hql).setParameter("account", accountID).executeUpdate();
+			t.commit();
+			return deletedCount > 0;
+
+		} catch (Exception e) {
+			if (t != null) {
+				t.rollback();
+			}
+			System.out.print(e.getMessage());
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return false;
 	}
 
 }

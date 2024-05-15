@@ -2127,7 +2127,15 @@ ol {
 	border: 1px solid #ebebeb;
 	padding-left: 20px;
 	font-size: 16px;
-	color: #b2b2b2;
+	border-radius: 4px;
+}
+
+.checkout__input select {
+	width: 100% !important;
+	height: 46px;
+	border: 1px solid #ebebeb;
+	padding-left: 20px;
+	font-size: 16px;
 	border-radius: 4px;
 }
 
@@ -2272,6 +2280,16 @@ ol {
 	letter-spacing: 2px;
 	width: 100%;
 	margin-top: 10px;
+}
+
+
+.address-link {
+    color: #7fad39 !important;
+    text-decoration: none;
+}
+
+.address-link:hover{
+	text-decoration: underline;
 }
 
 /*---------------------

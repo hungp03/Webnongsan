@@ -124,7 +124,7 @@
 									<c:forEach varStatus="status" var="item" items="${products}">
 										<tr>
 											<td class="align-middle"><a
-												href="product/detail.htm?productId=${item.productId}"> <c:choose>
+												href="product-detail.htm?productId=${item.productId}"> <c:choose>
 														<c:when test="${empty item.image}">
 															<img src="assets/user/img/products/default-product.png"
 																alt="Product Name" style="width: 80px">
@@ -137,7 +137,7 @@
 											</a></td>
 
 											<td class="align-middle"><a
-												href="product/detail.htm?productId=${item.productId}"
+												href="product-detail.htm?productId=${item.productId}"
 												class="text-dark">${item.productName}</a></td>
 											<td class="align-middle"><span>${item.category.name}</span></td>
 											<td class="align-middle"><fmt:formatDate

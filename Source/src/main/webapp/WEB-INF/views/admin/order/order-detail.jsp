@@ -111,7 +111,7 @@
 																	items="${orderDetail}">
 																	<tr>
 																		<td class="align-item"><a
-																			href="product/detail.htm?productId=${o.product.productId }">
+																			href="product-detail.htm?productId=${o.product.productId }">
 																				<img
 																				src="<c:url value="/assets/user/img/products/${o.product.image} "/>"
 																				style="width: 50px; height: 50px;">
@@ -139,7 +139,7 @@
 																	<td colspan="1" class="fw-medium text-dark ">Sub
 																		Total :</td>
 																	<td class="fw-medium text-dark "><fmt:formatNumber
-																			value="${order.price - 20000}" type="currency"
+																			value="${order.price - 15000}" type="currency"
 																			currencySymbol="đ" maxFractionDigits="0" /></td>
 																</tr>
 																<tr>
@@ -147,7 +147,7 @@
 																	<td class="border-bottom-0 pb-0"></td>
 																	<td colspan="1" class="fw-medium text-dark ">Shipping</td>
 																	<td class="fw-medium text-dark  "><fmt:formatNumber
-																			value="${20000}" type="currency" currencySymbol="đ"
+																			value="${15000}" type="currency" currencySymbol="đ"
 																			maxFractionDigits="0" /></td>
 																</tr>
 

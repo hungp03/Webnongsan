@@ -10,5 +10,6 @@ public interface ICartDAO {
 	public boolean addToCart(int productID, int accountID,int quantity);
 	public boolean editCart(int productID, int accountID,int quantity);
 	public boolean deleteCart(int productID, int accountID);
-	public double getTotalPrice(List<Cart> cart);
+	public float getTotalPrice(List<Cart> cart);
+	public boolean removeAllProductinCart(int accountID);
 }

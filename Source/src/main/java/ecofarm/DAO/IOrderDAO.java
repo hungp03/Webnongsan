@@ -2,6 +2,7 @@ package ecofarm.DAO;
 
 import java.util.List;
 
+import ecofarm.entity.Address;
 import ecofarm.entity.OrderDetail;
 import ecofarm.entity.Orders;
 
@@ -33,4 +34,6 @@ public interface IOrderDAO {
 	public List<Orders> getOrders();
 	
 	public List<Orders> getOrderFromAccountId(int accountId);
+	
+	List<Address> getFullAddress(int accountid);
 }

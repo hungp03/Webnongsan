@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import org.springframework.transaction.annotation.Transactional;
 
 import ecofarm.DAO.IOrderDAO;
+import ecofarm.entity.Address;
 import ecofarm.entity.OrderDetail;
 import ecofarm.entity.Orders;
 
@@ -79,7 +80,7 @@ public class OrderDAOImpl implements IOrderDAO {
 			return true;
 
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println(e.getMessage());
 			t.rollback();
 		} finally {
 			ss.close();
@@ -234,4 +235,21 @@ public class OrderDAOImpl implements IOrderDAO {
 		}
 		return orders;
 	}
+
+	@SuppressWarnings("unchecked")
+    public List<Address> getFullAddress(int accountId) {
+        Session session = sessionFactory.openSession();
+        List<Address> addresses = null;
+        try {
+            String hql = "FROM Address WHERE account.id = :accountId";
+            Query query = session.createQuery(hql);
+            query.setParameter("accountId", accountId);
+            addresses = query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return addresses;
+    }
 }
