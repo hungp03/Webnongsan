@@ -3,9 +3,12 @@ package ecofarm.interceptor;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import ecofarm.entity.Account;
 
 
 public class AdminInterceptor extends HandlerInterceptorAdapter {
@@ -17,18 +20,29 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
         boolean isLoggedIn = false;
         boolean isAdmin = false;
         
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("userEmail".equals(cookie.getName())) {
-                    isLoggedIn = true;
-                } else if ("userRole".equals(cookie.getName()) && BCrypt.checkpw("ADMIN", cookie.getValue())) {
-                    isAdmin = true;
-                }
-            }
+//        if (cookies != null) {
+//            for (Cookie cookie : cookies) {
+//                if ("userEmail".equals(cookie.getName())) {
+//                    isLoggedIn = true;
+//                } else if ("userRole".equals(cookie.getName()) && BCrypt.checkpw("ADMIN", cookie.getValue())) {
+//                    isAdmin = true;
+//                }
+//            }
+//        }
+        HttpSession session = request.getSession();
+        Account userInfo = (Account) session.getAttribute("userInfo");
+        if(userInfo == null) {
+        	response.sendRedirect(request.getContextPath() + "/login.htm");
+            return false;
+        }
+        else if(userInfo.getRole().getRoleId().toUpperCase().equals("ADMIN")) {
+        	isAdmin = true;
+        	isLoggedIn = true;
+        	return true;
         }
         
         // Nếu đã đăng nhập và là admin, cho phép truy cập
-        if (isLoggedIn && isAdmin) {
+        else if (isLoggedIn && isAdmin) {
             return true;
         } else if (isLoggedIn && !isAdmin) {
             // Nếu đã đăng nhập nhưng không phải là admin, chuyển hướng đến trang chính (home page)

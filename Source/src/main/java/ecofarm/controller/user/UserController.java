@@ -1,5 +1,7 @@
 package ecofarm.controller.user;
 
+import java.util.function.BiPredicate;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ecofarm.DAO.IAccountDAO;
 import ecofarm.bean.UploadFile;
 import ecofarm.entity.Account;
+import ecofarm.entity.Role;
 import ecofarm.utility.Mailer;
 
 @Controller
@@ -131,22 +134,28 @@ public class UserController {
 			Account loggedInUser = accountDAO.getAccountByEmail(account.getEmail());
 			session.setAttribute("userInfo", loggedInUser);
 			//Thêm role vào khi đăng nhập 
-			Cookie cookie_role_name = new Cookie("userRole", loggedInUser.getRole().getRoleName().toUpperCase());
-			response.addCookie(cookie_role_name);
+//			Cookie cookie_role_name = new Cookie("userRole", BCrypt.hashpw(loggedInUser.getRole().getRoleId(), BCrypt.gensalt(10)));
+//			response.addCookie(cookie_role_name);
 			if(checkRemember!= null) {
 				Cookie cookie = new Cookie("userEmail", loggedInUser.getEmail());
-				Cookie cookie_role = new Cookie("userRole", BCrypt.hashpw(loggedInUser.getRole().getRoleId(), BCrypt.gensalt(10)));
+//				Cookie cookie_role = new Cookie("userRole", BCrypt.hashpw(loggedInUser.getRole().getRoleId(), BCrypt.gensalt(10)));
 				cookie.setMaxAge(24*60*60);
-				cookie_role.setMaxAge(24*3600);
+//				cookie_role.setMaxAge(24*3600);
 				response.addCookie(cookie);
-				response.addCookie(cookie_role);
+//				response.addCookie(cookie_role);
 			}else {
 				Cookie cookie = new Cookie("userEmail", loggedInUser.getEmail());
-				Cookie cookie_role = new Cookie("userRole", loggedInUser.getRole().getRoleId());
+//				Cookie cookie_role = new Cookie("userRole", BCrypt.hashpw(loggedInUser.getRole().getRoleId(), BCrypt.gensalt(10)));
 				cookie.setMaxAge(-1);
-				cookie_role.setMaxAge(-1);
+//				cookie_role.setMaxAge(-1);
 				response.addCookie(cookie);
 			}
+//			if(BCrypt.checkpw(loggedInUser.getRole().getRoleId(), BCrypt.gensalt(10)), 'GU'))
+//			boolean checkRole(String role){ 
+//				return BCrypt.checkpw(role,loggedInUser.getRole().getRoleId());
+//				}
+//			BiPredicate<String, String> checkRole = (role, cookieRole) -> BCrypt.checkpw(role, cookieRole);
+//			request.setAttribute("checkRole",checkRole);
 			request.setAttribute("status","Đăng nhập tài khoản thành công");
 			return "redirect:/index.htm";
 		}else {
@@ -244,4 +253,7 @@ public class UserController {
 		}
 		return "user/forgotPass/newPassword";
 	}
+//	@ModelAttribute
+//	void usercontroller(Re) {
+	
 }
