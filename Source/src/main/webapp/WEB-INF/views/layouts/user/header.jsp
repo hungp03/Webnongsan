@@ -124,8 +124,10 @@
 									class="fa fa-user"></i>Login</a></li>
 						</c:if>
 						
-					
+						<%-- <c:if test="${BCrypt.checkpw("EMPLOYEE", userInfo.getRole().getRoleId()) }"> --%>
 						<c:if test="${userInfo.getRole().getRoleId().equals('GUEST')}">
+						<%-- <c:if test=""></c:if> --%>
+						
 						<c:if test="${not empty userInfo and userInfo.avatar != null}">
 							<div class="user-nav__user"><a href="<c:url value='/account/ProfilePage.htm'/>" class="avatar">
 								<img
@@ -143,8 +145,11 @@
 									class="fa fa-user"></i>${userInfo.getName() }</a></li>
 						</c:if>
 						</c:if>
+		<%-- 				<c:if test="${BCrypt.checkpw("ADMIN", userInfo.getRole().getRoleId()) }"> --%>
+						<%-- <c:if test="${checkRole.test("ADMIN",) }"> --%>
 						
 						<c:if test="${userInfo.getRole().getRoleId().equals('ADMIN')}">
+						 
 						<c:if test="${not empty userInfo and userInfo.avatar != null}">
 							<div class="user-nav__user"><a href="<c:url value='/admin/dashboard.htm'/>" class="avatar">
 								<img
