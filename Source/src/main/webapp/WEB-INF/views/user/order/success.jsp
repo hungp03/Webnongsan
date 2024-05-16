@@ -58,7 +58,7 @@
 							<a class="btn btn-outline-success card-link" href="index.htm"
 								role="button"> <i class="bi bi-house"></i> Quay về trang chủ
 							</a> <a class="btn btn-outline-success card-link"
-								href="account/ordersHistory.htm" role="button"> <i
+								href="account/OrderHistory.htm" role="button"> <i
 								class="bi bi-list-check"></i> Danh sách đơn hàng
 							</a>
 						</div>

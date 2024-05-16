@@ -22,6 +22,7 @@ import ecofarm.entity.OrderDetail;
 import ecofarm.entity.OrderDetailId;
 import ecofarm.entity.Orders;
 import ecofarm.entity.Product;
+import ecofarm.utility.Mailer;
 import ecofarm.utility.TimeUtil;
 import ecofarm.DAO.IAccountDAO;
 import ecofarm.DAO.ICartDAO;
@@ -32,6 +33,10 @@ import ecofarm.DAO.IProductDAO;
 @Controller
 @RequestMapping(value = "/order")
 public class UserOrderController {
+	
+	@Autowired
+	Mailer mailer;
+	
 	@Autowired
 	private ICartDAO cartDAO;
 	@Autowired
@@ -67,6 +72,7 @@ public class UserOrderController {
 	public String success(@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
 			ModelMap model, @RequestParam(value = "paymentMethod", required = true) String paymentMethod) {
 		if (userEmail != null && !userEmail.isEmpty()) {
+			String pm = "";
 			List<Category> cates = categoryDAO.getAllCategories();
 			Account account = accountDAO.getAccountByEmail(userEmail);
 			List<Cart> cart = cartDAO.getCartByAccountID(account.getAccountId());
@@ -82,8 +88,10 @@ public class UserOrderController {
 			orders.setPrice(cartDAO.getTotalPrice(cart) + 15000);
 			if ("cod".equals(paymentMethod)) {
 				orders.setPaymentMethod("COD");
+				pm = "Thanh toán khi nhận hàng";
 			} else if ("banking".equals(paymentMethod)) {
 				orders.setPaymentMethod("BANKING");
+				pm = "Chuyển khoản";
 			}
 			model.addAttribute("orders", orders);
 			if (account.getDefaultAddress() != null)
@@ -105,6 +113,7 @@ public class UserOrderController {
 			}
 			cartDAO.removeAllProductinCart(account.getAccountId());
 			System.out.println("Đơn hàng số: " + orders.getOrderId());
+			mailer.sendOrder(userEmail, orders.getOrderId(), orders.getOrderTime(), (int) Math.floor(orders.getPrice()) , pm);
 			model.addAttribute("categories", cates);
 			model.addAttribute("orders", orders);
 			return "user/order/success";
