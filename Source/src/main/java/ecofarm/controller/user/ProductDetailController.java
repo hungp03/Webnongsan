@@ -26,6 +26,8 @@ public class ProductDetailController {
 	public String Index(@RequestParam("productId") String productId,HttpServletRequest request) {
 		Product product = productDAO.getProductByID(Integer.parseInt(productId));
 		if(product!=null) {
+			productDAO.setRatingStar(product);
+			productDAO.setReviews(product);			
 			request.setAttribute("product",product);
 			request.setAttribute("relatedProducts",productDAO.getProductsByCategoryID(product.getCategory().getCategoryId()));
 			request.setAttribute("categories", categoryDAO.getAllCategories());

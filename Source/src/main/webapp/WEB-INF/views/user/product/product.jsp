@@ -9,6 +9,15 @@
 	border-color: #7fad39;
 	color: #ffffff;
 }
+.latest-product__item__text {
+	overflow: hidden;
+	padding-top: 10px;
+}
+
+.latest-product__item__text h6 a{
+	color: #252525;
+	margin-bottom: 8px;
+}
 </style>
 </head>
 <body>
@@ -152,7 +161,9 @@
 														alt="">
 												</div>
 												<div class="latest-product__item__text">
-													<h6>${item.productName }</h6>
+													<h6>
+													<a href="<c:url value="/product-detail.htm?productId=${item.productId }"/>">${item.productName }</a>
+													</h6>
 													<span><fmt:formatNumber value='${item.price }' type='currency'
 													currencySymbol='đ' maxFractionDigits='0' /></span>
 												</div>
@@ -201,7 +212,9 @@
 												</ul>
 											</div>
 											<div class="product__discount__item__text">
-												<span>${item.productName }</span>
+												<h5>
+												<a href="<c:url value="/product-detail.htm?productId=${item.productId }"/>">${item.productName }</a>
+												</h5>
 												<div class="product__item__price">
 													<fmt:formatNumber value='${item.price }'
 															type='currency' currencySymbol='đ' maxFractionDigits='0' />
@@ -255,7 +268,7 @@
 										</div>
 										<div class="product__item__text">
 											<h6>
-												<a href="#">${item.productName }</a>
+												<a href="<c:url value="/product-detail.htm?productId=${item.productId }"/>">${item.productName }</a>
 											</h6>
 											<h5><fmt:formatNumber value='${item.price }' type='currency'
 													currencySymbol='đ' maxFractionDigits='0' /></h5>

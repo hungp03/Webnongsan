@@ -26,6 +26,24 @@
 			<mvc:mapping path="/employee/**" />
 			<bean class="ecofarm.interceptor.EmployeeInterceptor" />
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/login.htm"/>
+			<mvc:mapping path="/register.htm"/>
+			<bean class="ecofarm.interceptor.LoginUserInterceptor"/>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/AddCart.htm"/>
+			<mvc:mapping path="/DeleteCart.htm"/>
+			<mvc:mapping path="/cart.htm"/>
+			<mvc:mapping path="/wishlist.htm"/>
+			<mvc:mapping path="AddWishlist.htm"/>
+			<mvc:mapping path="/DeleteWishlist.htm"/>
+			<mvc:mapping path="EditCart.htm"/>
+			<mvc:mapping path="/addFeedback.htm"/>
+			<mvc:mapping path="/account/ProfilePage.htm"/>
+			<mvc:mapping path="/DeleteAddress.htm"/>
+			<bean class="ecofarm.interceptor.UserInterceptor"/>
+		</mvc:interceptor>
 		<!-- <mvc:interceptor> -->
 		<!-- Đã đăng nhập thì KHÔNG được truy cập URL bên dưới -->
 		<!-- <mvc:mapping path="/guest/**" /> -->

@@ -103,6 +103,24 @@
 				$(this).css("background-image", "url(" + bg + ")");
 			});
 		})
+		const currentUrl = window.location.pathname;
+		const menuItems = document.querySelectorAll('#menu li');
+		function updateActiveMenuItem() {
+	        menuItems.forEach(item => {
+	            // Lấy href của thẻ a bên trong li
+	            const link = item.querySelector('a').getAttribute('href');
+
+	            // Nếu href có trong URL hiện tại, thêm class active
+	            if (currentUrl.includes(link)) {
+	                item.classList.add('active');
+	            } else {
+	                item.classList.remove('active');
+	            }
+	        });
+	    }
+
+	    // Gọi hàm để cập nhật class active khi trang tải
+	    updateActiveMenuItem();
 	</script>
 </body>
 </html>

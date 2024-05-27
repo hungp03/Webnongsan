@@ -25,6 +25,7 @@
 	<!-- Shoping Cart Section Begin -->
 	<section class="shoping-cart spad">
 		<div class="container">
+			<c:if test="${not empty carts }">
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="shoping__cart__table">
@@ -39,7 +40,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:if test="${not empty carts }">
+								
 									<c:forEach var="item" items="${carts }" varStatus="loop">
 										<tr>
 											<td class="shoping__cart__item"><img
@@ -68,7 +69,7 @@
 													class="icon_close"></span></a></td>
 										</tr>
 									</c:forEach>
-								</c:if>
+
 							</tbody>
 						</table>
 					</div>
@@ -80,7 +81,7 @@
 					<div class="shoping__checkout">
 						<h5>Cart Total</h5>
 						<ul>
-							<c:if test="${not empty totalPrice }">
+
 								<li>Subtotal <span><fmt:formatNumber
 											value='${totalPrice }' type='currency' currencySymbol='đ'
 											maxFractionDigits='0' /></span></li>
@@ -90,17 +91,24 @@
 								<li>Total <span><fmt:formatNumber
 											value='${totalPrice + 15000 }' type='currency'
 											currencySymbol='đ' maxFractionDigits='0' /></span></li>
-							</c:if>
 
 						</ul>
 						<a href="order/checkout.htm" class="primary-btn">THANH TOÁN</a>
 					</div>
 				</div>
 			</div>
+			</c:if>
+			<c:if test="${ empty carts}">
+				<div class="row" style="text-align:center">
+					<div class="col-lg-12">
+						<h3 style="font-size:20px; color:gray">Giỏ hàng đang trống hãy bắt đầu mua sắm nào</h3>
+					</div>
+				</div>
+			</c:if>
 		</div>
 	</section>
-	<!-- Shoping Cart Section End -->
-	<content tag="script"> <script>
+ 	<!-- Shoping Cart Section End -->
+<!--	<content tag="script"> <script>
 		$(".pro-qty").on(
 				"click",
 				'.qtybtn',
@@ -124,7 +132,7 @@
 					window.location = "EditCart.htm?productId=" + id + "&qty="
 							+ newVal;
 				})
-	</script> </content>
+	</script> </content> -->
 	<content tag="script">
 		<script>
 			$(".pro-qty").on("click", '.qtybtn',function(){

@@ -1,5 +1,7 @@
 package ecofarm.DAOImpl;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -138,11 +140,10 @@ public class ProductDAOImpl implements IProductDAO {
 	public List<Product> getReviewProduct() {
 		List<Product> list = getAllProducts();
 		list.forEach(product -> {
-			setRatingStar(product);
 			setReviews(product);
 		});
-		var ratingComparator = Comparator.comparing(Product::getRatingStar);
-		Collections.sort(list, ratingComparator);
+		var reviewComparator = Comparator.comparing(Product::getReviews);
+		Collections.sort(list, reviewComparator);
 		return list;
 	}
 
@@ -151,10 +152,9 @@ public class ProductDAOImpl implements IProductDAO {
 		List<Product> list = getAllProducts();
 		list.forEach(product -> {
 			setRatingStar(product);
-			setReviews(product);
 		});
-		var reviewComparator = Comparator.comparing(Product::getReviews);
-		Collections.sort(list, reviewComparator);
+		var ratingComparator = Comparator.comparing(Product::getRatingStar);
+		Collections.sort(list, ratingComparator);
 		return list;
 	}
 
@@ -229,15 +229,21 @@ public class ProductDAOImpl implements IProductDAO {
 		List<Feedback> feedbacks = feedbackDAO.getFeedbackByProduct(product.getProductId());
 		product.setRatingStar(0);
 		
-		if (feedbacks != null&& !feedbacks.isEmpty()) {
-			float[] totalRating = {0};
+		if (feedbacks != null && !feedbacks.isEmpty()) {
+			double[] totalRating = {0};
 			feedbacks.forEach(feedback -> {
 				totalRating[0] += feedback.getRatingStar();
 			});
-			float averageRating = totalRating[0] / feedbacks.size();
+			double averageRating = totalRating[0] / feedbacks.size();
+			averageRating = roudRatingStars(averageRating);
 			product.setRatingStar(averageRating);
 		}
 		
+	}
+	private double roudRatingStars(double rating) {
+		BigDecimal bdDecimal = new BigDecimal(Double.toString(rating));
+		bdDecimal =  bdDecimal.setScale(1, RoundingMode.HALF_UP);
+		return bdDecimal.doubleValue();
 	}
 
 	@Override
