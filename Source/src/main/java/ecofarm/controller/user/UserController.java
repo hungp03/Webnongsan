@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -126,24 +125,13 @@ public class UserController {
 			// Lưu thông tin người dùng vào phiên nếu đăng nhập thành công
 			Account loggedInUser = accountDAO.getAccountByEmail(account.getEmail());
 			session.setAttribute("userInfo", loggedInUser);
-			// Thêm role vào khi đăng nhập
-			Cookie cookie_role_name = new Cookie("userRole",
-					BCrypt.hashpw(loggedInUser.getRole().getRoleId(), BCrypt.gensalt(10)));
-			response.addCookie(cookie_role_name);
 			if (checkRemember != null) {
 				Cookie cookie = new Cookie("userEmail", loggedInUser.getEmail());
-				Cookie cookie_role = new Cookie("userRole",
-						BCrypt.hashpw(loggedInUser.getRole().getRoleId(), BCrypt.gensalt(10)));
 				cookie.setMaxAge(24 * 60 * 60);
-				cookie_role.setMaxAge(24 * 3600);
 				response.addCookie(cookie);
-				response.addCookie(cookie_role);
 			} else {
 				Cookie cookie = new Cookie("userEmail", loggedInUser.getEmail());
-				Cookie cookie_role = new Cookie("userRole",
-						BCrypt.hashpw(loggedInUser.getRole().getRoleId(), BCrypt.gensalt(10)));
 				cookie.setMaxAge(-1);
-				cookie_role.setMaxAge(-1);
 				response.addCookie(cookie);
 			}
 			request.setAttribute("status", "Đăng nhập tài khoản thành công");
@@ -162,10 +150,6 @@ public class UserController {
 		cookie.setMaxAge(0);
 		response.addCookie(cookie);
 		// Xóa thông tin người dùng khỏi phiên
-		Cookie cookie_role = new Cookie("userRole", null);
-		cookie_role.setMaxAge(0);
-		response.addCookie(cookie_role);
-		// Xóa user role ra khỏi phiên
 		session.removeAttribute("userInfo");
 		session.invalidate(); // Hủy phiên đăng nhập hiện tại
 		return "redirect:" + request.getHeader("Referer");

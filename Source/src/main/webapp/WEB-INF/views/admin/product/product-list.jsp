@@ -15,18 +15,18 @@
 		</div>
 	</c:if>
 
-	<div class="container-fluid">
+	<div class="container">
 		<div class="row">
 			<!-- Sidebar -->
-			<div class="col-lg-2 d-none d-lg-inline">
+			<div class="col-lg-2 d-none d-lg-block">
 				<%@include file="/WEB-INF/views/layouts/admin/admin-headernav.jsp"%>
 			</div>
 			<!-- Content -->
-			<div class="col-lg-10">
+			<div class="col-lg-10 col-md-12">
 				<div id="content-wrapper" class="d-flex flex-column">
 					<div class="container">
 						<!-- Breadcrumb -->
-						<div class="row mb-8">
+						<div class="row mb-4">
 							<div class="col-md-12">
 								<div
 									class="d-md-flex justify-content-between align-items-center">
@@ -53,7 +53,7 @@
 						<!-- Search and Filter -->
 						<div class="row">
 							<div class="col-xl-12 col-12 mb-5">
-								<div class="px-6 py-6 p-4">
+								<div class="px-6 py-6">
 									<div class="row justify-content-between">
 										<div class="col-lg-4 col-md-6 col-12 mb-2 mb-md-0">
 											<form class="d-flex" role="search"

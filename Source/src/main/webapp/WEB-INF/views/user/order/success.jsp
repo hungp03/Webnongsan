@@ -4,43 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <body>
-	<!-- Hero Section Begin -->
-	<section class="hero hero-normal">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="hero__categories">
-						<div class="hero__categories__all">
-							<i class="fa fa-bars"></i> <span>Danh mục</span>
-						</div>
-						<ul>
-							<c:forEach var="item" items="${categories}">
-								<li><a
-									href="<c:url value="/product.htm?categoryId=${item.categoryId }"/>">${item.name }</a></li>
-							</c:forEach>
-
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-9">
-					<div class="hero__search">
-						<%@ include file="/WEB-INF/views/layouts/user/searchbox.jsp"%>
-						<div class="hero__search__phone">
-							<div class="hero__search__phone__icon">
-								<i class="fa fa-phone"></i>
-							</div>
-							<div class="hero__search__phone__text">
-								<h5>+65 11.188.888</h5>
-								<span>support 24/7 time</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
 	<div
-		class="d-flex justify-content-center align-items-center min-vh-60">
+		class="d-flex justify-content-center align-items-center min-vh-60 mb-5">
 		<div class="container-fluid text-center">
 			<div class="row justify-content-center">
 				<div class="col-md-8 col-lg-7 col-xl-6">

@@ -44,7 +44,6 @@ public class HomeController {
 			session.setAttribute("userInfo", account);
 			if(account!=null) {
 				List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
-				session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
 				session.setAttribute("carts", list);
 				List<Wishlist> wishlist = wishlistDAO.getWishlistByAccountID(account.getAccountId());
 				session.setAttribute("wishlist", wishlist);
@@ -56,7 +55,6 @@ public class HomeController {
 				cookie.setMaxAge(-1);
 				response.addCookie(cookie);
 				List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
-				session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
 				session.setAttribute("carts", list);
 				//Tính số lượng wishlist khi đăng nhập
 				List<Wishlist> wishlist = wishlistDAO.getWishlistByAccountID(account.getAccountId());

@@ -44,7 +44,7 @@ Product (**Product_ID**, Product_Name, Price, Image, Quantity, Detail, Posting_D
 Cart (**Product_ID**, **Account_ID**, Quantity)
 - Bảng Cart có ``Product_ID`` và ``Account_ID`` là PK và FK 
 
-Orders (**Order_ID**, Order_Time, Order_Status, **_Address_ID_**, **_Account_ID_**, Total_Price)	
+Orders (**Order_ID**, Order_Time, Order_Status, **_Address_ID_**, **_Account_ID_**, Total_Price, Payment_Method)	
 
 Order_Detail (**Order_ID**, **Product_ID**, Quantity, Product_Unit_Price)
 - Bảng Order_Detail có ``Product_ID`` và ``Order_ID`` là PK và FK 

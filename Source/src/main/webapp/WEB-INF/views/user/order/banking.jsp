@@ -4,42 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <body>
-	<!-- Hero Section Begin -->
-	<section class="hero hero-normal">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="hero__categories">
-						<div class="hero__categories__all">
-							<i class="fa fa-bars"></i> <span>Danh mục</span>
-						</div>
-						<ul>
-							<c:forEach var="item" items="${categories}">
-								<li><a
-									href="<c:url value="/product.htm?categoryId=${item.categoryId }"/>">${item.name }</a></li>
-							</c:forEach>
-
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-9">
-					<div class="hero__search">
-						<%@ include file="/WEB-INF/views/layouts/user/searchbox.jsp"%>
-						<div class="hero__search__phone">
-							<div class="hero__search__phone__icon">
-								<i class="fa fa-phone"></i>
-							</div>
-							<div class="hero__search__phone__text">
-								<h5>+65 11.188.888</h5>
-								<span>support 24/7 time</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- Hero Section End -->
 
 	<!-- Breadcrumb Section Begin -->
 	<section class="breadcrumb-section set-bg"
@@ -65,7 +29,7 @@
 				<div class="card border-secondary mb-3">
 					<div class="card-body">
 						<ol class="list-group list-group-numbered">
-							<li class="list-group-item">Khách hàng nhập nội dung là <strong>DONHANG</strong>
+							<li class="list-group-item">Khách hàng nhập nội dung là <strong>DONHANG${orderID }</strong>
 								khi thanh toán.
 							</li>
 							<li class="list-group-item">Sau khi thanh toán thành công,
@@ -103,9 +67,9 @@
 				<div class="card border-success mb-3">
 					<div class="card-body">
 						<h5 class="card-title text-success">Cảm ơn bạn. Đơn hàng của
-							bạn đã được nhận.</h5>
+							bạn đang chờ thanh toán.</h5>
 						<p class="card-text">
-							<strong>Mã đơn hàng: </strong>60392
+							<strong>Mã đơn hàng: </strong>${orderID }
 						</p>
 						<%
 						java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
@@ -139,10 +103,12 @@
 					</thead>
 					<tbody>
 						<c:forEach var="item" items="${ cart}">
+						<tr>
 							<td>${item.product.getProductName()}×${ item.quantity}</td>
 							<td class="text-end"><fmt:formatNumber
 									value='${item.product.getPrice() * item.quantity}'
 									type='currency' currencySymbol='đ' maxFractionDigits='0' /></td>
+						</tr>
 						</c:forEach>
 
 						<tr>

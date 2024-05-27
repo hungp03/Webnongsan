@@ -4,42 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <body>
-	<!-- Hero Section Begin -->
-	<section class="hero hero-normal">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="hero__categories">
-						<div class="hero__categories__all">
-							<i class="fa fa-bars"></i> <span>Danh mục</span>
-						</div>
-						<ul>
-							<c:forEach var="item" items="${categories}">
-								<li><a
-									href="<c:url value="/product.htm?categoryId=${item.categoryId }"/>">${item.name }</a></li>
-							</c:forEach>
-
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-9">
-					<div class="hero__search">
-						<%@ include file="/WEB-INF/views/layouts/user/searchbox.jsp"%>
-						<div class="hero__search__phone">
-							<div class="hero__search__phone__icon">
-								<i class="fa fa-phone"></i>
-							</div>
-							<div class="hero__search__phone__text">
-								<h5>+65 11.188.888</h5>
-								<span>support 24/7 time</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- Hero Section End -->
 
 	<!-- Breadcrumb Section Begin -->
 	<section class="breadcrumb-section set-bg"
@@ -63,7 +27,10 @@
 	<section class="checkout spad">
 		<div class="container">
 			<div class="checkout__form">
-				<h4>Thông tin</h4>
+			<div class="d-flex flex-fill">
+				<h4>Thông tin</h4> 
+				<a class="address-link mt-1 ml-4" href="account/ProfilePage.htm">Thay đổi</a>
+			</div>
 				<div class="row">
 					<div class="col-lg-6 col-md-6">
 						<div class="row">
@@ -92,7 +59,6 @@
 										<c:otherwise>
 											<input type="text" id="address"
 												value="${user.defaultAddress.getFullAddress()}" readonly>
-
 										</c:otherwise>
 									</c:choose>
 								</div>
@@ -106,7 +72,20 @@
 									<p>
 										Phone<span></span>
 									</p>
-									<input type="text" value="${user.phoneNumber}" readonly>
+
+									<c:choose>
+										<c:when test="${empty user.phoneNumber}">
+											<div class="d-flex justify-content-between">
+												<p style="color: red">Chưa có số điện thoại</p>
+												<a class="address-link" href="account/ProfilePage.htm">Thay
+													đổi</a>
+											</div>
+										</c:when>
+										<c:otherwise>
+											<input type="text" value="${user.phoneNumber}" readonly>
+										</c:otherwise>
+									</c:choose>
+
 								</div>
 							</div>
 							<div class="col-lg-6">
@@ -158,8 +137,7 @@
 							</div>
 
 
-							<form id="paymentForm"
-								onsubmit="return validateForm()">
+							<form id="paymentForm" onsubmit="return validateForm()">
 								<p>Chọn hình thức thanh toán</p>
 								<div>
 									<input type="radio" id="cod" name="paymentMethod" value="cod">
@@ -175,44 +153,67 @@
 								<c:if test="${empty user.defaultAddress.getFullAddress()}">
 									<c:set var="isDisabled" value="disabled" />
 								</c:if>
+								<c:if test="${empty user.phoneNumber}">
+									<c:set var="isDisabled" value="disabled" />
+								</c:if>
 								<button type="submit" class="site-btn btn ${isDisabled}"
 									${isDisabled} id="paymentButton">Thanh toán</button>
 							</form>
 						</div>
 
 					</div>
-
 				</div>
 			</div>
 		</div>
 	</section>
 	<!-- Checkout Section End -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('paymentButton').addEventListener('click', function(event) {
-            var codRadio = document.getElementById('cod');
-            var bankingRadio = document.getElementById('banking');
+	<script>
+		document
+				.addEventListener(
+						'DOMContentLoaded',
+						function() {
+							document
+									.getElementById('paymentButton')
+									.addEventListener(
+											'click',
+											function(event) {
+												var codRadio = document
+														.getElementById('cod');
+												var bankingRadio = document
+														.getElementById('banking');
 
-            if (!codRadio.checked && !bankingRadio.checked) {
-                alert("Vui lòng chọn hình thức thanh toán.");
-                event.preventDefault();
-                return;
-            }
-        });
+												if (!codRadio.checked
+														&& !bankingRadio.checked) {
+													alert("Vui lòng chọn hình thức thanh toán.");
+													event.preventDefault();
+													return;
+												}
+											});
 
-        document.querySelectorAll('input[name="paymentMethod"]').forEach(function(radio) {
-            radio.addEventListener('change', function() {
-                if (this.value === 'cod') {
-                    document.getElementById('paymentForm').action = 'order/checkout_success.htm';
-                    document.getElementById('paymentForm').method = 'post'
-                } else if (this.value === 'banking') {
-                    document.getElementById('paymentForm').action = 'order/checkout_banking.htm';
-                    document.getElementById('paymentForm').method = 'get'
-                }
-            });
-        });
-    });
-</script>
+							document
+									.querySelectorAll(
+											'input[name="paymentMethod"]')
+									.forEach(
+											function(radio) {
+												radio
+														.addEventListener(
+																'change',
+																function() {
+																	if (this.value === 'cod') {
+																		document
+																				.getElementById('paymentForm').action = 'order/checkout_success.htm';
+																		document
+																				.getElementById('paymentForm').method = 'post'
+																	} else if (this.value === 'banking') {
+																		document
+																				.getElementById('paymentForm').action = 'order/checkout_banking.htm';
+																		document
+																				.getElementById('paymentForm').method = 'get'
+																	}
+																});
+											});
+						});
+	</script>
 </body>
 
 

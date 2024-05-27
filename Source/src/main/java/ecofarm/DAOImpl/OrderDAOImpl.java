@@ -226,30 +226,25 @@ public class OrderDAOImpl implements IOrderDAO {
 		try {
 			String hql = "FROM Orders WHERE AccountID = :accountId";
 			Query query = session.createQuery(hql);
-			query.setParameter("accountId",accountId);
+			query.setParameter("accountId", accountId);
 			orders = query.list();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: handle exception
-		}finally {
+		} finally {
 			session.close();
 		}
 		return orders;
 	}
 
-	@SuppressWarnings("unchecked")
-    public List<Address> getFullAddress(int accountId) {
-        Session session = sessionFactory.openSession();
-        List<Address> addresses = null;
-        try {
-            String hql = "FROM Address WHERE account.id = :accountId";
-            Query query = session.createQuery(hql);
-            query.setParameter("accountId", accountId);
-            addresses = query.list();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return addresses;
-    }
+	@Override
+	public int getLastestOrderID() {
+		try {
+			Session ss = sessionFactory.getCurrentSession();
+			Query query = ss.createQuery("SELECT MAX(orderId) FROM Orders");
+			int max = (int) query.uniqueResult();
+			return max;
+		} catch (HibernateException ex) {
+			throw ex;
+		}
+	}
 }

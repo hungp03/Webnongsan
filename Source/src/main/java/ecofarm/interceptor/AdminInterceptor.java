@@ -1,11 +1,13 @@
 package ecofarm.interceptor;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import ecofarm.entity.Account;
 
 
 public class AdminInterceptor extends HandlerInterceptorAdapter {
@@ -13,20 +15,16 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        Cookie[] cookies = request.getCookies();
         boolean isLoggedIn = false;
         boolean isAdmin = false;
-        
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("userEmail".equals(cookie.getName())) {
-                    isLoggedIn = true;
-                } else if ("userRole".equals(cookie.getName()) && BCrypt.checkpw("ADMIN", cookie.getValue())) {
-                    isAdmin = true;
-                }
+        HttpSession session = request.getSession();
+        Account userInfo = (Account) session.getAttribute("userInfo");
+        if(userInfo!= null) {
+        	isLoggedIn = true;
+        	if (userInfo.getRole().getRoleId().toUpperCase().equals("ADMIN")) {
+            	isAdmin = true;	
             }
         }
-        
         // Nếu đã đăng nhập và là admin, cho phép truy cập
         if (isLoggedIn && isAdmin) {
             return true;

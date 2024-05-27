@@ -17,17 +17,17 @@
 		</div>
 
 	</c:if>
-	<div class="container-fluid">
+	<div class="container">
 		<div class="row">
 
 			<!-- Sidebar -->
-			<div class="col-2 d-none d-lg-inline "><%@include
+			<div class="col-lg-2 d-none d-lg-block"><%@include
 					file="/WEB-INF/views/layouts/admin/admin-headernav.jsp"%></div>
-			<div class="col-10 col-12-sm col-12-md">
+			<div class="col-lg-10 col-md-12">
 				<div id="content-wrapper" class="d-flex flex-column">
 					<!-- Main -->
 					<div class="container">
-						<div class="row mt-3">
+						<div class="row mb-5">
 
 							<div class="col-md-12 mb-4">
 								<div

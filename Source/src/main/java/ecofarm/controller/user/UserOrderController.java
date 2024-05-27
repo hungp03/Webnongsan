@@ -52,17 +52,13 @@ public class UserOrderController {
 	public String detail(ModelMap model,
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail) {
 		if (userEmail != null && !userEmail.isEmpty()) {
-			List<Category> cates = categoryDAO.getAllCategories();
 			Account account = accountDAO.getAccountByEmail(userEmail);
 			List<Cart> cart = cartDAO.getCartByAccountID(account.getAccountId());
 			if (cart.size() <= 0) {
 				return "redirect:/index.htm";
 			}
-			//List<Address> add = orderDAO.getFullAddress(account.getAccountId());
 			model.addAttribute("cart", cart);
-			model.addAttribute("categories", cates);
 			model.addAttribute("user", account);
-			//model.addAttribute("address", add);
 			return "user/order/checkout";
 		}
 		return "redirect:/login.htm";
@@ -73,7 +69,6 @@ public class UserOrderController {
 			ModelMap model, @RequestParam(value = "paymentMethod", required = true) String paymentMethod) {
 		if (userEmail != null && !userEmail.isEmpty()) {
 			String pm = "";
-			List<Category> cates = categoryDAO.getAllCategories();
 			Account account = accountDAO.getAccountByEmail(userEmail);
 			List<Cart> cart = cartDAO.getCartByAccountID(account.getAccountId());
 			if (cart.size() <= 0) {
@@ -114,7 +109,6 @@ public class UserOrderController {
 			cartDAO.removeAllProductinCart(account.getAccountId());
 			System.out.println("Đơn hàng số: " + orders.getOrderId());
 			mailer.sendOrder(userEmail, orders.getOrderId(), orders.getOrderTime(), (int) Math.floor(orders.getPrice()) , pm);
-			model.addAttribute("categories", cates);
 			model.addAttribute("orders", orders);
 			return "user/order/success";
 		}
@@ -123,14 +117,13 @@ public class UserOrderController {
 	@RequestMapping(value = "checkout_banking.htm", method = RequestMethod.GET)
 	public String bankingPayment(ModelMap model, @CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail) {
 		if (userEmail != null && !userEmail.isEmpty()) {
-			List<Category> cates = categoryDAO.getAllCategories();
 			Account account = accountDAO.getAccountByEmail(userEmail);
 			List<Cart> cart = cartDAO.getCartByAccountID(account.getAccountId());
 			if (cart.size() <= 0) {
 				return "redirect:/index.htm";
 			}
 			model.addAttribute("cart", cart);
-			model.addAttribute("categories", cates);
+			model.addAttribute("orderID", orderDAO.getLastestOrderID() + 1);
 			model.addAttribute("total", cartDAO.getTotalPrice(cart));
 			return "user/order/banking";		
 		}
@@ -138,7 +131,7 @@ public class UserOrderController {
 	}
 	
 	@RequestMapping(value = "cancelRequest", method = RequestMethod.POST)
-	public String cancleRequest(HttpSession session, HttpServletRequest request,
+	public String cancelRequest(HttpSession session, HttpServletRequest request,
 			@RequestParam(value = "orderId") int orderId) {
 		Orders orders = orderDAO.findOrder(orderId);
 		for (OrderDetail d : orders.getOrderDetails()) {

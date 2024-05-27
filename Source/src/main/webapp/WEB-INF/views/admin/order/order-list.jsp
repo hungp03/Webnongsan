@@ -4,16 +4,16 @@
 <%@include file="/WEB-INF/views/layouts/admin/admin-lib.jsp"%>
 
 <body>
-	<div class="container-fluid">
+	<div class="container">
 		<div class="row">
 			<!-- Sidebar -->
-			<div class="col-2 d-none d-lg-inline "><%@include
+			<div class="col-lg-2 d-none d-lg-block"><%@include
 					file="/WEB-INF/views/layouts/admin/admin-headernav.jsp"%></div>
-			<div class="col-10 col-12-sm col-12-md">
+			<div class="col-lg-10 col-md-12">
 				<div id="content-wrapper" class="d-flex flex-column">
 					<div class="container">
 						<!-- Breadcrum -->
-						<div class="row mb-8">
+						<div class="row mb-4">
 							<div class="col-md-12">
 								<div
 									class="d-md-flex justify-content-between align-items-center">
@@ -40,7 +40,7 @@
 
 						<div class="row">
 							<div class="col-xl-12 col-12 mb-5">
-								<div class=" px-6 py-6 p-4">
+								<div class=" px-6 py-6">
 									<div class="col-xl-12 col-12 mb-3">
 										<div class="row justify-content-end">
 											<div class="col-xl-2 col-md-4 col-12 d-flex flex-col">
