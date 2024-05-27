@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.criteria.Order;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -32,6 +33,7 @@ import ecofarm.bean.AddressDatasBean.ProvinceBean;
 import ecofarm.bean.AddressDatasBean.WardBean;
 import ecofarm.entity.Account;
 import ecofarm.entity.Address;
+import ecofarm.entity.OrderDetail;
 import ecofarm.entity.Orders;
 import ecofarm.entity.Province;
 import ecofarm.entity.Ward;
@@ -39,7 +41,6 @@ import ecofarm.bean.AddressUserBean;
 import ecofarm.bean.ChangePassword;
 
 @Controller
-
 public class ProfilePageController {
 	@Autowired
 	private IAccountDAO accountDAO;
@@ -47,7 +48,7 @@ public class ProfilePageController {
 	private IProfileDAO profileDAO;
 	@Autowired
 	private IOrderDAO orderDAO;
-	
+
 	@RequestMapping("/account/ProfilePage")
 	public String profilePageIndex(
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
@@ -87,8 +88,6 @@ public class ProfilePageController {
 		}
 		Account account = accountDAO.getAccountByEmail(userEmail);
 		int accountID = account.getAccountId();
-//		session.setAttribute("userInfo", accountDAO.getAccountByEmail(userEmail));
-//		Account account =(Account)session.getAttribute("userInfo");
 		if (profileDAO.changeProfileInfo(accountID, updateProfile)) {
 			Account loggedInUser = accountDAO.getAccountByEmail(updateProfile.getEmail());
 //			Xóa thông tin gmail cũ trong cookie
@@ -96,11 +95,9 @@ public class ProfilePageController {
 			cookie.setMaxAge(0);
 			response.addCookie(cookie);
 //			Thêm thông tin gmail mới vào cookie
-
 			cookie = new Cookie("userEmail", loggedInUser.getEmail());
 			cookie.setMaxAge(-1);
 			response.addCookie(cookie);
-
 //			Sửa thông tin trong session
 			session.removeAttribute("userInfo");
 			session.setAttribute("userInfo", accountDAO.getAccountByEmail(updateProfile.getEmail()));
@@ -128,14 +125,14 @@ public class ProfilePageController {
 		Ward ward = profileDAO.getWard(userAddress.getWardId());
 		Account account = accountDAO.getAccountByEmail(userEmail);
 		Address newAddress = new Address(ward, account, userAddress.getAddressLine());
-		boolean isSuccess = profileDAO.addNewAddress(newAddress);
+		boolean _f = profileDAO.addNewAddress(newAddress);
 		return "redirect:/account/ProfilePage.htm";
 	}
 
 	@RequestMapping(value = "/account/ChangePassword", method = RequestMethod.GET)
 	public String changePassword(
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
-			@ModelAttribute("password") ChangePassword password,HttpServletRequest request) {
+			@ModelAttribute("password") ChangePassword password, HttpServletRequest request) {
 		if (userEmail.equals("")) {
 			request.setAttribute("user", new Account());
 			return "redirect:/login.htm";
@@ -146,7 +143,7 @@ public class ProfilePageController {
 	@RequestMapping(value = "/account/ChangePassword", method = RequestMethod.POST)
 	public String savePassword(@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
 			ModelMap model, @ModelAttribute("password") ChangePassword password, BindingResult errors,
-			HttpSession session,HttpServletRequest request) {
+			HttpSession session, HttpServletRequest request) {
 		if (userEmail.equals("")) {
 			request.setAttribute("user", new Account());
 			return "redirect:/index.htm";
@@ -183,12 +180,14 @@ public class ProfilePageController {
 	}
 
 	@RequestMapping(value = "account/OrderHistory")
-	public String orderHistory(@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,ModelMap modelMap){
+	public String orderHistory(@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
+			ModelMap modelMap) {
 		Account account = accountDAO.getAccountByEmail(userEmail);
-		List <Orders> userOrder = orderDAO.getOrderFromAccountId(account.getAccountId());
-		modelMap.addAttribute("userOrder",userOrder);
+		List<Orders> userOrder = orderDAO.getOrderFromAccountId(account.getAccountId());
+		modelMap.addAttribute("userOrder", userOrder);
 		return "user/account/orderHistory";
 	}
+
 	@ModelAttribute
 	void chooseAddress(ModelMap modelMap) {
 		List<Province> allProvince = profileDAO.getAllProvince();
@@ -198,7 +197,23 @@ public class ProfilePageController {
 		modelMap.addAttribute("address", addressBean);
 		AddressUserBean userAddress = new AddressUserBean();
 		modelMap.addAttribute("userAddress", userAddress);
+	}
 
+	@RequestMapping(value = "order/myorder.htm", method = RequestMethod.GET)
+	public String orderDetail(@RequestParam("orderId") int orderId, ModelMap model, @CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail) {
+		Orders order = orderDAO.findOrder(orderId);
+
+        if (userEmail.isEmpty()) {
+        	return "redirect:/login.htm";
+        }
+        if (order.getAccount().getEmail() != userEmail) {
+        	model.addAttribute("violate", "Yêu cầu của bạn không khả dụng. Bạn chỉ được xem đơn hàng của mình");
+        	return "user/account/order_detail";
+        }
+		List<OrderDetail> orderDetail = orderDAO.getOrderDetail(orderId);
+		model.addAttribute("order", order);
+		model.addAttribute("orderDetail", orderDetail);
+		return "user/account/order_detail";
 	}
 
 }

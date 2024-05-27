@@ -13,7 +13,7 @@
 	display: none;
 	position: absolute;
 	background-color: #ffffff;
-	min-width: 100px;
+	min-width: 140px;
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 	z-index: 1;
 }
@@ -161,7 +161,7 @@
 												</c:when>
 											</c:choose>
 												<a
-													href="account/ProfilePage.html">Profile</a>
+													href="account/ProfilePage.htm">Profile</a>
 											</div>
 										</div>
 							</div>
@@ -181,14 +181,3 @@
 	</div>
 </header>
 
-<script>
-	function showOptions() {
-		var options = document.getElementById("options");
-		options.style.display = "block";
-	}
-
-	function hideOptions() {
-		var options = document.getElementById("options");
-		options.style.display = "none";
-	}
-</script>

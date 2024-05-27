@@ -35,5 +35,5 @@ public interface IOrderDAO {
 	
 	public List<Orders> getOrderFromAccountId(int accountId);
 	
-	List<Address> getFullAddress(int accountid);
+	int getLastestOrderID();
 }
