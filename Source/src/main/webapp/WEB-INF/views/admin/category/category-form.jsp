@@ -25,11 +25,11 @@
 		</div>
 
 	</c:if>
-	<div class="container-fluid">
+	<div class="container">
 		<div class="row">
 
 			<!-- Sidebar -->
-			<div class="col-lg-2 d-none d-lg-inline"><%@include
+			<div class="col-lg-2 d-none d-lg-block"><%@include
 					file="/WEB-INF/views/layouts/admin/admin-headernav.jsp"%></div>
 			<div class="col-lg-10">
 				<div id="content-wrapper" class="d-flex flex-column">

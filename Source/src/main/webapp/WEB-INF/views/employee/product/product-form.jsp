@@ -23,13 +23,13 @@
 			</div>
 		</div>
 	</c:if>
-	<div class="container-fluid">
+	<div class="container">
 		<div class="row">
 
 			<!-- Sidebar -->
-			<div class="col-lg-2 d-none d-lg-inline"><%@include
+			<div class="col-lg-2 d-none d-lg-block"><%@include
 					file="/WEB-INF/views/layouts/employee/employee-headernav.jsp"%></div>
-			<div class="col-lg-10">
+			<div class="col-lg-10 col-md-12">
 				<div id="content-wrapper" class="d-flex flex-column">
 					<!-- Main -->
 					<div class="container">

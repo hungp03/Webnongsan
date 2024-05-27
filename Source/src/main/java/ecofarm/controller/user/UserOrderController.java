@@ -138,7 +138,7 @@ public class UserOrderController {
 	}
 	
 	@RequestMapping(value = "cancelRequest", method = RequestMethod.POST)
-	public String cancleRequest(HttpSession session, HttpServletRequest request,
+	public String cancelRequest(HttpSession session, HttpServletRequest request,
 			@RequestParam(value = "orderId") int orderId) {
 		Orders orders = orderDAO.findOrder(orderId);
 		for (OrderDetail d : orders.getOrderDetails()) {

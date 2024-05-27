@@ -8,7 +8,8 @@
 <c:if test="${not empty updateProdBean }">
 	<c:set var="crrBean" value="${updateProdBean}" />
 	<c:set var="beanName" value="updateProdBean" />
-	<c:set var="actionString" value="admin/products/update_product/${crrBean.productId}.htm" />
+	<c:set var="actionString"
+		value="admin/products/update_product/${crrBean.productId}.htm" />
 	<c:set var="title" value="Update Product" />
 </c:if>
 
@@ -23,13 +24,13 @@
 			</div>
 		</div>
 	</c:if>
-	<div class="container-fluid">
+	<div class="container">
 		<div class="row">
 
 			<!-- Sidebar -->
-			<div class="col-lg-2 d-none d-lg-inline"><%@include
+			<div class="col-lg-2 d-none d-lg-block"><%@include
 					file="/WEB-INF/views/layouts/admin/admin-headernav.jsp"%></div>
-			<div class="col-lg-10">
+			<div class="col-lg-10 col-md-12">
 				<div id="content-wrapper" class="d-flex flex-column">
 					<!-- Main -->
 					<div class="container">
@@ -65,23 +66,23 @@
 										<label for="inputNameProduct" class="form-label mb-2 fw-bold">Product
 											Name</label>
 										<form:input path="productName" class="form-control"
-											id="inputNameProduct" required="true"/>
-											<form:errors path="productName" style="color: red;" />
-											
+											id="inputNameProduct" required="true" />
+										<form:errors path="productName" style="color: red;" />
+
 									</div>
 									<div class="col-md-5">
 										<label for="inputCategory" class="form-label mb-2 fw-bold">Category
 											Type</label>
 										<form:select path="categoryId" id="inputCategory"
-											class="form-select" items="${categories}"
+											class="form-control" items="${categories}"
 											itemValue="categoryId" itemLabel="name"></form:select>
 									</div>
 									<div class="col-md-3 mt-2">
 										<label for="inputQuantity" class="form-label mb-2 fw-bold">Quantity</label>
 										<form:input path="quantity" type="number" class="form-control"
-											id="inputQuantity" min="0"/>
-											<form:errors path="quantity" style="color: red;" />
-											
+											id="inputQuantity" min="0" />
+										<form:errors path="quantity" style="color: red;" />
+
 									</div>
 									<div class="col-md-3 mt-2">
 										<label for="inputUnit" class="form-label mb-2 fw-bold">Unit</label>
@@ -104,14 +105,14 @@
 									<div class="col-md-5 mt-2">
 										<label for="inputPrice" class="form-label mb-2 fw-bold">Price</label>
 										<form:input path="price" type="number" class="form-control"
-											id="inputPrice" min="0" step="1000"/>
+											id="inputPrice" min="0" step="1000" />
 										<form:errors path="price" style="color: red;" />
-										
+
 									</div>
 									<div class="col-md-12 mt-2">
 										<div class="form-floating mb-3">
-											<form:input type="text" class="form-control" path="detail"
-												id="inputDetail" style="height: 60px" />
+											<form:textarea type="text" class="form-control" path="detail"
+												id="inputDetail" style="height: 100px" />
 											<label for="inputDetail" class="form-label mb-2 fw-bold">Detail</label>
 										</div>
 									</div>

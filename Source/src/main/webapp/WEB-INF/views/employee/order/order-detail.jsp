@@ -4,14 +4,14 @@
 
 <body>
 
-<div class="container-fluid">
+<div class="container">
 
 	<div class="row">
 
 		<!-- Sidebar -->
-		<div class="col-2 d-none d-lg-inline "><%@include
+		<div class="col-lg-2 d-none d-lg-block"><%@include
 				file="/WEB-INF/views/layouts/employee/employee-headernav.jsp"%></div>
-		<div class="col-10 col-12-sm col-12-md">
+		<div class="col-lg-10 col-md-12">
 			<div id="content-wrapper" class="d-flex flex-column">
 				<!-- Main -->
 				<div class="container">
@@ -42,7 +42,7 @@
 						<div class="container">
 							<!-- row -->
 							<div class="row ">
-								<div class="col-xl-10 col-10 mb-5">
+								<div class="col-12 mb-5">
 									<!-- card -->
 									<div class="card h-100 card-lg">
 										<div class="card-body p-6">
@@ -170,7 +170,7 @@
 											<div class="row">
 												<div class="col-md-6 mb-4 mb-lg-0">
 													<h6>Payment Info</h6>
-													<span>Cash on Delivery</span>
+													<span>${order.paymentMethod}</span>
 												</div>
 
 											</div>

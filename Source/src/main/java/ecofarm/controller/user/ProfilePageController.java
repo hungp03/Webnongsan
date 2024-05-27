@@ -54,7 +54,7 @@ public class ProfilePageController {
 			HttpSession session, ModelMap modelMap, HttpServletRequest request) {
 		if (userEmail.equals("")) {
 			request.setAttribute("user", new Account());
-			return "redirect:/index.htm";
+			return "redirect:/login.htm";
 		}
 		Account account = accountDAO.getAccountByEmail(userEmail);
 		modelMap.addAttribute("profileInfo", account);
@@ -83,7 +83,7 @@ public class ProfilePageController {
 			HttpServletResponse response) {
 		if (userEmail.equals("")) {
 			request.setAttribute("user", new Account());
-			return "redirect:/index.htm";
+			return "redirect:/login.htm";
 		}
 		Account account = accountDAO.getAccountByEmail(userEmail);
 		int accountID = account.getAccountId();
@@ -123,7 +123,7 @@ public class ProfilePageController {
 			HttpServletResponse response) {
 		if (userEmail.equals("")) {
 			request.setAttribute("user", new Account());
-			return "redirect:/index.htm";
+			return "redirect:/login.htm";
 		}
 		Ward ward = profileDAO.getWard(userAddress.getWardId());
 		Account account = accountDAO.getAccountByEmail(userEmail);
@@ -138,7 +138,7 @@ public class ProfilePageController {
 			@ModelAttribute("password") ChangePassword password,HttpServletRequest request) {
 		if (userEmail.equals("")) {
 			request.setAttribute("user", new Account());
-			return "redirect:/index.htm";
+			return "redirect:/login.htm";
 		}
 		return "user/account/changePassword";
 	}
