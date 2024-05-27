@@ -199,21 +199,34 @@ public class CartDAOImpl implements ICartDAO {
 			cart.setId(cartId);
 			if (checkCart == null) {
 				cart.setQuantity(quantity);
+				Session session = sessionFactory.openSession();
+				try {
+					Transaction tr = session.beginTransaction();
+					session.save(cart);
+					tr.commit();
+					isAdded = true;
+				} catch (Exception e) {
+					// TODO: handle exception
+					System.out.println(e.getMessage());
+					e.printStackTrace();
+				} finally {
+					session.close();
+				}
 			} else {
 				cart.setQuantity(checkCart.getQuantity() + quantity);
-			}
-			Session session = sessionFactory.openSession();
-			try {
-				Transaction tr = session.beginTransaction();
-				session.update(cart);
-				tr.commit();
-				isAdded = true;
-			} catch (Exception e) {
-				// TODO: handle exception
-				System.out.println(e.getMessage());
-				e.printStackTrace();
-			} finally {
-				session.close();
+				Session session = sessionFactory.openSession();
+				try {
+					Transaction tr = session.beginTransaction();
+					session.update(cart);
+					tr.commit();
+					isAdded = true;
+				} catch (Exception e) {
+					// TODO: handle exception
+					System.out.println(e.getMessage());
+					e.printStackTrace();
+				} finally {
+					session.close();
+				}
 			}
 		}
 		return isAdded;

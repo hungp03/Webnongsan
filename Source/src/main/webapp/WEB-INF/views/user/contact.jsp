@@ -168,47 +168,40 @@ button, select {
 </style>
 </head>
 <body>
-	<section>
-		<section class="hero hero-normal">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-3">
-						<div class="hero__categories">
-							<div class="hero__categories__all">
-								<i class="fa fa-bars"></i> <span>All departments</span>
-							</div>
-							<ul>
-								<li><a href="#">Fresh Meat</a></li>
-								<li><a href="#">Vegetables</a></li>
-								<li><a href="#">Fruit & Nut Gifts</a></li>
-								<li><a href="#">Fresh Berries</a></li>
-								<li><a href="#">Ocean Foods</a></li>
-								<li><a href="#">Butter & Eggs</a></li>
-								<li><a href="#">Fastfood</a></li>
-								<li><a href="#">Fresh Onion</a></li>
-								<li><a href="#">Papayaya & Crisps</a></li>
-								<li><a href="#">Oatmeal</a></li>
-								<li><a href="#">Fresh Bananas</a></li>
-							</ul>
+	<section class="hero hero-normal">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="hero__categories">
+						<div class="hero__categories__all">
+							<i class="fa fa-bars"></i> <span>Danh mục</span>
 						</div>
+						<ul>
+							<c:forEach var="item" items="${categories}">
+								<li><a
+									href="<c:url value="/product.htm?categoryId=${item.categoryId }"/>">${item.name }</a></li>
+							</c:forEach>
+
+						</ul>
 					</div>
-					<div class="col-lg-9">
-						<div class="hero__search">
-							<%@ include file="/WEB-INF/views/layouts/user/searchbox.jsp"%>
-							<div class="hero__search__phone">
-								<div class="hero__search__phone__icon">
-									<i class="fa fa-phone"></i>
-								</div>
-								<div class="hero__search__phone__text">
-									<h5>+65 11.188.888</h5>
-									<span>support 24/7 time</span>
-								</div>
+				</div>
+				<div class="col-lg-9">
+					<div class="hero__search">
+						<%@ include file="/WEB-INF/views/layouts/user/searchbox.jsp"%>
+						<div class="hero__search__phone">
+							<div class="hero__search__phone__icon">
+								<i class="fa fa-phone"></i>
+							</div>
+							<div class="hero__search__phone__text">
+								<h5>+65 11.188.888</h5>
+								<span>support 24/7 time</span>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</section>
+		</div>
+	</section>
 		<!-- Hero Section End -->
 		<!-- Breadcrumb Section Begin -->
 		<section class="breadcrumb-section set-bg"
@@ -243,27 +236,27 @@ button, select {
 
 						<div class="col-md-12 mb-3">
 							<!-- input -->
-							<label class="form-label" for="title"> Title</label> <input
+							<label class="form-label" for="title"> Tiêu đề</label> <input
 								type="text" id="title" name="title" class="form-control"
-								placeholder="Your Title" required="">
+								placeholder="Nhập vào tiêu đề" required="">
 						</div>
 						<div class="col-md-6 mb-3">
 							<label class="form-label" for="emailContact">Email<span
 								class="text-danger">*</span></label> <input type="email"
 								id="emailContact" name="emailContact" class="form-control"
-								placeholder="Enter Your First Name" required="">
+								placeholder="Nhập vào email của bạn" required="">
 						</div>
 						<div class="col-md-6 mb-3">
 							<!-- input -->
-							<label class="form-label" for="phone"> Phone</label> <input
+							<label class="form-label" for="phone"> Điện thoại</label> <input
 								type="text" id="phone" name="phone" class="form-control"
-								placeholder="Your Phone Number" required="">
+								placeholder="Nhập vào số điện thoại của bạn" required="">
 						</div>
 						<div class="col-md-12 mb-3">
 							<!-- input -->
-							<label class="form-label" for="comments"> Comments</label>
+							<label class="form-label" for="comments"> Nội dung</label>
 							<textarea rows="3" id="comments" class="form-control"
-								placeholder="Additional Comments" name="comments"></textarea>
+								placeholder="Mô tả chi tiết vấn đề của bạn" name="comments"></textarea>
 						</div>
 						<c:if test="${not empty message}">
 								<div class="col-12">

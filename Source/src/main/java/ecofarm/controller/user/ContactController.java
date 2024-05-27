@@ -1,5 +1,7 @@
 package ecofarm.controller.user;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ecofarm.DAO.ICategoryDAO;
 import ecofarm.bean.Company;
+import ecofarm.entity.Category;
 import ecofarm.utility.Mailer;
 
 @RequestMapping("contact")
@@ -21,9 +25,13 @@ public class ContactController {
 	@Autowired
 	@Qualifier("ecofarm")
 	Company company;
+	@Autowired
+	private ICategoryDAO categoryDAO;
 	
 	@RequestMapping(value="",method = RequestMethod.GET)
 	public String ContactForm(HttpServletRequest request) {
+		List<Category> cates = categoryDAO.getAllCategories();
+		request.setAttribute("categories", cates);
 		request.setAttribute("company", company);
 		return "user/contact";
 	}
@@ -36,7 +44,7 @@ public class ContactController {
 		try {
 			mailer.sendForUs(emailContact, title, comments);
 			model.addAttribute("message","Gửi mail thành công");
-			return "user/index";
+			return "redirect:/index.htm";
 			
 		} catch (Exception e) {
 			// TODO: handle exception

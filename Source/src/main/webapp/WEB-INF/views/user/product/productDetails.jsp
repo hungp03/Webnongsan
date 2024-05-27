@@ -96,6 +96,24 @@
 	height: 40px !important;
 	width: 40px !important;
 }
+.product__details__quantity input[type=number]::-webkit-outer-spin-button,
+.product__details__quantity input[type=number]::-webkit-inner-spin-button{
+	-webkit-appearance: none;
+    margin: 0;
+}
+.product__details__quantity input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+    width: 50px; /* Adjust width as needed */
+    text-align: center;
+}
+.product__details__quantity .pro-qty button {
+    background-color: #6f6f6f26; /* Customize button color */
+    border: none;
+    padding: 10px 15px; /* Adjust padding as needed */
+    cursor: pointer;
+    font-size: 16px; /* Adjust font size as needed */
+}
 </style>
 </head>
 <body>
@@ -201,11 +219,13 @@
 								currencySymbol='đ' maxFractionDigits='0' />
 						</div>
 						<form action="AddCart.htm?productId=${product.productId }"
-							method="post" style="display: inline-block;">
+							method="post" style="display: inline-block;" onsubmit="return validateQuantity()">
 							<div class="product__details__quantity">
 								<div class="quantity">
 									<div class="pro-qty">
-										<input name="quantity" type="text" value="1">
+										<button type="button" onclick="changeQuantity(-1)">-</button>
+										<input id="quantity" name="quantity" type="number" min="1" step="1" value="1" oninput="validateInput(event)">
+										<button type="button" onclick="changeQuantity(1)">+</button>
 									</div>
 								</div>
 							</div>
@@ -217,7 +237,12 @@
 							class="heart-icon"><span class="icon_heart_alt"></span></a>
 						<ul>
 							<li><b>Đơn vị: </b> <span>${product.unit }</span></li>
-							<li><b>Tồn kho: </b> <span>${product.quantity }</span></li>
+							<c:if test="${product.quantity > 0}">
+								<li><b>Tồn kho: </b> <span>${product.quantity }</span></li>
+							</c:if>
+							<c:if test="${product.quantity <= 0}">
+								<li style="color:#dd2222"><b>Sản phẩm hết hàng</span></li>
+							</c:if>
 						</ul>
 					</div>
 				</div>
@@ -240,7 +265,7 @@
 									<div class="product-feedback-list">${product.detail }</div>
 								</div>
 							</div>
-
+							<!--  Section đánh giá comment sản phẩm  -->
 							<div class="tab-pane" id="tabs-3" role="tabpanel">
 								<div class="product__details__tab__desc">
 									<h6>Đánh giá</h6>
@@ -334,5 +359,45 @@
 		</div>
 	</section>
 	<!-- Related Product Section End -->
+	<content tag="script">
+		<script>
+			function changeQuantity(amount) {
+			    var quantityInput = document.getElementById('quantity');
+			    var currentQuantity = parseInt(quantityInput.value);
+			    var newQuantity = currentQuantity + amount;
 
+			    if (newQuantity >= 1) {
+			        quantityInput.value = newQuantity;
+			    }
+			}
+			function validateInput(event){
+				var input = event.target;
+				var value = input.value;
+
+				// Kiểm tra và xóa tất cả dấu '.'
+			    var newValue  = value.replace(/\./g, '');
+				
+				if (value === '-' || value === '0' || parseInt(value) < 1){
+					input.value = '';
+				}else{
+					input.value = newValue;
+				}
+
+			}
+			
+			function validateQuantity(){
+				var quantity = document.getElementById('quantity').value;
+				var productQuantity = ${product.quantity};
+				if(quantity === '' || !Number.isInteger(Number(quantity))){
+					alert("Vui lòng nhập số lượng của sản phẩm");
+					return false;
+				}if(parseInt(quantity) > productQuantity){
+					alert("Số lượng sản phẩm tồn kho không đủ");
+					return false;
+				}
+				return true;
+			}
+			
+		</script>
+	</content>
 </body>

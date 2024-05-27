@@ -54,7 +54,7 @@
 		</div>
 	</div>
 	<div class="humberger__menu__widget">
-		<div class="header__top__right__language">
+		<%-- <div class="header__top__right__language">
 			<img src="<c:url value="/assets/user/img/language.png"/>" alt="">
 			<div>English</div>
 			<span class="arrow_carrot-down"></span>
@@ -62,17 +62,16 @@
 				<li><a href="<c:url value="/assets/user/#"/>">Spanis</a></li>
 				<li><a href="<c:url value="/assets/user/#"/>">English</a></li>
 			</ul>
-		</div>
+		</div> --%>
 		<div class="header__top__right__auth">
 			<a href="<c:url value="/login.htm"/>"><i class="fa fa-user"></i>
 				Login</a>
 		</div>
 	</div>
 	<nav class="humberger__menu__nav mobile-menu">
-		<ul>
-			<li class="active"><a href="<c:url value="/index.htm"/>">Home</a></li>
+		<ul id="menu">
+			<li><a href="<c:url value="/index.htm"/>">Home</a></li>
 			<li><a href="<c:url value="/product.htm"/>">Shop</a></li>
-			<li><a href="<c:url value="/blog.htm"/>">Blog</a></li>
 			<li><a href="<c:url value="/contact.htm"/>">Contact</a></li>
 			<c:if test="${empty userInfo }">
 				<li><a href="<c:url value="/login.htm"/>">Login</a></li>
@@ -98,10 +97,9 @@
 			</div>
 			<div class="col-lg-6">
 				<nav class="header__menu">
-					<ul>
-						<li class="active"><a href="<c:url value="/index.htm"/>">Home</a></li>
+					<ul id="menu">
+						<li><a href="<c:url value="/index.htm"/>">Home</a></li>
 						<li><a href="<c:url value="/product.htm"/>">Shop</a></li>
-						<li><a href="<c:url value="/blog.htm"/>">Blog</a></li>
 						<li><a href="<c:url value="/contact.htm"/>">Contact</a></li>
 						<c:if test="${empty userInfo }">
 							<li><a href="<c:url value="/login.htm"/>">Login</a></li>

@@ -27,7 +27,7 @@ public class CartController {
 	@RequestMapping("cart")
 	public String Index(HttpServletRequest request, HttpSession session,
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail) {
-		if (!userEmail.equals("")) {
+		/* if (!userEmail.equals("")) { */
 			Account account = accountDAO.getAccountByEmail(userEmail);
 			if (account != null) {
 				List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
@@ -35,19 +35,19 @@ public class CartController {
 				session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
 			}
 			return "user/cart";
-		} else {
+/*		} else {
 			return "redirect:/login.htm";
-		}
+		}*/
 	}
 
 	@RequestMapping(value = { "/AddCart" }, method = RequestMethod.GET)
 	public String AddToCart(@RequestParam(value = "productId", required = true) int productId,
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
 			HttpSession session, HttpServletRequest request) {
-		if (userEmail.equals("")) {
-			request.setAttribute("user", new Account());
-			return "redirect:/login.htm";
-		}
+		/*
+		 * if (userEmail.equals("")) { request.setAttribute("user", new Account());
+		 * return "redirect:/login.htm"; }
+		 */
 		Account account = accountDAO.getAccountByEmail(userEmail);
 		if (account != null) {
 			cartDAO.addToCart(productId, account.getAccountId());
@@ -62,10 +62,10 @@ public class CartController {
 	public String AddToCartQuantity(@RequestParam(value = "productId", required = true) int productId,
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
 			@RequestParam("quantity") String quantity, HttpSession session, HttpServletRequest request) {
-		if (userEmail.equals("")) {
-			request.setAttribute("user", new Account());
-			return "redirect:/login.htm";
-		}
+		/*
+		 * if (userEmail.equals("")) { request.setAttribute("user", new Account());
+		 * return "redirect:/login.htm"; }
+		 */
 
 		Account account = accountDAO.getAccountByEmail(userEmail);
 		if (account != null) {

@@ -19,7 +19,7 @@
 		<property name="banner2"
 			value="assets/user/img/banner/banner-2.jpg" />
 		<property name="phoneNumber" value="(+84) 123456789" />
-		<property name="gmail" value="abc@gmail.com" />
+		<property name="gmail" value="noreplymail1249@gmail.com" />
 		<property name="address" value="97 Man Thiện" />
 		<property name="openTime" value="8:00" />
 		<property name="closeTime" value="21:00" />
