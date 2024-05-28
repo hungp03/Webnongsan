@@ -42,8 +42,6 @@ public class UserOrderController {
 	@Autowired
 	private IAccountDAO accountDAO;
 	@Autowired
-	private ICategoryDAO categoryDAO;
-	@Autowired
 	private IOrderDAO orderDAO;
 	@Autowired
 	private IProductDAO productDAO;
@@ -100,6 +98,7 @@ public class UserOrderController {
 				orderDetail.setProduct(c.getProduct());
 				orderDetail.setOrder(orders);
 				orderDetail.setQuantity(c.getQuantity());
+				orderDetail.setPrice(c.getProduct().getPrice());
 				// Xoa so luong ton sp
 				Product product = orderDetail.getProduct();
 				product.setQuantity(product.getQuantity() - orderDetail.getQuantity());

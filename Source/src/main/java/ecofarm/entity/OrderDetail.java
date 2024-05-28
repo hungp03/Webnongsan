@@ -30,12 +30,24 @@ public class OrderDetail {
 
 	@Column(name = "Quantity", nullable = false)
 	private int quantity;
-
-	public OrderDetail(OrderDetailId id, Orders order, Product product, int quantity) {
+	
+	@Column(name = "ProductUnitPrice", nullable = false, scale = 4)
+	private double price;
+	
+	public OrderDetail(OrderDetailId id, Orders order, Product product, int quantity, double price) {
 		this.id = id;
 		this.order = order;
 		this.product = product;
 		this.quantity = quantity;
+		this.price = price;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	public OrderDetail() {

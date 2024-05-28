@@ -238,7 +238,10 @@
 									</div>
 								</div>
 							</div>
-							<button type="submit" class="primary-btn" style="border: none">ADD
+							<c:if test="${product.quantity <= 0}">
+								<c:set var="btn_disable" value="disabled"></c:set>
+							</c:if>
+							<button type="submit" class="primary-btn btn" ${btn_disable} style="border: none">ADD
 								TO CARD</button>
 						</form>
 						<a

@@ -73,7 +73,7 @@ public class Account {
 		this.wishlist = wishlist;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "account")
 	private Set<Orders> orders = new HashSet<>(0);
 
 	/*

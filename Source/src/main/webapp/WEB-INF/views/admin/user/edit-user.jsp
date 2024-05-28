@@ -2,7 +2,14 @@
 	pageEncoding="UTF-8"%>
 
 <%@include file="/WEB-INF/views/layouts/admin/admin-lib.jsp"%>
-
+<c:choose>
+	<c:when test="${role.toLowerCase() eq 'employee'}">
+		<c:set var="roleName" value="Nhân viên" />
+	</c:when>
+	<c:when test="${role.toLowerCase() eq 'guest'}">
+		<c:set var="roleName" value="Khách hàng" />
+	</c:when>
+</c:choose>
 <style>
 </style>
 <body>
@@ -34,18 +41,18 @@
 									class="d-md-flex justify-content-between align-items-center">
 									<!-- pageheader -->
 									<div>
-										<h2>Update ${role }</h2>
+										<h2>Cập nhật thông tin ${roleName }</h2>
 										<!-- breacrumb -->
 										<nav aria-label="breadcrumb">
 											<ol class="breadcrumb mb-0 text-muted fs-6 fw-semibold">
 												<li class="breadcrumb-item  "><a
-													href="admin/dashboard.htm" class="brc-link">Dashboard
+													href="admin/dashboard.htm" class="brc-link">Trang chủ
 												</a></li>
 												<li class="breadcrumb-item "><a
 													href="admin/user/get-${role.toLowerCase() }.htm"
-													class="brc-link">${role } </a>
+													class="brc-link">${roleName } </a>
 												<li class="breadcrumb-item active" aria-current="page"
-													class="text-decoration-none">Update ${role }</li>
+													class="text-decoration-none">Cập nhật thông tin ${roleName }</li>
 											</ol>
 
 										</nav>
@@ -61,8 +68,8 @@
 									<div class="row g-3">
 
 										<div class="col">
-											<label for="lastName" class="form-label mb-2 fw-bold">Lastname</label>
-											<form:input type="text" id="lastName" placeholder="Lastname"
+											<label for="lastName" class="form-label mb-2 fw-bold">Họ</label>
+											<form:input type="text" id="lastName" placeholder="Họ"
 												class="form-control " path="lastName" />
 											<form:errors class="text-danger" path="lastName" />
 
@@ -70,8 +77,8 @@
 										<!-- col -->
 										<div class="col">
 											<!-- input -->
-											<label for="firstName" class="form-label mb-2 fw-bold">Firstname</label>
-											<form:input type="text" id="firstName"
+											<label for="firstName" class="form-label mb-2 fw-bold">Tên</label>
+											<form:input type="text" id="Tên"
 												placeholder="Firstname" class="form-control "
 												path="firstName" />
 											<form:errors class="text-danger" path="firstName" />
@@ -85,20 +92,20 @@
 										<div class="col-12">
 
 											<label for="password" class="form-label mb-2 fw-bold">
-												Password</label>
+												Mật khẩu</label>
 											<form:input type="password" class="form-control"
 												id="password" placeholder="Password" path="password" />
 											<form:errors class="text-danger" path="password" />
 
 										</div>
 										<div class="col-12 ">
-											<label for="phoneNumber" class="form-label mb-2 fw-bold">Phone</label>
+											<label for="phoneNumber" class="form-label mb-2 fw-bold">Số điện thoại</label>
 											<form:input type="text" class="form-control" id="phoneNumber"
 												path="phoneNumber" placeholder="Phone Number" />
 											<form:errors class="text-danger" path="phoneNumber" />
 										</div>
 										<div class="form-group mt-3">
-											<p class="mb-2 fw-bold">Current Avatar</p>
+											<p class="mb-2 fw-bold">Ảnh hiện tại</p>
 											<img id="output" class="width-100" style="width: 100px"
 												src="<c:url value="/assets/user/img/account/${updateuser.avatarDir }" />"
 												alt="No Image" />
@@ -112,7 +119,7 @@
 										<!-- btn -->
 										<div
 											class="col-12 mt-2 d-flex align-items-center justify-content-center">
-											<button type="submit" class="btn btn-custom">Submit</button>
+											<button type="submit" class="btn btn-custom">Xác nhận</button>
 										</div>
 									</div>
 								</form:form>
