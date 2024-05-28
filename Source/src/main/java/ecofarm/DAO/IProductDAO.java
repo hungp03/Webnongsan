@@ -9,6 +9,7 @@ public interface IProductDAO {
 	public List<Product> getProductsByCategoryID(int categoryID);
 	public List<Product> getLatestProductsByCaID(int categoryID);
 	public Product getProductByID(int productID);
+	public List<Product> getProductInSaleByCaID(int categoryID);
 	
 	public List<Product> getLatestProduct();
 	public List<Product> getReviewProduct();
