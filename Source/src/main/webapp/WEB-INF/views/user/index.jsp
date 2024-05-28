@@ -135,11 +135,15 @@
 									</div>
 									<div class="featured__item__text">
 										<h6>
-											<a href="<c:url value="/product-detail.htm?productId=${item.productId }"/>">${item.productName }</a>
+											<a
+												href="<c:url value="/product-detail.htm?productId=${item.productId }"/>">${item.productName }</a>
 										</h6>
 										<h5>
-											<fmt:formatNumber value='${item.price }' type='currency'
-												currencySymbol='đ' maxFractionDigits='0' />
+											<c:set var="formattedPrice">
+												<fmt:formatNumber value="${item.price}" type="number"
+													maxFractionDigits="0" />
+											</c:set>
+											${formattedPrice}đ
 										</h5>
 									</div>
 								</div>
@@ -178,8 +182,11 @@
 													<a href="<c:url value="/assets/user/#"/>">${item.productName }</a>
 												</h6>
 												<h5>
-													<fmt:formatNumber value='${item.price }' type='currency'
-														currencySymbol='đ' maxFractionDigits='0' />
+													<c:set var="formattedPrice">
+														<fmt:formatNumber value="${item.price}" type="number"
+															maxFractionDigits="0" />
+													</c:set>
+													${formattedPrice}đ
 												</h5>
 
 											</div>
@@ -250,7 +257,12 @@
 										</div>
 										<div class="latest-product__item__text">
 											<h6>${item.productName }</h6>
-											<span>${item.price }</span>
+											<span><c:set var="formattedPrice">
+														<fmt:formatNumber value="${item.price}" type="number"
+															maxFractionDigits="0" />
+													</c:set>
+													${formattedPrice}đ
+											</span>
 										</div>
 									</a>
 									<c:if
@@ -282,8 +294,12 @@
 										</div>
 										<div class="latest-product__item__text">
 											<h6>${item.productName }</h6>
-											<span><fmt:formatNumber value='${item.price }'
-													type='currency' currencySymbol='đ' maxFractionDigits='0' /></span>
+											<span><c:set var="formattedPrice">
+														<fmt:formatNumber value="${item.price}" type="number"
+															maxFractionDigits="0" />
+													</c:set>
+													${formattedPrice}đ
+											</span>
 										</div>
 									</a>
 									<c:if
@@ -315,8 +331,12 @@
 										</div>
 										<div class="latest-product__item__text">
 											<h6>${item.productName }</h6>
-											<span><fmt:formatNumber value='${item.price }'
-													type='currency' currencySymbol='đ' maxFractionDigits='0' /></span>
+											<span><c:set var="formattedPrice">
+														<fmt:formatNumber value="${item.price}" type="number"
+															maxFractionDigits="0" />
+													</c:set>
+													${formattedPrice}đ
+											</span>
 										</div>
 									</a>
 									<c:if

@@ -9,12 +9,13 @@
 	border-color: #7fad39;
 	color: #ffffff;
 }
+
 .latest-product__item__text {
 	overflow: hidden;
 	padding-top: 10px;
 }
 
-.latest-product__item__text h6 a{
+.latest-product__item__text h6 a {
 	color: #252525;
 	margin-bottom: 8px;
 }
@@ -115,28 +116,6 @@
 							</div>
 						</div>
 
-
-
-						<div class="sidebar__item">
-							<h4>Popular Size</h4>
-							<div class="sidebar__item__size">
-								<label for="large"> Large <input type="radio" id="large">
-								</label>
-							</div>
-							<div class="sidebar__item__size">
-								<label for="medium"> Medium <input type="radio"
-									id="medium">
-								</label>
-							</div>
-							<div class="sidebar__item__size">
-								<label for="small"> Small <input type="radio" id="small">
-								</label>
-							</div>
-							<div class="sidebar__item__size">
-								<label for="tiny"> Tiny <input type="radio" id="tiny">
-								</label>
-							</div>
-						</div>
 						<div class="sidebar__item">
 							<div class="latest-product__text">
 								<h4>Latest Products</h4>
@@ -162,10 +141,14 @@
 												</div>
 												<div class="latest-product__item__text">
 													<h6>
-													<a href="<c:url value="/product-detail.htm?productId=${item.productId }"/>">${item.productName }</a>
+														<a
+															href="<c:url value="/product-detail.htm?productId=${item.productId }"/>">${item.productName }</a>
 													</h6>
-													<span><fmt:formatNumber value='${item.price }' type='currency'
-													currencySymbol='đ' maxFractionDigits='0' /></span>
+													<span> <c:set var="formattedPrice">
+															<fmt:formatNumber value="${item.price}" type="number"
+																maxFractionDigits="0" />
+														</c:set> ${formattedPrice}đ
+													</span>
 												</div>
 											</a>
 											<c:if
@@ -198,7 +181,7 @@
 										<div class="product__discount__item">
 											<div class="product__discount__item__pic set-bg"
 												data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
-										
+
 												<ul class="product__item__pic__hover">
 													<li><a
 														href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
@@ -213,11 +196,15 @@
 											</div>
 											<div class="product__discount__item__text">
 												<h5>
-												<a href="<c:url value="/product-detail.htm?productId=${item.productId }"/>">${item.productName }</a>
+													<a
+														href="<c:url value="/product-detail.htm?productId=${item.productId }"/>">${item.productName }</a>
 												</h5>
 												<div class="product__item__price">
-													<fmt:formatNumber value='${item.price }'
-															type='currency' currencySymbol='đ' maxFractionDigits='0' />
+													<c:set var="formattedPrice">
+														<fmt:formatNumber value="${item.price}" type="number"
+															maxFractionDigits="0" />
+													</c:set>
+													${formattedPrice}đ
 												</div>
 											</div>
 										</div>
@@ -242,7 +229,7 @@
 										</h6>
 									</div>
 								</div>
-							
+
 							</div>
 						</div>
 						<div class="row">
@@ -268,10 +255,16 @@
 										</div>
 										<div class="product__item__text">
 											<h6>
-												<a href="<c:url value="/product-detail.htm?productId=${item.productId }"/>">${item.productName }</a>
+												<a
+													href="<c:url value="/product-detail.htm?productId=${item.productId }"/>">${item.productName }</a>
 											</h6>
-											<h5><fmt:formatNumber value='${item.price }' type='currency'
-													currencySymbol='đ' maxFractionDigits='0' /></h5>
+											<h5>
+												<c:set var="formattedPrice">
+													<fmt:formatNumber value="${item.price}" type="number"
+														maxFractionDigits="0" />
+												</c:set>
+												${formattedPrice}đ
+											</h5>
 										</div>
 									</div>
 								</div>
