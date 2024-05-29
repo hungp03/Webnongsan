@@ -11,13 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ecofarm.DAO.IFeedbackDAO;
 import ecofarm.entity.Feedback;
+
 @Transactional
 public class FeedbackDAOImpl implements IFeedbackDAO {
 
 	private SessionFactory sessionFactory;
+
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Feedback> getFeedbackByProduct(int productId) {
@@ -56,38 +59,37 @@ public class FeedbackDAOImpl implements IFeedbackDAO {
 		List<Feedback> feedback = query.list();
 		return feedback;
 	}
-	
+
 	@Override
 	public List<Feedback> searchFeedback(String search) {
-	    Session session = sessionFactory.openSession();
-	    session.beginTransaction();
-	    
-	    String hql;
-	    Query query;
-	    
-	    try {
-	        // Kiểm tra xem search có thể chuyển đổi thành số nguyên hay không
-	        int feedbackId = Integer.parseInt(search);
-	        // Nếu thành công, tìm kiếm theo feedbackId
-	        hql = "FROM Feedback WHERE feedbackId = :id OR feedbackContent LIKE :content";
-	        query = session.createQuery(hql);
-	        query.setParameter("id", feedbackId);
-	        query.setParameter("content", "%" + search + "%");
-	    } catch (NumberFormatException e) {
-	        // Nếu không thể chuyển đổi thành số nguyên, tìm kiếm theo feedbackContent
-	        hql = "FROM Feedback WHERE feedbackContent LIKE :content";
-	        query = session.createQuery(hql);
-	        query.setParameter("content", "%" + search + "%");
-	    }
-	    
-	    @SuppressWarnings("unchecked")
-	    List<Feedback> list = query.list();
-	    session.getTransaction().commit();
-	    session.close();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
 
-	    return list;
+		String hql;
+		Query query;
+
+		try {
+			// Kiểm tra xem search có thể chuyển đổi thành số nguyên hay không
+			int feedbackId = Integer.parseInt(search);
+			// Nếu thành công, tìm kiếm theo feedbackId
+			hql = "FROM Feedback WHERE feedbackId = :id OR feedbackContent LIKE :content";
+			query = session.createQuery(hql);
+			query.setParameter("id", feedbackId);
+			query.setParameter("content", "%" + search + "%");
+		} catch (NumberFormatException e) {
+			// Nếu không thể chuyển đổi thành số nguyên, tìm kiếm theo feedbackContent
+			hql = "FROM Feedback WHERE feedbackContent LIKE :content";
+			query = session.createQuery(hql);
+			query.setParameter("content", "%" + search + "%");
+		}
+
+		@SuppressWarnings("unchecked")
+		List<Feedback> list = query.list();
+		session.getTransaction().commit();
+		session.close();
+
+		return list;
 	}
-
 
 	@Override
 	public Feedback getFeedBackById(int fid) {
@@ -118,6 +120,7 @@ public class FeedbackDAOImpl implements IFeedbackDAO {
 		}
 		return false;
 	}
+
 	@Override
 	public boolean addFeedback(Feedback feedback) {
 		Session session = sessionFactory.openSession();
@@ -134,6 +137,43 @@ public class FeedbackDAOImpl implements IFeedbackDAO {
 		}
 		return false;
 	}
-	
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Feedback> getFeedbacksByAccout(int accountId) {
+		Session session = sessionFactory.getCurrentSession();
+		List<Feedback> list = new ArrayList<Feedback>();
+		try {
+			String hql = "FROM Feedback WHERE account.accountId = :aid";
+			Query query = session.createQuery(hql);
+			query.setParameter("aid", accountId);
+			list = query.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Feedback getFeedback(int productId, int accountId) {
+		Session session = sessionFactory.getCurrentSession();
+		List<Feedback> list = new ArrayList<Feedback>();
+		try {
+			String hql = "FROM Feedback WHERE account.accountId = :aid AND product.productId = :pid";
+			Query query = session.createQuery(hql);
+			query.setParameter("aid", accountId);
+			query.setParameter("pid", productId);
+			list = query.list();
+		}catch (Exception e) {
+			// TODO: handle exception
+
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		return list.get(0);
+	}
 }
