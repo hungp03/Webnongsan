@@ -146,7 +146,7 @@ public class EProductController {
 			String photoName = productImgUpload.uploadImage(product.getImageFile());
 			newProduct.setImage(photoName);
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -184,7 +184,7 @@ public class EProductController {
 			}
 			re.addFlashAttribute("mess", "Xóa thành công");
 		} else {
-			re.addFlashAttribute("mess", "Có lỗi khi xóa");
+			re.addFlashAttribute("mess", "Không thể xóa, sản phẩm có thể đã được khách hàng sử dụng");
 		}
 		return "redirect:/employee/products.htm";
 	}
@@ -246,7 +246,7 @@ public class EProductController {
 					}
 					// Cập nhật ảnh mới cho product
 					foundProd.setImage(newImage);
-					Thread.sleep(2000);
+					Thread.sleep(5000);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -296,6 +296,8 @@
 												</div>
 												<div class="comment-text w-100 active">
 													<h5>${item.account.getName() }</h5>
+													<span
+															class="label label-success">Đã mua hàng</span> 
 													<div>
 														<c:set var="countStar" value="0"></c:set>
 														<c:forEach begin="1" end="${item.ratingStar }">
@@ -309,10 +311,9 @@
 														</c:if>
 													</div>
 													<div class="comment-footer">
-														<span class="date">${item.postingDate }</span> <span
-															class="label label-success">Đã mua hàng</span> <span
-															class="action-icons"> <a href="#" data-abc="true"><i
-																class="fa fa-heart"></i></a>
+														<span class="date"><fmt:formatDate pattern="dd-MM-yyyy HH:mm"
+								value="${item.postingDate }" /></span> <span
+															class="action-icons">
 														</span>
 													</div>
 													<p class="m-b-5 m-t-10">${item.feedbackContent }</p>
