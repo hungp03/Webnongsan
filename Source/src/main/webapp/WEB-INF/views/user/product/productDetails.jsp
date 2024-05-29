@@ -220,14 +220,15 @@
 						</div>
 
 						<div class="product__details__price">
-								<c:set var="formattedPrice">
-									<fmt:formatNumber value="${product.price}" type="number"
-										maxFractionDigits="0" />
-								</c:set>
-								${formattedPrice}đ
+							<c:set var="formattedPrice">
+								<fmt:formatNumber value="${product.price}" type="number"
+									maxFractionDigits="0" />
+							</c:set>
+							${formattedPrice}đ
 						</div>
 						<form action="AddCart.htm?productId=${product.productId }"
-							method="post" style="display: inline-block;" onsubmit="return validateQuantity()">
+							method="post" style="display: inline-block;"
+							onsubmit="return validateQuantity()">
 
 							<div class="product__details__quantity">
 								<div class="quantity">
@@ -239,11 +240,11 @@
 									</div>
 								</div>
 							</div>
-							<%-- <c:if test="${product.quantity <= 0}">
-								<c:set var="btn_disable" value="disabled"></c:set> ${btn_disable}
-							</c:if> --%>
-							<button type="submit" class="primary-btn" style="border: none">ADD
-								TO CARD</button>
+							<c:if test="${product.quantity <= 0}">
+								<c:set var="btn_disable" value="disabled"></c:set>
+							</c:if>
+							<button type="submit" class="primary-btn btn" ${btn_disable}
+								style="border: none">ADD TO CARD</button>
 						</form>
 						<a
 							href="<c:url value="/AddWishlist.htm?productId=${product.productId }"/>"
@@ -254,7 +255,7 @@
 								<li><b>Tồn kho: </b> <span>${product.quantity }</span></li>
 							</c:if>
 							<c:if test="${product.quantity <= 0}">
-								<li style="color: #dd2222"><b>Sản phẩm hết hàng</span></li>
+								<li style="color: #dd2222"><b>Tạm hết hàng</span></li>
 							</c:if>
 						</ul>
 					</div>
@@ -286,13 +287,27 @@
 										<c:forEach var="item" items="${feedbacks }" varStatus="loop">
 											<div class="comment-widgets m-b-20">
 												<div class="p-2">
-													<span class="round"> <img
+													<span class="round">
+													<c:if test="${not empty item.account.avatar }">
+														<img
 														src="<c:url value="/assets/user/img/account/${item.account.avatar }"/>"
 														alt="User photo" class="user-nav__user-photo">
+													</c:if>
+													<c:if test="${empty item.account.avatar }">
+														<img
+														src="<c:url value="/assets/user/img/account/defaultavatar.png"/>"
+														alt="User photo" class="user-nav__user-photo">
+													</c:if>
 													</span>
 												</div>
 												<div class="comment-text w-100 active">
 													<h5>${item.account.getName() }</h5>
+													<span class="label label-success">Đã mua hàng</span>
+													<div class="comment-footer">
+														<span class="date"><fmt:formatDate pattern="dd-MM-yyyy HH:mm"
+								value="${item.postingDate }" /></span>
+												
+													</div>
 													<div>
 														<c:set var="countStar" value="0"></c:set>
 														<c:forEach begin="1" end="${item.ratingStar }">
@@ -305,13 +320,7 @@
 																style="font-size: 16px; height: 17px; width: 18px;"></i>
 														</c:if>
 													</div>
-													<div class="comment-footer">
-														<span class="date">${item.postingDate }</span> <span
-															class="label label-success">Đã mua hàng</span> <span
-															class="action-icons"> <a href="#" data-abc="true"><i
-																class="fa fa-heart"></i></a>
-														</span>
-													</div>
+
 													<p class="m-b-5 m-t-10">${item.feedbackContent }</p>
 												</div>
 											</div>
@@ -360,8 +369,6 @@
 									href="<c:url value="/product-detail.htm?productId=${item.productId }"/>">${item.productName }</a>
 							</h6>
 							<h5>
-								<%-- <fmt:formatNumber value='${item.price }' type='currency'
-									currencySymbol='đ' maxFractionDigits='0' /> --%>
 
 								<c:set var="formattedPrice">
 									<fmt:formatNumber value="${item.price}" type="number"
@@ -378,45 +385,48 @@
 		</div>
 	</section>
 	<!-- Related Product Section End -->
-	<content tag="script">
-		<script>
-			function changeQuantity(amount) {
-			    var quantityInput = document.getElementById('quantity');
-			    var currentQuantity = parseInt(quantityInput.value);
-			    var newQuantity = currentQuantity + amount;
+	<content tag="script"> <script>
+		function changeQuantity(amount) {
+			var quantityInput = document.getElementById('quantity');
+			var currentQuantity = parseInt(quantityInput.value);
+			var newQuantity = currentQuantity + amount;
 
-			    if (newQuantity >= 1) {
-			        quantityInput.value = newQuantity;
-			    }
+			if (newQuantity >= 1) {
+				quantityInput.value = newQuantity;
 			}
-			function validateInput(event){
-				var input = event.target;
-				var value = input.value;
+		}
+		function validateInput(event) {
+			var input = event.target;
+			var value = input.value;
 
-				// Kiểm tra và xóa tất cả dấu '.'
-			    var newValue  = value.replace(/\./g, '');
-				
-				if (value === '-' || value === '0' || parseInt(value) < 1){
-					input.value = '';
-				}else{
-					input.value = newValue;
-				}
+			// Kiểm tra và xóa tất cả dấu '.'
+			var newValue = value.replace(/\./g, '');
 
+			if (value === '-' || value === '0' || parseInt(value) < 1) {
+				input.value = '';
+			} else {
+				input.value = newValue;
 			}
-			
-			function validateQuantity(){
-				var quantity = document.getElementById('quantity').value;
-				var productQuantity = ${product.quantity};
-				if(quantity === '' || !Number.isInteger(Number(quantity))){
-					alert("Vui lòng nhập số lượng của sản phẩm");
-					return false;
-				}if(parseInt(quantity) > productQuantity){
-					alert("Số lượng sản phẩm tồn kho không đủ. Chỉ còn "+productQuantity+" sản phẩm trong kho.");
-					return false;
-				}
-				return true;
+
+		}
+
+		function validateQuantity() {
+			var quantity = document.getElementById('quantity').value;
+			var productQuantity = $
+			{
+				product.quantity
 			}
-			
-		</script>
-	</content>
+			;
+			if (quantity === '' || !Number.isInteger(Number(quantity))) {
+				alert("Vui lòng nhập số lượng của sản phẩm");
+				return false;
+			}
+			if (parseInt(quantity) > productQuantity) {
+				alert("Số lượng sản phẩm tồn kho không đủ. Chỉ còn "
+						+ productQuantity + " sản phẩm trong kho.");
+				return false;
+			}
+			return true;
+		}
+	</script> </content>
 </body>

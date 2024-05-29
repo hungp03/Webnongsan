@@ -150,7 +150,7 @@
 				<div class="col-lg-9 col-md-7">
 					<div class="product__discount">
 						<div class="section-title product__discount__title">
-							<h2>Kết quả tìm được</h2>
+							<h2>Kết quả tìm kiếm</h2>
 						</div>
 						<div class="filter__item">
 							<div class="row">
@@ -187,9 +187,6 @@
 											data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
 											<ul class="product__item__pic__hover">
 												<li>
-													<%-- <a
-													href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
-														class="fa fa-heart"></i></a> --%>
 													<form method="post"
 														action="AddWishlist.htm?productId=${item.productId }">
 														<button
@@ -201,18 +198,15 @@
 												<li><a
 													href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
 														class="fa fa-retweet"></i></a></li>
-												<li>
-													<%-- <a
-													href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
-														class="fa fa-shopping-cart"></i></a> --%>
-													<form method="post"
-														action="AddCart.htm?productId=${item.productId }">
-														<button
-															style="border: none; background-color: transparent;">
-															<a><i class="fa fa-shopping-cart"></i></a>
-														</button>
-													</form>
-												</li>
+												<li><c:if test="${item.quantity > 0 }">
+														<form method="post"
+															action="AddCart.htm?productId=${item.productId }">
+															<button
+																style="border: none; background-color: transparent;">
+																<a><i class="fa fa-shopping-cart"></i></a>
+															</button>
+														</form>
+													</c:if></li>
 											</ul>
 										</div>
 										<div class="product__item__text">

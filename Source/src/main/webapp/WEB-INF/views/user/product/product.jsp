@@ -118,7 +118,7 @@
 
 						<div class="sidebar__item">
 							<div class="latest-product__text">
-								<h3>Sản phẩm mới nhất</h3>
+								<h4>Lastest Product</h4>
 
 								<c:set var="limitLatestProduct" value="${latestProducts.size()}" />
 
@@ -168,10 +168,8 @@
 				<div class="col-lg-9 col-md-7">
 					<div class="product__discount">
 						<div class="section-title product__discount__title">
-							<h2>Sale Off</h2>
+							<h2>Sản phẩm đề xuất</h2>
 						</div>
-
-
 						<div class="row">
 							<div class="product__discount__slider owl-carousel">
 								<c:forEach var="item" items="${ productsByCategory}"
@@ -183,16 +181,30 @@
 												data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
 
 												<ul class="product__item__pic__hover">
-													<li><a
-														href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
-															class="fa fa-heart"></i></a></li>
-													<li><a
-														href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
-															class="fa fa-retweet"></i></a></li>
-													<li><a
-														href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
-															class="fa fa-shopping-cart"></i></a></li>
-												</ul>
+												<li>
+													<form method="post"
+														action="AddWishlist.htm?productId=${item.productId }">
+														<button
+															style="border: none; background-color: transparent;">
+															<a><i class="fa fa-heart"></i></a>
+														</button>
+													</form>
+												</li>
+												<li><a
+													href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
+														class="fa fa-retweet"></i></a></li>
+												<li>
+													<c:if test="${item.quantity > 0 }">
+														<form method="post"
+															action="AddCart.htm?productId=${item.productId }">
+															<button
+																style="border: none; background-color: transparent;">
+																<a><i class="fa fa-shopping-cart"></i></a>
+															</button>
+														</form>
+													</c:if>
+												</li>
+											</ul>
 											</div>
 											<div class="product__discount__item__text">
 												<h5>
@@ -211,7 +223,7 @@
 									</div>
 								</c:forEach>
 							</div>
-						</div>
+						</div> 
 						<div class="filter__item mt-2">
 							<div class="row">
 								<div class="col-lg-4 col-md-5">
@@ -225,7 +237,7 @@
 								<div class="col-lg-4 col-md-4">
 									<div class="filter__found">
 										<h6>
-											<span>${productsByCategory.size() }</span> Sản phẩm tìm thấy
+											Tất cả sản phẩm
 										</h6>
 									</div>
 								</div>
@@ -243,9 +255,6 @@
 											data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
 											<ul class="product__item__pic__hover">
 												<li>
-													<%-- <a
-													href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
-														class="fa fa-heart"></i></a> --%>
 													<form method="post"
 														action="AddWishlist.htm?productId=${item.productId }">
 														<button
@@ -258,16 +267,15 @@
 													href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
 														class="fa fa-retweet"></i></a></li>
 												<li>
-													<%-- <a
-													href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
-														class="fa fa-shopping-cart"></i></a> --%>
-													<form method="post"
-														action="AddCart.htm?productId=${item.productId }">
-														<button
-															style="border: none; background-color: transparent;">
-															<a><i class="fa fa-shopping-cart"></i></a>
+													<c:if test="${item.quantity > 0 }">
+														<form method="post"
+															action="AddCart.htm?productId=${item.productId }">
+															<button
+																style="border: none; background-color: transparent;">
+																<a><i class="fa fa-shopping-cart"></i></a>
 															</button>
-													</form>
+														</form>
+													</c:if>
 												</li>
 											</ul>
 										</div>

@@ -117,13 +117,13 @@ ol {
 	text-align: center;
 }
 
-.section-title h2 {
+.section-title h2{
 	color: #1c1c1c;
 	font-weight: 700;
 	position: relative;
 }
 
-.section-title h2:after {
+.section-title h2:after{
 	position: absolute;
 	left: 0;
 	bottom: -15px;
@@ -1270,7 +1270,7 @@ ol {
 	margin-bottom: 65px;
 }
 
-.product__discount__title h2 {
+.product__discount__title h2{
 	display: inline-block;
 }
 
