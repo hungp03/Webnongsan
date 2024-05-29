@@ -43,7 +43,7 @@ public class OrderDetail {
 	}
 
 	public Double getPrice() {
-		return price;
+		return (price == null)?0.0:price;
 	}
 
 	public void setPrice(double price) {

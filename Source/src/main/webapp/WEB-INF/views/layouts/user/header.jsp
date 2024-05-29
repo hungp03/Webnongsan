@@ -78,10 +78,6 @@
 				<li><a href="<c:url value="/assets/user/#"/>">English</a></li>
 			</ul>
 		</div> --%>
-		<div class="header__top__right__auth">
-			<a href="<c:url value="/login.htm"/>"><i class="fa fa-user"></i>
-				Login</a>
-		</div>
 	</div>
 	<nav class="humberger__menu__nav mobile-menu">
 		<ul id="menu">

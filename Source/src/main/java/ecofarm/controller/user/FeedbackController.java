@@ -39,7 +39,7 @@ public class FeedbackController {
 	@Autowired
 	IFeedbackDAO feedbackDAO;
 
-	@RequestMapping(value = { "/addFeedback" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/addFeedback","/EditFeedback" }, method = RequestMethod.GET)
 	public String showwAddFeedbackForm(HttpServletRequest request, HttpSession session,
 			@RequestParam(value = "productId", required = true) int productId,
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail, Model model) {
@@ -62,7 +62,7 @@ public class FeedbackController {
 			feedback.setProductID(productId);
 			feedback.setStatus(1);
 			model.addAttribute("feedback", feedback);
-			return "user/addFeedback";
+			return "user/feedback/addFeedback";
 		}
 		return "user/index";
 	}
@@ -78,25 +78,63 @@ public class FeedbackController {
 
 		if (errors.hasErrors()) {
 			model.addAttribute("message", "Chi tiết đánh giá không hợp lệ.");
+			return "redirect:" + request.getHeader("Referer");
 		} else {
 			feedbackBean.setPostingDate(new Date());
 			Account account = accountDAO.getAccountByEmail(userEmail);
 			Product product = productDAO.getProductByID(productId);
 			feedbackBean.setStatus(1);
-			Feedback feedback = new Feedback();
-			feedback.setAccount(account);
-			feedback.setFeedbackContent(feedbackBean.getFeedbackContent());
-			feedback.setPostingDate(feedbackBean.getPostingDate());
-			feedback.setProduct(product);
-			feedback.setRatingStar(feedbackBean.getRatingStar());
-			feedback.setStatus(feedbackBean.getStatus());
-			boolean res = feedbackDAO.addFeedback(feedback);
-			if(res) {
-				model.addAttribute("message","Thêm feedback thành công");
+			Feedback checkFeedback =  feedbackDAO.getFeedback(product.getProductId(),account.getAccountId());
+			
+			if(checkFeedback == null) {
+				Feedback feedback = new Feedback();
+				feedback.setAccount(account);
+				feedback.setFeedbackContent(feedbackBean.getFeedbackContent());
+				feedback.setPostingDate(feedbackBean.getPostingDate());
+				feedback.setProduct(product);
+				feedback.setRatingStar(feedbackBean.getRatingStar());
+				feedback.setStatus(feedbackBean.getStatus());
+				boolean res = feedbackDAO.addFeedback(feedback);
+				if(res) {
+					model.addAttribute("message","Thêm feedback thành công");
+				}else {
+					model.addAttribute("message","Thêm feedback thất bại");
+				}
 			}else {
-				model.addAttribute("message","Thêm feedback thất bại");
+				checkFeedback.setFeedbackContent(feedbackBean.getFeedbackContent());
+				checkFeedback.setPostingDate(feedbackBean.getPostingDate());
+				checkFeedback.setRatingStar(feedbackBean.getRatingStar());
+				checkFeedback.setStatus(feedbackBean.getStatus());
+				boolean res = feedbackDAO.updateFeedback(checkFeedback);
+				if(res) {
+					model.addAttribute("message","Sửa feedback thành công");
+				}else {
+					model.addAttribute("message","Sửa feedback thất bại");
+				}
 			}
 		}
 		return "redirect:index.htm";
 	}
+
+	@RequestMapping(value = {"account/FeedBack"}, method = RequestMethod.GET)
+	public String showFeedbacks(HttpServletRequest request,
+			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail) {
+		if (userEmail.equals("")) {
+			request.setAttribute("user", new Account());
+			return "user/login";
+		}
+		Account account = accountDAO.getAccountByEmail(userEmail);
+		if (account != null) {
+			
+			List<Feedback> feedbacks = feedbackDAO.getFeedbacksByAccout(account.getAccountId());
+			request.setAttribute("feedbacks", feedbacks);
+		}
+		return "user/feedback/feedback";
+	}
+//	@RequestMapping(value = {"EditFeedback"}, method = RequestMethod.GET)
+//	public String showeditFeedback(HttpServletRequest request, HttpSession session,
+//			@RequestParam(value = "productId", required = true) int productId,
+//			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail, Model model) {
+//		
+//	}
 }

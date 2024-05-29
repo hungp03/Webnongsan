@@ -12,4 +12,6 @@ public interface IFeedbackDAO {
 	public Feedback getFeedBackById(int fid);
 	public boolean updateFeedback(Feedback feedback);
 	public boolean addFeedback(Feedback feedback);
+	public List<Feedback> getFeedbacksByAccout(int accountId);
+	public Feedback getFeedback(int productId,int accountId);
 }
