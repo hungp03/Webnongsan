@@ -121,6 +121,8 @@ public class ProfilePageController {
 				account.setAvatar(newImage);
 				Thread.sleep(6000);
 				accountDAO.updateAccount(account);
+				session.removeAttribute("userInfo");
+				session.setAttribute("userInfo", account);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

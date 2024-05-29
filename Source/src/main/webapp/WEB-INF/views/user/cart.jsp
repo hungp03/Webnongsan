@@ -70,9 +70,16 @@
 														value="${item.product.price * item.quantity}"
 														type="number" maxFractionDigits="0" />
 												</c:set> ${formattedPrice}đ</td>
-											<td class="shoping__cart__item__close"><a
+											<td class="shoping__cart__item__close">
+											<form method="post" action="<c:url value="/DeleteCart.htm?productId=${ item.product.productId}"/>">
+												<button
+																style="border: none; background-color: transparent;">
+																<a><span class="icon_close"></span></a>
+																</button>
+											</form> <%-- <a
 												href="<c:url value="/DeleteCart.htm?productId=${ item.product.productId}"/>"><span
-													class="icon_close"></span></a></td>
+													class="icon_close"></span></a> --%>
+											</td>
 										</tr>
 									</c:forEach>
 

@@ -150,7 +150,7 @@
 				<div class="col-lg-9 col-md-7">
 					<div class="product__discount">
 						<div class="section-title product__discount__title">
-							<h2>Sản phẩm tìm kiếm được</h2>
+							<h2>Kết quả tìm được</h2>
 						</div>
 						<div class="filter__item">
 							<div class="row">
@@ -159,7 +159,8 @@
 										<span>Sắp xếp theo</span> <select id="sort"
 											onchange="sortProducts()">
 											<option value="none"
-												<c:if test="${param.sort eq 'none'}">selected</c:if>>Mặc định</option>
+												<c:if test="${param.sort eq 'none'}">selected</c:if>>Mặc
+												định</option>
 											<option value="name"
 												<c:if test="${param.sort eq 'name'}">selected</c:if>>Tên</option>
 											<option value="price"
@@ -209,6 +210,7 @@
 														<button
 															style="border: none; background-color: transparent;">
 															<a><i class="fa fa-shopping-cart"></i></a>
+														</button>
 													</form>
 												</li>
 											</ul>

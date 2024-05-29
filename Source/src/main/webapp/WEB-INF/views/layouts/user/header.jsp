@@ -85,9 +85,9 @@
 	</div>
 	<nav class="humberger__menu__nav mobile-menu">
 		<ul id="menu">
-			<li><a href="<c:url value="/index.htm"/>">Home</a></li>
+			<li><a href="<c:url value="/index.htm"/>">Trang chủ</a></li>
 			<li><a href="<c:url value="/product.htm"/>">Shop</a></li>
-			<li><a href="<c:url value="/contact.htm"/>">Contact</a></li>
+			<li><a href="<c:url value="/contact.htm"/>">Liên lạc</a></li>
 			<c:if test="${empty userInfo }">
 				<li><a href="<c:url value="/login.htm"/>">Login</a></li>
 			</c:if>
