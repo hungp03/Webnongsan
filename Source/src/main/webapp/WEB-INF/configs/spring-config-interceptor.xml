@@ -40,9 +40,15 @@
 			<mvc:mapping path="/DeleteWishlist.htm"/>
 			<mvc:mapping path="EditCart.htm"/>
 			<mvc:mapping path="/addFeedback.htm"/>
+			<mvc:mapping path="/EditFeedback.htm"/>
 			<mvc:mapping path="/account/ProfilePage.htm"/>
 			<mvc:mapping path="/DeleteAddress.htm"/>
 			<bean class="ecofarm.interceptor.UserInterceptor"/>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/addFeedback.htm"/>
+			<mvc:mapping path="/EditFeedback.htm"/>
+			<bean class="ecofarm.interceptor.FeedbackInterceptor"/>
 		</mvc:interceptor>
 		<!-- <mvc:interceptor> -->
 		<!-- Đã đăng nhập thì KHÔNG được truy cập URL bên dưới -->
