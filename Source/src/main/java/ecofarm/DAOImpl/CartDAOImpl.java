@@ -69,6 +69,9 @@ public class CartDAOImpl implements ICartDAO {
 			cart.setId(cartId);
 			if (checkCart == null) {
 				cart.setQuantity(1);
+				if(cart.getQuantity() > product.getQuantity()) {
+					return false;
+				}
 				Session session = sessionFactory.openSession();
 				try {
 					Transaction tr = session.beginTransaction();
@@ -84,6 +87,9 @@ public class CartDAOImpl implements ICartDAO {
 				}
 			} else {
 				cart.setQuantity(checkCart.getQuantity() + 1);
+				if(cart.getQuantity() > product.getQuantity()) {
+					return false;
+				}
 				Session session = sessionFactory.openSession();
 				try {
 					Transaction tr = session.beginTransaction();
@@ -129,7 +135,11 @@ public class CartDAOImpl implements ICartDAO {
 	public boolean editCart(int productID, int accountID, int quantity) {
 		boolean isEdit = false;
 		Cart checkCart = getCartByID(productID, accountID);
+		Product product = productDAO.getProductByID(productID);
 		if (checkCart != null) {
+			if(checkCart.getQuantity() > product.getQuantity()) {
+				return false;
+			}
 			Session session = sessionFactory.openSession();
 			try {
 				Transaction tr = session.beginTransaction();
@@ -199,6 +209,9 @@ public class CartDAOImpl implements ICartDAO {
 			cart.setId(cartId);
 			if (checkCart == null) {
 				cart.setQuantity(quantity);
+				if(cart.getQuantity() > product.getQuantity()) {
+					return false;
+				}
 				Session session = sessionFactory.openSession();
 				try {
 					Transaction tr = session.beginTransaction();
@@ -214,6 +227,9 @@ public class CartDAOImpl implements ICartDAO {
 				}
 			} else {
 				cart.setQuantity(checkCart.getQuantity() + quantity);
+				if(cart.getQuantity() > product.getQuantity()) {
+					return false;
+				}
 				Session session = sessionFactory.openSession();
 				try {
 					Transaction tr = session.beginTransaction();

@@ -18,9 +18,7 @@
 		<servlet-name>spring</servlet-name>
 		<url-pattern>*.htm</url-pattern>
 	</servlet-mapping>
-	<!-- <error-page>
-		<location>/error</location>
-	</error-page> -->
+	<!-- <error-page> <location>/error</location> </error-page> -->
 	<!-- Sitemesh -->
 	<filter>
 		<filter-name>sitemesh</filter-name>
@@ -56,7 +54,7 @@
 	<session-config>
 		<tracking-mode>COOKIE</tracking-mode>
 	</session-config>
-	
+
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
