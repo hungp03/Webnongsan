@@ -151,8 +151,8 @@
 								<i class="fa fa-phone"></i>
 							</div>
 							<div class="hero__search__phone__text">
-								<h5>+65 11.188.888</h5>
-								<span>support 24/7 time</span>
+								<h5>${company.phoneNumber }</h5>
+								<span>Hỗ trợ 24/7</span>
 							</div>
 						</div>
 					</div>
@@ -245,8 +245,7 @@
 							<c:if test="${product.quantity <= 0}">
 								<c:set var="btn_disable" value="disabled"></c:set> 
 							</c:if> 
-							<button type="submit" class="primary-btn" ${btn_disable} style="border: none">ADD
-								TO CARD</button>
+							<button type="submit" class="primary-btn" ${btn_disable} style="border: none">THÊM VÀO GIỎ HÀNG</button>
 						</form>
 						<a
 							href="<c:url value="/AddWishlist.htm?productId=${product.productId }"/>"

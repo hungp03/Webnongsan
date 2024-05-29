@@ -71,7 +71,7 @@
 			<div class="col-12">
 				<!-- Page title -->
 				<div class="my-5">
-					<h3>My Profile</h3>
+					<h3>Lịch sử đánh giá</h3>
 					<hr>
 				</div>
 				<!-- Form START -->

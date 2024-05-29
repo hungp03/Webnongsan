@@ -167,9 +167,9 @@ a.text-muted{
 				<div class="col-12 col-md-6 offset-lg-1 col-lg-4 order-lg-2 order-1">
 					<div class="mb-lg-9 mb-3">
 						<h1 class="mb-1 h2 fw-bold">
-							Forgot your password <span class="text-success-login">OGANI </span>
+							Quên mật khẩu <span class="text-success-login">OGANI </span>
 						</h1>
-						<p>PLease enter your email</p>
+						<p>Vui lòng nhập email của bạn</p>
 					</div>
 
 					<form id="userbean" class="pt-2" action="forgotPassword.htm" method="post">
@@ -178,7 +178,7 @@ a.text-muted{
 
 							<div class="col-12">
 								<!-- input -->
-								<input name="email" placeholder="Email address"
+								<input name="email" placeholder="Địa chỉ email"
 									type="email" class="form-control" required/>
 							</div>
 							<c:if test="${not empty message}">

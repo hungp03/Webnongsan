@@ -210,10 +210,9 @@ label {
 				<!-- col -->
 				<div class="col-12 col-md-6 offset-lg-1 col-lg-4 order-lg-2 order-1">
 					<div class="mb-lg-9 mb-5" style="margin-bottom: 0px!important">
-						<h1 class="mb-1 h2 fw-bold">Sign up</h1>
+						<h1 class="mb-1 h2 fw-bold">Đăng ký</h1>
 						<p>
-							Welcome to <span class="text-warning">Ogani!</span> Enter
-							your email to get started.
+							Chào mừng đến với <span class="text-warning">Ogani!</span> Hãy nhập vào thông tin của bạn để đăng nhập
 						</p>
 					</div>
 					<!-- form -->
@@ -224,37 +223,37 @@ label {
 							
 							<div class="col">
 								<!-- input -->
-								<input name="firstName" placeholder="First name"
+								<input name="firstName" placeholder="Họ"
 									type="text" class="form-control " />
 
 							</div>
 							
 							<div class="col">
-								<input name="lastName" placeholder="Last name"
+								<input name="lastName" placeholder="Tên"
 									type="text" class="form-control "/>
 							</div>
 							<div class="col-12">
 
-								<input name="email" placeholder="Email" type="email"
+								<input name="email" placeholder="Địa chỉ Email" type="email"
 									class="form-control"/>
 
 							</div>
 							<div class="col-12">
 								<div class="password-field position-relative">
-									<input name="password"
-										placeholder="Enter password" type="password"
+									<input name="mật khẩu"
+										placeholder="Nhập mật khẩu" type="password"
 										class="form-control"/>
 
 								</div>
 							</div>
 							<div class="col-12">
 								<input name="phoneNumber"
-									placeholder="Phone Number" type="text" class="form-control"
+									placeholder="Số điện thoại" type="text" class="form-control"
 									/>
 
 							</div>
 							<div class="col-12" style="display:flex;">
-								<label for="avatar" style="margin-right:5px">Avatar:</label> 
+								<label for="avatar" style="margin-right:5px">Hình đại diện:</label> 
 								<input name="avatar" id="avatar" type="file" class="form-control-file"/>
 
 							</div>
@@ -271,9 +270,9 @@ label {
 
 							<!-- text -->
 							<p>
-								<small>By continuing, you agree to our <a
-									class="link-success" href="#!"> Terms of Service</a> &amp; <a
-									class="link-success" href="#!">Privacy Policy</a></small>
+								<small>Bằng việc nhấn tiếp tục bạn đã đồng ý với điều khoản dịch vụ của chúng tôi <a
+									class="link-success" href="#!"> Điều khoản dịch vụ</a> &amp; <a
+									class="link-success" href="#!">Chính sách bảo mật</a></small>
 							</p>
 						</div>
 					</form>

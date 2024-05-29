@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ecofarm.DAO.IAccountDAO;
 import ecofarm.DAO.ICartDAO;
+import ecofarm.bean.Company;
 import ecofarm.entity.Account;
 import ecofarm.entity.Cart;
 import ecofarm.entity.Product;
@@ -25,7 +27,9 @@ public class CartController {
 	private IAccountDAO accountDAO;
 	@Autowired
 	private ICartDAO cartDAO;
-
+	@Autowired
+	@Qualifier("ecofarm")
+	Company company;
 
 	@RequestMapping("cart")
 	public String Index(HttpServletRequest request, HttpSession session,

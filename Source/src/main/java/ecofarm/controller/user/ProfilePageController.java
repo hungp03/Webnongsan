@@ -41,6 +41,7 @@ import ecofarm.entity.Province;
 import ecofarm.entity.Ward;
 import ecofarm.bean.AddressUserBean;
 import ecofarm.bean.ChangePassword;
+import ecofarm.bean.Company;
 import ecofarm.bean.UploadFile;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -52,6 +53,9 @@ public class ProfilePageController {
 	private IProfileDAO profileDAO;
 	@Autowired
 	private IOrderDAO orderDAO;
+	@Autowired
+	@Qualifier("ecofarm")
+	Company company;
 
 	@RequestMapping("/account/ProfilePage")
 	public String profilePageIndex(

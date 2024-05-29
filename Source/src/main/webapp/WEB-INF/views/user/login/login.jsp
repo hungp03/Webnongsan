@@ -172,9 +172,9 @@ a.text-muted{
 				<div class="col-12 col-md-6 offset-lg-1 col-lg-4 order-lg-2 order-1">
 					<div class="mb-lg-9 mb-3">
 						<h1 class="mb-1 h2 fw-bold">
-							Sign in to <span class="text-success-login">OGANI </span>
+							Đăng nhập vào  <span class="text-success-login">OGANI </span>
 						</h1>
-						<p>Welcome back to OGANI! Enter your email to get started.</p>
+						<p>Chào mừng trở lại OGANI! Vui lòng nhập thông tin email và mật khẩu.</p>
 					</div>
 
 					<form:form id="userbean" class="pt-2" action="login.htm" method="post" modelAttribute="user">
@@ -183,13 +183,13 @@ a.text-muted{
 
 							<div class="col-12">
 								<!-- input -->
-								<form:input path="email" placeholder="Email address"
+								<form:input path="email" placeholder="Địa chỉ Email"
 									type="email" class="form-control"/>
 							</div>
 							<div class="col-12">
 								<!-- input -->
 								<div class="password-field position-relative">
-									<form:input path="password" placeholder="Password"
+									<form:input path="password" placeholder="Mật khẩu"
 										type="password" class="form-control"/> 
 								</div>
 
@@ -203,11 +203,11 @@ a.text-muted{
 										type="hidden" name="_isRemember" value="on"> -->
 									<!-- label -->
 									<label class="form-check-label" for="flexCheckDefault">
-										Remember me </label>
+										Ghi nhớ tôi </label>
 								</div>
 								<div>
 									<a data-bs-toggle="modal" data-bs-target="#exampleModal"
-										class="text-muted" href="<c:url value="forgotPassword.htm"/>">Forgot password?</a>
+										class="text-muted" href="<c:url value="forgotPassword.htm"/>">Quên mật khẩu?</a>
 								</div>
 							</div>
 							<!-- btn -->
@@ -224,8 +224,8 @@ a.text-muted{
 							</div>
 							<!-- link -->
 							<div>
-								Do not have an account? <a href="<c:url value="register.htm"/>"
-									class="link-success " previewlistener="true">Create new</a>
+								Bạn chưa có tài khoản? <a href="<c:url value="register.htm"/>"
+									class="link-success " previewlistener="true">Tạo tài khoản mới</a>
 							</div>
 						</div>
 					</form:form>
