@@ -94,13 +94,13 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="section-title">
-						<h2>Featured Product</h2>
+						<h2>Sản phẩm tiêu biểu</h2>
 					</div>
 					<div class="featured__controls">
 						<ul style="justify-content: center; border-bottom: 0px"
 							class="nav nav-tabs" role="tablist">
 							<li class="active mixitup-control-active"><a href="#tabs-0"
-								data-toggle="tab" role="tab" aria-selected="true">All</a></li>
+								data-toggle="tab" role="tab" aria-selected="true">Tất cả</a></li>
 							<c:forEach var="item" items="${categories }" varStatus="loop">
 								<li><a href="#tabs-${item.categoryId }" data-toggle="tab"
 									role="tab" aria-selected="false"> ${item.name }</a></li>

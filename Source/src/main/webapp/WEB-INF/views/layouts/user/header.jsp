@@ -73,6 +73,7 @@
 			<li><a href="<c:url value="/index.htm"/>">Trang chủ</a></li>
 			<li><a href="<c:url value="/product.htm"/>">Sản phẩm</a></li>
 			<li><a href="<c:url value="/contact.htm"/>">Liên hệ</a></li>
+
 			<c:if test="${empty userInfo }">
 				<li><a href="<c:url value="/login.htm"/>">Đăng nhập</a></li>
 			</c:if>

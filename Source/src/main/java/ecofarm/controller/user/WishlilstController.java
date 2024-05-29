@@ -51,7 +51,8 @@ public class WishlilstController {
 		return "redirect:" + request.getHeader("Referer");
 	}
 
-	@RequestMapping("/DeleteWishlist")
+
+	@RequestMapping(value = "/DeleteWishlist",method = RequestMethod.POST)
 	public String DeleteFromWishlist(@RequestParam(value = "productId", required = true) int productId,
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
 			HttpSession session, HttpServletRequest request) {
