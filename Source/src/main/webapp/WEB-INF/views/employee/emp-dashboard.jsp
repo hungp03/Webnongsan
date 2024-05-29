@@ -23,7 +23,7 @@
 										<!-- Breadcrumb -->
 										<nav aria-label="breadcrumb">
 											<ol class="breadcrumb mb-0 text-muted fs-6 fw-semibold">
-												<li class="breadcrumb-item"><a href="admin/index.htm"
+												<li class="breadcrumb-item"><a href="employee/dashboard.htm"
 													class="brc-link">Trang chủ</a></li>
 											</ol>
 										</nav>

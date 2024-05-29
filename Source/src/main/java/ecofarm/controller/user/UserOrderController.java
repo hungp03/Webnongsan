@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -29,6 +30,7 @@ import ecofarm.DAO.ICartDAO;
 import ecofarm.DAO.ICategoryDAO;
 import ecofarm.DAO.IOrderDAO;
 import ecofarm.DAO.IProductDAO;
+import ecofarm.bean.Company;
 
 @Controller
 @RequestMapping(value = "/order")
@@ -45,6 +47,9 @@ public class UserOrderController {
 	private IOrderDAO orderDAO;
 	@Autowired
 	private IProductDAO productDAO;
+	@Autowired
+	@Qualifier("ecofarm")
+	Company company;
 
 	@RequestMapping(value = "checkout", method=RequestMethod.POST)
 	public String detail(ModelMap model,

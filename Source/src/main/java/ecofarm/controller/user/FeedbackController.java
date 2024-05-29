@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -22,6 +23,7 @@ import ecofarm.DAO.IAccountDAO;
 import ecofarm.DAO.ICartDAO;
 import ecofarm.DAO.IFeedbackDAO;
 import ecofarm.DAO.IProductDAO;
+import ecofarm.bean.Company;
 import ecofarm.bean.FeedbackBean;
 import ecofarm.entity.Account;
 import ecofarm.entity.Cart;
@@ -38,6 +40,9 @@ public class FeedbackController {
 	ICartDAO cartDAO;
 	@Autowired
 	IFeedbackDAO feedbackDAO;
+	@Autowired
+	@Qualifier("ecofarm")
+	Company company;
 
 	@RequestMapping(value = { "/addFeedback","/EditFeedback" }, method = RequestMethod.GET)
 	public String showwAddFeedbackForm(HttpServletRequest request, HttpSession session,

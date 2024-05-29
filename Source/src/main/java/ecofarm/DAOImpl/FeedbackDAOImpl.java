@@ -28,11 +28,10 @@ public class FeedbackDAOImpl implements IFeedbackDAO {
 		Session session = sessionFactory.getCurrentSession();
 
 		try {
-			String hql = "FROM Feedback WHERE ProductID = :productId";
+			String hql = "FROM Feedback WHERE ProductID = :productId and status = 1";
 			Query query = session.createQuery(hql);
 			query.setParameter("productId", productId);
 			list = query.list();
-
 		} catch (Exception e) {
 			// TODO: handle exception
 

@@ -42,8 +42,6 @@ public class ProductDAOImpl implements IProductDAO {
 
 			list = query.list();
 		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 		return list;
@@ -201,7 +199,6 @@ public class ProductDAOImpl implements IProductDAO {
 			t.commit();
 			return true;
 		} catch (Exception ex) {
-			System.out.println("Delete product failed" + ex.getMessage());
 			t.rollback();
 		} finally {
 			session.close();
@@ -256,5 +253,26 @@ public class ProductDAOImpl implements IProductDAO {
 		if (feedbacks != null) {
 			product.setReviews(feedbacks.size());
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Product getFeedbackProduct(int productID, int accountID) {
+		Session session = sessionFactory.getCurrentSession();
+		List<Product> list = new ArrayList<Product>();
+		try {
+			String hql = "FROM Product WHERE productId IN ("
+					+" SELECT product.productId FROM OrderDetail WHERE order.account.accountId = :aid )"
+					+" AND productId = :pid";
+			Query query = session.createQuery(hql);
+			query.setParameter("aid", accountID);
+			query.setParameter("pid", productID);
+			list = query.list();
+			
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
+		if(list.size() > 0) return list.get(0);
+		else return null;
 	}
 }

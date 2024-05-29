@@ -7,7 +7,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ecofarm.DAO.ICategoryDAO;
 import ecofarm.DAO.IProductDAO;
 import ecofarm.DAOImpl.PaginateDAOImpl;
+import ecofarm.bean.Company;
 import ecofarm.entity.Category;
 import ecofarm.entity.Product;
 import ecofarm.utility.Paginate;
@@ -31,10 +35,14 @@ public class ProductController {
 	private ICategoryDAO categoryDAO;
 	
 	private PaginateDAOImpl paginateDAO = new PaginateDAOImpl();
+	@Autowired
+	@Qualifier("ecofarm")
+	Company company;
 
 	@RequestMapping()
 	public ModelAndView Product(@RequestParam(value = "categoryId", required = false, defaultValue = "0") int id,
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
+			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		List<Product> products = productDAO.getProductsByCategoryID(id);
 		List<Category> cates = categoryDAO.getAllCategories();
@@ -46,6 +54,7 @@ public class ProductController {
 		mv.addObject("categoryID", id);
 		mv.addObject("paginateInfo", paginateDAO.getInfoPaginate(products.size(), 5, currentPage));
 		mv.setViewName("user/product/product");
+		request.setAttribute("company", company);
 		return mv;
 	}
 	
@@ -55,7 +64,8 @@ public class ProductController {
 			@RequestParam(value = "sort", required = false) String sort,
 			@RequestParam(required = true, value = "search") String search,
 			@RequestParam(value = "minPrice", required = false) BigDecimal minPrice,
-	        @RequestParam(value = "maxPrice", required = false) BigDecimal maxPrice) {
+	        @RequestParam(value = "maxPrice", required = false) BigDecimal maxPrice,HttpServletRequest request) {
+		request.setAttribute("company", company);
 		List<Product> products = productDAO.searchProducts(search);
 		int maxPri = this.getMaxPrice(products);
 		List<Category> cates = categoryDAO.getAllCategories();

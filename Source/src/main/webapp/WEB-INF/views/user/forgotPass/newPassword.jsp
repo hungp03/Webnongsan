@@ -167,9 +167,9 @@ a.text-muted{
 				<div class="col-12 col-md-6 offset-lg-1 col-lg-4 order-lg-2 order-1">
 					<div class="mb-lg-9 mb-3">
 						<h1 class="mb-1 h2 fw-bold">
-							Forgot your password <span class="text-success-login">OGANI </span>
+							Quên mật khẩu <span class="text-success-login">OGANI </span>
 						</h1>
-						<p>PLease enter your new password</p>
+						<p>Hãy nhập mật khẩu mới của bạn</p>
 					</div>
 
 					<form id="userbean" class="pt-2" action="forgotPassword/newPassword.htm" method="post">
@@ -178,12 +178,12 @@ a.text-muted{
 
 							<div class="col-12">
 								<!-- input -->
-								<input name="newPass" placeholder="New Password"
+								<input name="newPass" placeholder="Mật khẩu mới"
 									type="password" class="form-control" required/>
 							</div>
 							<div class="col-12">
 								<!-- input -->
-								<input name="confirmPass" placeholder="Confirm Password"
+								<input name="confirmPass" placeholder="Xác thực mật khẩu"
 									type="password" class="form-control" required/>
 							</div>
 							<c:if test="${not empty message}">

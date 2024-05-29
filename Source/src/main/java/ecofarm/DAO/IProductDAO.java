@@ -19,4 +19,5 @@ public interface IProductDAO {
 	public boolean deleteProduct(Product product);
 	public void setRatingStar(Product product);
 	public void setReviews(Product product);
+	public Product getFeedbackProduct(int productID, int accountID);
 }

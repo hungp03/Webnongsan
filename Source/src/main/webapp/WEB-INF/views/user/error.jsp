@@ -15,15 +15,14 @@
 				<div class="col-sm-12 ">
 					<div class="col-sm-offset-1 text-center">
 						<div class="four_zero_four_bg">
-							<h1 class="text-center ">404</h1>
+							<h1 class="text-center ">${errorStatus}</h1>
 
 
 						</div>
 
 						<div class="contant_box">
-							<h3 class="h2">${qoutes }</h3>
+							<h3 class="h2">${message }</h3>
 
-							<p>${mess }</p>
 
 							<a href="index.htm" class="btn btn-custom">Go to Home</a>
 						</div>

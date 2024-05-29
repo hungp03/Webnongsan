@@ -151,8 +151,8 @@
 								<i class="fa fa-phone"></i>
 							</div>
 							<div class="hero__search__phone__text">
-								<h5>+65 11.188.888</h5>
-								<span>support 24/7 time</span>
+								<h5>${company.phoneNumber }</h5>
+								<span>Hỗ trợ 24/7</span>
 							</div>
 						</div>
 					</div>
@@ -245,8 +245,7 @@
 							<c:if test="${product.quantity <= 0}">
 								<c:set var="btn_disable" value="disabled"></c:set> 
 							</c:if> 
-							<button type="submit" class="primary-btn" ${btn_disable} style="border: none">ADD
-								TO CARD</button>
+							<button type="submit" class="primary-btn" ${btn_disable} style="border: none">THÊM VÀO GIỎ HÀNG</button>
 						</form>
 						<a
 							href="<c:url value="/AddWishlist.htm?productId=${product.productId }"/>"
@@ -296,6 +295,8 @@
 												</div>
 												<div class="comment-text w-100 active">
 													<h5>${item.account.getName() }</h5>
+													<span
+															class="label label-success">Đã mua hàng</span> 
 													<div>
 														<c:set var="countStar" value="0"></c:set>
 														<c:forEach begin="1" end="${item.ratingStar }">
@@ -309,10 +310,9 @@
 														</c:if>
 													</div>
 													<div class="comment-footer">
-														<span class="date">${item.postingDate }</span> <span
-															class="label label-success">Đã mua hàng</span> <span
-															class="action-icons"> <a href="#" data-abc="true"><i
-																class="fa fa-heart"></i></a>
+														<span class="date"><fmt:formatDate pattern="dd-MM-yyyy HH:mm"
+								value="${item.postingDate }" /></span> <span
+															class="action-icons">
 														</span>
 													</div>
 													<p class="m-b-5 m-t-10">${item.feedbackContent }</p>
