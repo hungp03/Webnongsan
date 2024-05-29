@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/layouts/user/common.jsp"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="availablecheckout" value="true"></c:set>
 <body>
 	<!-- Breadcrumb Section Begin -->
 	<section class="breadcrumb-section set-bg"
@@ -32,10 +33,10 @@
 							<table>
 								<thead>
 									<tr>
-										<th class="shoping__product">Products</th>
-										<th>Price</th>
-										<th>Quantity</th>
-										<th>Total</th>
+										<th class="shoping__product">Sản phẩm</th>
+										<th>Giá</th>
+										<th>Số lượng</th>
+										<th>Tổng sản phẩm</th>
 										<th></th>
 									</tr>
 								</thead>
@@ -43,10 +44,16 @@
 
 									<c:forEach var="item" items="${carts }" varStatus="loop">
 										<tr>
-											<td class="shoping__cart__item"><img
+											<td class="shoping__cart__item"><a href="<c:url value="/product-detail.htm?productId=${item.product.productId }"/>"><img
 												src="<c:url value="/assets/user/img/products/${item.product.image }"/>"
 												alt="" style="width: 100px">
-												<h5>${item.product.productName }</h5></td>
+												<h5>${item.product.productName }</h5> <c:if
+													test="${item.quantity > item.product.quantity }">
+													<c:set var="availablecheckout" value="false"></c:set>
+													<p style="color: red;">Số lượng trong giỏ hàng lớn hơn
+														tồn kho! Vui lòng thay đổi hoặc xóa sản phẩm</p>
+												</c:if></td>
+
 											<td class="shoping__cart__price"><c:set
 													var="formattedPrice">
 													<fmt:formatNumber value="${item.product.price}"
@@ -70,9 +77,16 @@
 														value="${item.product.price * item.quantity}"
 														type="number" maxFractionDigits="0" />
 												</c:set> ${formattedPrice}đ</td>
-											<td class="shoping__cart__item__close"><a
+											<td class="shoping__cart__item__close">
+											<form method="post" action="<c:url value="/DeleteCart.htm?productId=${ item.product.productId}"/>">
+												<button
+																style="border: none; background-color: transparent;">
+																<a><span class="icon_close"></span></a>
+																</button>
+											</form> <%-- <a
 												href="<c:url value="/DeleteCart.htm?productId=${ item.product.productId}"/>"><span
-													class="icon_close"></span></a></td>
+													class="icon_close"></span></a> --%>
+											</td>
 										</tr>
 									</c:forEach>
 
@@ -85,20 +99,20 @@
 					<div class="col-lg-6"></div>
 					<div class="col-lg-6">
 						<div class="shoping__checkout">
-							<h5>Cart Total</h5>
+							<h5>Giỏ hàng</h5>
 							<ul>
 
-								<li>Subtotal <span> <c:set var="formattedPrice">
+								<li>Giá sản phẩm <span> <c:set var="formattedPrice">
 											<fmt:formatNumber value="${totalPrice }" type="number"
 												maxFractionDigits="0" />
 										</c:set> ${formattedPrice}đ
 								</span></li>
-								<li>Delivery fee<span> <c:set var="formattedPrice">
+								<li>Phí vẫn chuyển<span> <c:set var="formattedPrice">
 											<fmt:formatNumber value="15000" type="number"
 												maxFractionDigits="0" />
 										</c:set> ${formattedPrice}đ
 								</span></li>
-								<li>Total <span> <c:set var="formattedPrice">
+								<li>Tổng tiền <span> <c:set var="formattedPrice">
 											<fmt:formatNumber value="${totalPrice + 15000 }"
 												type="number" maxFractionDigits="0" />
 										</c:set> ${formattedPrice}đ
@@ -106,7 +120,21 @@
 
 
 							</ul>
-							<a href="order/checkout.htm" class="primary-btn">THANH TOÁN</a>
+							<c:choose>
+								<c:when test="${availablecheckout eq 'false'}">
+									<button class="primary-btn btn disabled btn-block" tabindex="-1"
+										aria-disabled="true" disabled>THANH TOÁN</button>
+								</c:when>
+								<c:otherwise>
+									<form action="order/checkout.htm" method="post"
+										style="display: inline;">
+										<button type="submit" class="primary-btn btn btn-block">THANH
+											TOÁN</button>
+									</form>
+								</c:otherwise>
+							</c:choose>
+
+
 						</div>
 					</div>
 				</div>
@@ -138,12 +166,11 @@
 								if (newVal > stock) {
 									alert('Chỉ còn lại ' + stock
 											+ ' sản phẩm trong kho.');
-									$button.parent().find('input')
-											.val(stock);
+									$button.parent().find('input').val(stock);
 									return;
-								}else{
+								} else {
 									window.location = "EditCart.htm?productId="
-										+ id + "&qty=" + newVal;
+											+ id + "&qty=" + newVal;
 								}
 							} else {
 								// Don't allow decrementing below zero

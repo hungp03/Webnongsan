@@ -40,11 +40,19 @@
 								<c:if test="${not empty wishlist }">
 									<c:forEach var="item" items="${wishlist }" varStatus="loop">
 										<tr>
-											<td class="shoping__cart__item"><img
+											<td class="shoping__cart__item"><a href="<c:url value="/product-detail.htm?productId=${item.product.productId }"/>"><img
 												src="<c:url value="/assets/user/img/products/${item.product.image }"/>" alt="" style="width:100px">
-												<h5>${item.product.productName }</h5></td>
+												<h5>${item.product.productName }</h5></a></td>
 											<td class="shoping__cart__item__close">
-											<a href="<c:url value="/DeleteWishlist.htm?productId=${ item.product.productId}"/>"><span class="icon_close"></span></a></td>
+											<form method="post" action="<c:url value="/DeleteWishlist.htm?productId=${ item.product.productId}"/>">
+												<button
+																style="border: none; background-color: transparent;">
+																<a><span class="icon_close"></span></a>
+																</button>
+											</form>
+										<%-- 	
+											<a type="submit" href="<c:url value="/DeleteWishlist.htm?productId=${ item.product.productId}"/>"><span class="icon_close"></span></a></td>
+										 --%>
 										</tr>
 									</c:forEach>
 								</c:if>

@@ -46,7 +46,7 @@ public class UserOrderController {
 	@Autowired
 	private IProductDAO productDAO;
 
-	@RequestMapping(value = "checkout")
+	@RequestMapping(value = "checkout", method=RequestMethod.POST)
 	public String detail(ModelMap model,
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail) {
 		if (userEmail != null && !userEmail.isEmpty()) {

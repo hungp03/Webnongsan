@@ -121,6 +121,8 @@ public class ProfilePageController {
 				account.setAvatar(newImage);
 				Thread.sleep(6000);
 				accountDAO.updateAccount(account);
+				session.removeAttribute("userInfo");
+				session.setAttribute("userInfo", account);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -296,7 +298,7 @@ public class ProfilePageController {
 		if (userEmail.isEmpty()) {
 			return "redirect:/login.htm";
 		}
-		if (order.getAccount().getEmail() != userEmail) {
+		if (!order.getAccount().getEmail().equals(userEmail)) {
 			model.addAttribute("violate", "Yêu cầu của bạn không khả dụng. Bạn chỉ được xem đơn hàng của mình");
 			return "user/account/order_detail";
 		}

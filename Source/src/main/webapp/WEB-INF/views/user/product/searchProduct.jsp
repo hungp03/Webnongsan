@@ -89,7 +89,7 @@
 					<div class="sidebar">
 
 						<div class="sidebar__item">
-							<h4>Price</h4>
+							<h4>Giá</h4>
 							<!-- <div>
 								<label>Price</label> <input type="range" min="0" max="5000000"
 									value="0" class="slider" id="priceRange"
@@ -119,7 +119,7 @@
 							</div>
 							<div class="sidebar__item mt-2">
 								<div class="latest-product__text">
-									<h4>Latest Products</h4>
+									<h4>Sản phẩm mới nhất</h4>
 									<div class="latest-product__slider owl-carousel">
 
 										<div class="latest-prdouct__slider__item">
@@ -150,27 +150,28 @@
 				<div class="col-lg-9 col-md-7">
 					<div class="product__discount">
 						<div class="section-title product__discount__title">
-							<h2>Search Result</h2>
+							<h2>Kết quả tìm được</h2>
 						</div>
 						<div class="filter__item">
 							<div class="row">
 								<div class="col-lg-4 col-md-5">
 									<div class="filter__sort">
-										<span>Sort By</span> <select id="sort"
+										<span>Sắp xếp theo</span> <select id="sort"
 											onchange="sortProducts()">
 											<option value="none"
-												<c:if test="${param.sort eq 'none'}">selected</c:if>>Default</option>
+												<c:if test="${param.sort eq 'none'}">selected</c:if>>Mặc
+												định</option>
 											<option value="name"
-												<c:if test="${param.sort eq 'name'}">selected</c:if>>Name</option>
+												<c:if test="${param.sort eq 'name'}">selected</c:if>>Tên</option>
 											<option value="price"
-												<c:if test="${param.sort eq 'price'}">selected</c:if>>Price</option>
+												<c:if test="${param.sort eq 'price'}">selected</c:if>>Giá</option>
 										</select>
 									</div>
 								</div>
 								<div class="col-lg-4 col-md-4">
 									<div class="filter__found">
 										<h6>
-											<span>${total }</span> Products found
+											<span>${total }</span> Sản phẩm tìm được
 										</h6>
 									</div>
 								</div>
@@ -209,6 +210,7 @@
 														<button
 															style="border: none; background-color: transparent;">
 															<a><i class="fa fa-shopping-cart"></i></a>
+														</button>
 													</form>
 												</li>
 											</ul>

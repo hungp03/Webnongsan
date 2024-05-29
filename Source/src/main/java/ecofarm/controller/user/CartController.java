@@ -59,23 +59,32 @@ public class CartController {
 	@RequestMapping(value = { "/AddCart" }, method = RequestMethod.POST)
 	public String AddToCartQuantity(@RequestParam(value = "productId", required = true) int productId,
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
-			@RequestParam("quantity") String quantity, HttpSession session, HttpServletRequest request) {
+			@RequestParam(value="quantity",required = false) String quantity, HttpSession session, HttpServletRequest request) {
 		/*
 		 * if (userEmail.equals("")) { request.setAttribute("user", new Account());
 		 * return "redirect:/login.htm"; }
 		 */
-
+		
+		
 		Account account = accountDAO.getAccountByEmail(userEmail);
 		if (account != null) {
-			cartDAO.addToCart(productId, account.getAccountId(), Integer.parseInt(quantity));
-			List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
-			session.setAttribute("carts", list);
-			session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
-		}
+			if (quantity==null) { cartDAO.addToCart(productId, account.getAccountId());
+			}
+			else {
+				cartDAO.addToCart(productId, account.getAccountId(), Integer.parseInt(quantity));
+				List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
+				session.setAttribute("carts", list);
+				session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
+			}
+			
+			
+		
+	}
 		return "redirect:" + request.getHeader("Referer");
 	}
 
-	@RequestMapping("/DeleteCart")
+
+	@RequestMapping(value = "/DeleteCart",method = RequestMethod.POST)
 	public String DeleteFromCart(@RequestParam(value = "productId", required = true) int productId,
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
 			HttpSession session, HttpServletRequest request) {

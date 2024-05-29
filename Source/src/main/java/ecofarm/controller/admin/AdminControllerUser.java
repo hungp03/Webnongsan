@@ -120,7 +120,7 @@ public class AdminControllerUser {
 				photoName = accountImgUpload.uploadImage(user.getAvatar());
 				System.out.println("Account photo: " + photoName);
 				try {
-					Thread.sleep(2000);
+					Thread.sleep(5000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -215,7 +215,7 @@ public class AdminControllerUser {
 				}
 				// Cập nhật ảnh mới
 				account.setAvatar(newImage);
-				Thread.sleep(2000);
+				Thread.sleep(5000);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
