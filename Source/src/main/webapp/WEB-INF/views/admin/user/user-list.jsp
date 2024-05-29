@@ -43,7 +43,7 @@
                                     <!-- breadcrumb -->
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb mb-0 text-muted fs-6 fw-semibold">
-                                            <li class="breadcrumb-item"><a href="index.htm" class="text-decoration-none brc-link">Trang chủ</a></li>
+                                            <li class="breadcrumb-item"><a href="admin/dashboard.htm" class="text-decoration-none brc-link">Trang chủ</a></li>
                                             <li class="breadcrumb-item active" aria-current="page">${roleName}</li>
                                         </ol>
                                     </nav>
