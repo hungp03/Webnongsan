@@ -40,20 +40,21 @@ public class CartController {
 		}*/
 	}
 
-	@RequestMapping(value = { "/AddCart" }, method = RequestMethod.GET)
-	public String AddToCart(@RequestParam(value = "productId", required = true) int productId,
-			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
-			HttpSession session, HttpServletRequest request) {
-	
-		Account account = accountDAO.getAccountByEmail(userEmail);
-		if (account != null) {
-			cartDAO.addToCart(productId, account.getAccountId());
-			List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
-			session.setAttribute("carts", list);
-			session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
-		}
-		return "redirect:" + request.getHeader("Referer");
-	}
+	/*
+	 * @RequestMapping(value = { "/AddCart" }, method = RequestMethod.GET) public
+	 * String AddToCart(@RequestParam(value = "productId", required = true) int
+	 * productId,
+	 * 
+	 * @CookieValue(value = "userEmail", defaultValue = "", required = false) String
+	 * userEmail, HttpSession session, HttpServletRequest request) {
+	 * 
+	 * Account account = accountDAO.getAccountByEmail(userEmail); if (account !=
+	 * null) { cartDAO.addToCart(productId, account.getAccountId()); List<Cart> list
+	 * = cartDAO.getCartByAccountID(account.getAccountId());
+	 * session.setAttribute("carts", list); session.setAttribute("totalPrice",
+	 * cartDAO.getTotalPrice(list)); } return "redirect:" +
+	 * request.getHeader("Referer"); }
+	 */
 
 	@RequestMapping(value = { "/AddCart" }, method = RequestMethod.POST)
 	public String AddToCartQuantity(@RequestParam(value = "productId", required = true) int productId,

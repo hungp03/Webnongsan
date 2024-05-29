@@ -23,4 +23,7 @@ public interface IProfileDAO {
 	public List<Province> getAllProvince();
 	public boolean addNewAddress (Address newAddress);
 	public Ward getWard(int wardId);
+	public boolean chooseDefaultAddress(Account account,int addressId);
+	public int defaultAddressId(int accountId);
+	public boolean removeDefalutAddress(Account account);
 }

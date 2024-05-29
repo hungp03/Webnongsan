@@ -17,7 +17,7 @@
 	color: white;
 }
 
-.price-value{
+.price-value {
 	font-size: 16px;
 	color: #dd2222;
 	font-weight: 700;
@@ -109,8 +109,8 @@
 								</div>
 								<div class="range-slider">
 									<div class="d-flex justify-content-between">
-										<p class="price-value" id="minamount"></p><p
-											class="price-value" id="maxamount"></p>
+										<p class="price-value" id="minamount"></p>
+										<p class="price-value" id="maxamount"></p>
 									</div>
 								</div>
 
@@ -119,29 +119,29 @@
 							</div>
 							<div class="sidebar__item mt-2">
 								<div class="latest-product__text">
-								<h4>Latest Products</h4>
-								<div class="latest-product__slider owl-carousel">
+									<h4>Latest Products</h4>
+									<div class="latest-product__slider owl-carousel">
 
-									<div class="latest-prdouct__slider__item">
-										<c:forEach var="item" items="${latestProducts}">
-											<a
-												href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"
-												class="latest-product__item">
-												<div class="latest-product__item__pic">
-													<img
-														src="<c:url value="/assets/user/img/products/${item.image }"/>"
-														alt="">
-												</div>
-												<div class="latest-product__item__text">
-													<h6>${item.productName }</h6>
-													<span><fmt:formatNumber value='${item.price }'
-															type='currency' currencySymbol='đ' maxFractionDigits='0' /></span>
-												</div>
-											</a>
-										</c:forEach>
+										<div class="latest-prdouct__slider__item">
+											<c:forEach var="item" items="${latestProducts}">
+												<a
+													href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"
+													class="latest-product__item">
+													<div class="latest-product__item__pic">
+														<img
+															src="<c:url value="/assets/user/img/products/${item.image }"/>"
+															alt="">
+													</div>
+													<div class="latest-product__item__text">
+														<h6>${item.productName }</h6>
+														<span><fmt:formatNumber value='${item.price }'
+																type='currency' currencySymbol='đ' maxFractionDigits='0' /></span>
+													</div>
+												</a>
+											</c:forEach>
+										</div>
 									</div>
 								</div>
-							</div>
 							</div>
 						</div>
 
@@ -185,15 +185,32 @@
 										<div class="product__item__pic set-bg"
 											data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
 											<ul class="product__item__pic__hover">
-												<li><a
+												<li>
+													<%-- <a
 													href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
-														class="fa fa-heart"></i></a></li>
+														class="fa fa-heart"></i></a> --%>
+													<form method="post"
+														action="AddWishlist.htm?productId=${item.productId }">
+														<button
+															style="border: none; background-color: transparent;">
+															<a><i class="fa fa-heart"></i></a>
+														</button>
+													</form>
+												</li>
 												<li><a
 													href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
 														class="fa fa-retweet"></i></a></li>
-												<li><a
+												<li>
+													<%-- <a
 													href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
-														class="fa fa-shopping-cart"></i></a></li>
+														class="fa fa-shopping-cart"></i></a> --%>
+													<form method="post"
+														action="AddCart.htm?productId=${item.productId }">
+														<button
+															style="border: none; background-color: transparent;">
+															<a><i class="fa fa-shopping-cart"></i></a>
+													</form>
+												</li>
 											</ul>
 										</div>
 										<div class="product__item__text">

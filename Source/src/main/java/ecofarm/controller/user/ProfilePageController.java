@@ -1,5 +1,6 @@
 package ecofarm.controller.user;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -39,6 +41,8 @@ import ecofarm.entity.Province;
 import ecofarm.entity.Ward;
 import ecofarm.bean.AddressUserBean;
 import ecofarm.bean.ChangePassword;
+import ecofarm.bean.UploadFile;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class ProfilePageController {
@@ -65,15 +69,92 @@ public class ProfilePageController {
 		return "user/account/profilePage";
 	}
 
-	@RequestMapping("/DeleteAddress")
-	public String deleteAdress(@RequestParam(value = "addressId", required = true) int addressId,
+	@RequestMapping(value = "/account/RemoveDefaultAddress")
+	public String removeDefaultAddress(
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
-			HttpSession session, HttpServletRequest request) {
+			HttpServletRequest request) {
+		if (userEmail.equals("")) {
+			request.setAttribute("user", new Account());
+			return "redirect:/login.htm";
+		}
 		Account account = accountDAO.getAccountByEmail(userEmail);
-		profileDAO.deleteAddress(addressId);
-
+		profileDAO.removeDefalutAddress(account);
 		return "redirect:/account/ProfilePage.htm";
 
+	}
+
+//	@RequestMapping("account/DeleteAddress")
+//	public String deleteAdress(@RequestParam(value = "addressId", required = true) int addressId,
+//			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
+//			HttpSession session, HttpServletRequest request) {
+//		Account account = accountDAO.getAccountByEmail(userEmail);
+//		profileDAO.deleteAddress(addressId);
+//
+//		return "redirect:/account/ProfilePage.htm";
+//
+//	}
+	@Autowired
+	@Qualifier("accountImgDir")
+	UploadFile accountImgUpload;
+
+	@RequestMapping(value = "account/UploadAvatar", method = RequestMethod.POST)
+	public String uploadAvartar(@RequestParam("userAvatar") MultipartFile file,
+			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
+			HttpSession session, HttpServletRequest request, ModelMap model) {
+		String photoName = null;
+		if (userEmail.equals("")) {
+			request.setAttribute("user", new Account());
+			return "redirect:/login.htm";
+		}
+		Account account = accountDAO.getAccountByEmail(userEmail);
+		try {
+			if (!file.isEmpty()) {
+				String newImage = accountImgUpload.uploadImage(file);
+				System.out.println("Account photo: " + newImage);
+				if (account.getAvatar() != null) {
+					File oldImage = new File(accountImgUpload.getBasePath() + account.getAvatar());
+					if (oldImage.exists()) {
+						oldImage.delete();
+					}
+				}
+				// Cập nhật ảnh mới
+				account.setAvatar(newImage);
+				Thread.sleep(6000);
+				accountDAO.updateAccount(account);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return "redirect:/account/ProfilePage.htm";
+	}
+
+	@RequestMapping("account/DeleteAddress")
+	public String deleteAdress(@RequestParam(value = "addressId", required = true) int addressId,
+			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
+			HttpSession session, HttpServletRequest request, ModelMap model) {
+		boolean s = profileDAO.deleteAddress(addressId);
+		/*
+		 * if (s) { model.addAttribute("deleteAddressMessage", 1); } else {
+		 * model.addAttribute("deleteAddressMessage", 0); }
+		 */
+		if (s) {
+			session.setAttribute("deleteAddressMessage", 1);
+		} else {
+			session.setAttribute("deleteAddressMessage", 0);
+		}
+
+//		return "redirect:/account/ProfilePage.htm";
+		return "redirect:/account/ProfilePage.htm";
+
+	}
+
+	@RequestMapping("account/ChooseDefaultAddress.htm")
+	public String chooseDefaultAddress(@RequestParam(value = "addressId", required = true) int addressId,
+			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail) {
+		Account account = accountDAO.getAccountByEmail(userEmail);
+		profileDAO.chooseDefaultAddress(account, addressId);
+		return "redirect:/account/ProfilePage.htm";
 	}
 
 	@RequestMapping("/UpdateProfileInfo")
@@ -199,6 +280,14 @@ public class ProfilePageController {
 		modelMap.addAttribute("userAddress", userAddress);
 	}
 
+	@ModelAttribute
+	void defaultAddress(HttpSession session,
+			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail) {
+		Account account = accountDAO.getAccountByEmail(userEmail);
+//		modelMap.addAttribute("defaultAddressNumber",profileDAO.defaultAddressId(account.getAccountId()));
+		session.setAttribute("defaultAddressNumber", profileDAO.defaultAddressId(account.getAccountId()));
+	}
+
 	@RequestMapping(value = "order/myorder.htm", method = RequestMethod.GET)
 	public String orderDetail(@RequestParam("orderId") int orderId, ModelMap model,
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail) {
@@ -207,14 +296,10 @@ public class ProfilePageController {
 		if (userEmail.isEmpty()) {
 			return "redirect:/login.htm";
 		}
-		System.out.println(userEmail);
-		System.out.println(order.getAccount().getEmail());
-
-		if (!order.getAccount().getEmail().equals(userEmail)) {
+		if (order.getAccount().getEmail() != userEmail) {
 			model.addAttribute("violate", "Yêu cầu của bạn không khả dụng. Bạn chỉ được xem đơn hàng của mình");
 			return "user/account/order_detail";
 		}
-
 		List<OrderDetail> orderDetail = orderDAO.getOrderDetail(orderId);
 		model.addAttribute("order", order);
 		model.addAttribute("orderDetail", orderDetail);

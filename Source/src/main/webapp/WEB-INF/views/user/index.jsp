@@ -12,6 +12,7 @@
 	position: relative;
 	cursor: pointer;
 }
+
 </style>
 </head>
 <body>
@@ -122,18 +123,32 @@
 									<div class="featured__item__pic set-bg"
 										data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
 										<ul class="featured__item__pic__hover">
-											<li><a
-												href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
-													class="fa fa-heart"></i></a></li>
+											<li>
+												<form method="post"
+													action="AddWishlist.htm?productId=${item.productId }">
+													<button
+														style="border: none; background-color: transparent;">
+														<a><i class="fa fa-heart"></i></a>
+													</button>
+												</form>
+											</li>
 											<li><a
 												href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
 													class="fa fa-retweet"></i></a></li>
 											<c:if test="${item.quantity <= 0}">
 												<c:set var="btn_disable" value="disabled"></c:set>
 											</c:if>
-											<li><a
+											<li>
+												<form method="post"
+													action="AddCart.htm?productId=${item.productId }">
+													<button
+														style="border: none; background-color: transparent;">
+														<a><i class="fa fa-shopping-cart"></i></a>
+												</form> <%-- <a
 												href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
-													class="fa fa-shopping-cart ${btn_disable }" ></i></a></li>
+													class="fa fa-shopping-cart ${btn_disable }"></i></a> --%>
+
+											</li>
 										</ul>
 									</div>
 									<div class="featured__item__text">
@@ -169,15 +184,27 @@
 											<div class="featured__item__pic set-bg"
 												data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
 												<ul class="featured__item__pic__hover">
-													<li><a
-														href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
-															class="fa fa-heart"></i></a></li>
+													<li><form method="post"
+															action="AddWishlist.htm?productId=${item.productId }">
+															<button
+																style="border: none; background-color: transparent;">
+																<a><i class="fa fa-heart"></i></a>
+															</button>
+														</form>
 													<li><a
 														href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
 															class="fa fa-retweet"></i></a></li>
-													<li><a
+													<li>
+														<form method="post"
+															action="AddCart.htm?productId=${item.productId }">
+															<button
+																style="border: none; background-color: transparent;">
+																<a><i class="fa fa-shopping-cart"></i></a>
+																</button>
+														</form> <%-- <a
 														href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
-															class="fa fa-shopping-cart"></i></a></li>
+															class="fa fa-shopping-cart"></i></a> --%>
+													</li>
 												</ul>
 											</div>
 											<div class="featured__item__text">
