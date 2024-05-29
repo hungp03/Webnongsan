@@ -46,27 +46,27 @@
 										href="<c:url value="/product.htm?categoryId=${item.categoryId }"/>">${item.name }</a></li>
 								</c:forEach>
 
-							</ul>
-						</div>
+						</ul>
 					</div>
-					<div class="col-lg-9">
-						<div class="hero__search">
-							<%@ include file="/WEB-INF/views/layouts/user/searchbox.jsp"%>
-							<div class="hero__search__phone">
-								<div class="hero__search__phone__icon">
-									<i class="fa fa-phone"></i>
-								</div>
-								<div class="hero__search__phone__text">
-									<h5>+65 11.188.888</h5>
-									<span>support 24/7 time</span>
-								</div>
+				</div>
+				<div class="col-lg-9">
+					<div class="hero__search">
+						<%@ include file="/WEB-INF/views/layouts/user/searchbox.jsp"%>
+						<div class="hero__search__phone">
+							<div class="hero__search__phone__icon">
+								<i class="fa fa-phone"></i>
+							</div>
+							<div class="hero__search__phone__text">
+								<h5>${company.phoneNumber }</h5>
+								<span>Hỗ trợ 24/7</span>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</section>
-		<!-- Hero Section End -->
+		</div>
+	</section>
+	<!-- Hero Section End -->
 
 		<!-- Breadcrumb Section Begin -->
 		<section class="breadcrumb-section set-bg"
