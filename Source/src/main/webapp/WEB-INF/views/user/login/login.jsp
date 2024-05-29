@@ -174,7 +174,7 @@ a.text-muted{
 						<h1 class="mb-1 h2 fw-bold">
 							Đăng nhập vào  <span class="text-success-login">OGANI </span>
 						</h1>
-						<p>Chào mừng trở lại OGANI! Vui lòng nhập thông tin email và mật khẩu.</p>
+						<p>Chào mừng quay trở lại. Đăng nhập để tiếp tục</p>
 					</div>
 
 					<form:form id="userbean" class="pt-2" action="login.htm" method="post" modelAttribute="user">

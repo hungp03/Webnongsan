@@ -20,7 +20,6 @@ import javax.persistence.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-//@Table(name = "Product", schema = "dbo", catalog = "DB_Webns")
 @Table(name = "Product", schema = "dbo", catalog = "DB_Webnongsan")
 public class Product {
 
@@ -60,12 +59,6 @@ public class Product {
 	private double ratingStar;
 	@Transient	
 	private int reviews;
-	
-	/*
-	 * @ManyToOne(fetch = FetchType.EAGER)
-	 * 
-	 * @JoinColumn(name = "CouponID") private Coupon coupon;
-	 */
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "AccountID", nullable = false)
