@@ -42,8 +42,6 @@ public class ProductDAOImpl implements IProductDAO {
 
 			list = query.list();
 		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 		return list;
@@ -201,7 +199,6 @@ public class ProductDAOImpl implements IProductDAO {
 			t.commit();
 			return true;
 		} catch (Exception ex) {
-			System.out.println("Delete product failed" + ex.getMessage());
 			t.rollback();
 		} finally {
 			session.close();

@@ -136,7 +136,7 @@
 										</div>
 										<div
 											class="gap-3 d-md-flex justify-content-md-end text-center">
-											<button class="btn btn-primary btn-md">Cập nhật thông tin</button>
+											<button class="btn btn-primary btn-sm btn-block">Cập nhật</button>
 										</div>
 									</div>
 								</div>

@@ -37,7 +37,8 @@
 											<ol class="breadcrumb mb-0 text-muted fs-6 fw-semibold">
 												<li class="breadcrumb-item"><a
 													href="admin/dashboard.htm" class="brc-link">Trang chủ</a></li>
-												<li class="breadcrumb-item active text-decoration-none">Sản phẩm</li>
+												<li class="breadcrumb-item active text-decoration-none">Sản
+													phẩm</li>
 											</ol>
 										</nav>
 									</div>
@@ -89,7 +90,8 @@
 														</c:otherwise>
 													</c:choose>
 													<li><a class="dropdown-item"
-														href="<c:url value='${baseURL}${separator}sort=default' />">Mặc định</a></li>
+														href="<c:url value='${baseURL}${separator}sort=default' />">Mặc
+															định</a></li>
 													<li><a class="dropdown-item"
 														href="<c:url value='${baseURL}${separator}sort=name' />">Tên</a></li>
 													<li><a class="dropdown-item"

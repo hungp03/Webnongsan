@@ -146,7 +146,7 @@ public class AdminControllerProduct {
 			String photoName = productImgUpload.uploadImage(product.getImageFile());
 			newProduct.setImage(photoName);
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -184,7 +184,7 @@ public class AdminControllerProduct {
 			}
 			re.addFlashAttribute("mess", "Xóa thành công");
 		} else {
-			re.addFlashAttribute("mess", "Có lỗi xảy ra trong quá trình xóa");
+			re.addFlashAttribute("mess", "Không thể xóa, sản phẩm có thể đã được khách hàng sử dụng");
 		}
 		return "redirect:/admin/products.htm";
 	}
@@ -246,7 +246,7 @@ public class AdminControllerProduct {
 					}
 					// Cập nhật ảnh mới cho product
 					foundProd.setImage(newImage);
-					Thread.sleep(2000);
+					Thread.sleep(5000);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -259,6 +259,7 @@ public class AdminControllerProduct {
 			foundProd.setProductName(product.getProductName());
 			foundProd.setPrice(product.getPrice());
 			foundProd.setQuantity(product.getQuantity());
+			foundProd.setDetail(product.getDetail());
 			productDAO.updateProduct(foundProd);
 			re.addFlashAttribute("mess", "Cập nhật thành công");
 		}
