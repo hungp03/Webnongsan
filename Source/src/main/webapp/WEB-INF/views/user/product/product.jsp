@@ -96,8 +96,8 @@
 
 
 						<div class="sidebar__item">
-							<h4>Price</h4>
-							<div class="price-range-wrap">
+							<h4 style="visibility: hidden;">Price</h4>
+							<div class="price-range-wrap" style="visibility: hidden;">
 								<div
 									class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
 									data-min="10" data-max="540">
@@ -118,7 +118,7 @@
 
 						<div class="sidebar__item">
 							<div class="latest-product__text">
-								<h4>Latest Products</h4>
+								<h3>Sản phẩm mới nhất</h3>
 
 								<c:set var="limitLatestProduct" value="${latestProducts.size()}" />
 
@@ -215,17 +215,17 @@
 						<div class="filter__item mt-2">
 							<div class="row">
 								<div class="col-lg-4 col-md-5">
-									<div class="filter__sort">
-										<span>Sort By</span> <select>
-											<option value="0">Default</option>
-											<option value="1">Price</option>
+									<div class="filter__sort" style="visibility: hidden;">
+										<span>Sắp xếp theo</span> <select>
+											<option value="0">Mặc định</option>
+											<option value="1">Theo giá</option>
 										</select>
 									</div>
 								</div>
 								<div class="col-lg-4 col-md-4">
 									<div class="filter__found">
 										<h6>
-											<span>${productsByCategory.size() }</span> Products found
+											<span>${productsByCategory.size() }</span> Sản phẩm tìm thấy
 										</h6>
 									</div>
 								</div>
@@ -242,15 +242,33 @@
 										<div class="product__item__pic set-bg"
 											data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
 											<ul class="product__item__pic__hover">
-												<li><a
+												<li>
+													<%-- <a
 													href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
-														class="fa fa-heart"></i></a></li>
+														class="fa fa-heart"></i></a> --%>
+													<form method="post"
+														action="AddWishlist.htm?productId=${item.productId }">
+														<button
+															style="border: none; background-color: transparent;">
+															<a><i class="fa fa-heart"></i></a>
+														</button>
+													</form>
+												</li>
 												<li><a
 													href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
 														class="fa fa-retweet"></i></a></li>
-												<li><a
+												<li>
+													<%-- <a
 													href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
-														class="fa fa-shopping-cart"></i></a></li>
+														class="fa fa-shopping-cart"></i></a> --%>
+													<form method="post"
+														action="AddCart.htm?productId=${item.productId }">
+														<button
+															style="border: none; background-color: transparent;">
+															<a><i class="fa fa-shopping-cart"></i></a>
+															</button>
+													</form>
+												</li>
 											</ul>
 										</div>
 										<div class="product__item__text">

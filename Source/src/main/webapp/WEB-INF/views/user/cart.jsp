@@ -32,10 +32,10 @@
 							<table>
 								<thead>
 									<tr>
-										<th class="shoping__product">Products</th>
-										<th>Price</th>
-										<th>Quantity</th>
-										<th>Total</th>
+										<th class="shoping__product">Sản phẩm</th>
+										<th>Giá</th>
+										<th>Số lượng</th>
+										<th>Tổng sản phẩm</th>
 										<th></th>
 									</tr>
 								</thead>
@@ -43,10 +43,10 @@
 
 									<c:forEach var="item" items="${carts }" varStatus="loop">
 										<tr>
-											<td class="shoping__cart__item"><img
+											<td class="shoping__cart__item"><a href="<c:url value="/product-detail.htm?productId=${item.product.productId }"/>"><img
 												src="<c:url value="/assets/user/img/products/${item.product.image }"/>"
 												alt="" style="width: 100px">
-												<h5>${item.product.productName }</h5></td>
+												<h5>${item.product.productName }</h5></a></td>
 											<td class="shoping__cart__price"><c:set
 													var="formattedPrice">
 													<fmt:formatNumber value="${item.product.price}"
@@ -70,9 +70,16 @@
 														value="${item.product.price * item.quantity}"
 														type="number" maxFractionDigits="0" />
 												</c:set> ${formattedPrice}đ</td>
-											<td class="shoping__cart__item__close"><a
+											<td class="shoping__cart__item__close">
+											<form method="post" action="<c:url value="/DeleteCart.htm?productId=${ item.product.productId}"/>">
+												<button
+																style="border: none; background-color: transparent;">
+																<a><span class="icon_close"></span></a>
+																</button>
+											</form> <%-- <a
 												href="<c:url value="/DeleteCart.htm?productId=${ item.product.productId}"/>"><span
-													class="icon_close"></span></a></td>
+													class="icon_close"></span></a> --%>
+											</td>
 										</tr>
 									</c:forEach>
 
@@ -85,20 +92,20 @@
 					<div class="col-lg-6"></div>
 					<div class="col-lg-6">
 						<div class="shoping__checkout">
-							<h5>Cart Total</h5>
+							<h5>Giỏ hàng</h5>
 							<ul>
 
-								<li>Subtotal <span> <c:set var="formattedPrice">
+								<li>Giá sản phẩm <span> <c:set var="formattedPrice">
 											<fmt:formatNumber value="${totalPrice }" type="number"
 												maxFractionDigits="0" />
 										</c:set> ${formattedPrice}đ
 								</span></li>
-								<li>Delivery fee<span> <c:set var="formattedPrice">
+								<li>Phí vẫn chuyển<span> <c:set var="formattedPrice">
 											<fmt:formatNumber value="15000" type="number"
 												maxFractionDigits="0" />
 										</c:set> ${formattedPrice}đ
 								</span></li>
-								<li>Total <span> <c:set var="formattedPrice">
+								<li>Tổng tiền <span> <c:set var="formattedPrice">
 											<fmt:formatNumber value="${totalPrice + 15000 }"
 												type="number" maxFractionDigits="0" />
 										</c:set> ${formattedPrice}đ
