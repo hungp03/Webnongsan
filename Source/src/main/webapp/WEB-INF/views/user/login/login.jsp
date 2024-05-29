@@ -172,9 +172,9 @@ a.text-muted{
 				<div class="col-12 col-md-6 offset-lg-1 col-lg-4 order-lg-2 order-1">
 					<div class="mb-lg-9 mb-3">
 						<h1 class="mb-1 h2 fw-bold">
-							Sign in to <span class="text-success-login">OGANI </span>
+							Đăng nhập vào <span class="text-success-login">OGANI </span>
 						</h1>
-						<p>Welcome back to OGANI! Enter your email to get started.</p>
+						<p>Chào mừng quay trở lại. Đăng nhập để tiếp tục</p>
 					</div>
 
 					<form:form id="userbean" class="pt-2" action="login.htm" method="post" modelAttribute="user">
@@ -203,7 +203,7 @@ a.text-muted{
 										type="hidden" name="_isRemember" value="on"> -->
 									<!-- label -->
 									<label class="form-check-label" for="flexCheckDefault">
-										Remember me </label>
+										Ghi nhớ tài khoản </label>
 								</div>
 								<div>
 									<a data-bs-toggle="modal" data-bs-target="#exampleModal"
