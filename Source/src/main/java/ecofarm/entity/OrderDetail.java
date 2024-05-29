@@ -32,7 +32,7 @@ public class OrderDetail {
 	private int quantity;
 	
 	@Column(name = "ProductUnitPrice", nullable = false, scale = 4)
-	private double price;
+	private Double price;
 	
 	public OrderDetail(OrderDetailId id, Orders order, Product product, int quantity, double price) {
 		this.id = id;
@@ -42,7 +42,7 @@ public class OrderDetail {
 		this.price = price;
 	}
 
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
