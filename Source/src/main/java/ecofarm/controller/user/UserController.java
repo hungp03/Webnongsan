@@ -118,6 +118,10 @@ public class UserController {
 		String checkRemember = request.getParameter("isRemember");
 
 		if (accountDAO.checkAccountLogin(account)) {
+			if (accountDAO.getAccountByEmail(account.getEmail()).getStatus() == 0) {
+				request.setAttribute("message", "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ admin để được hỗ trợ");
+				return "user/login/login";
+			}
 			isLogin = true;
 		}
 
@@ -137,8 +141,7 @@ public class UserController {
 			request.setAttribute("status", "Đăng nhập tài khoản thành công");
 			return "redirect:/index.htm";
 		} else {
-			request.setAttribute("message", "Email hoặc password của bạn không chính xác. Vui lòng kiểm tra lại.");
-//			return "redirect:"+request.getHeader("Referer");	
+			request.setAttribute("message", "Email hoặc password của bạn không chính xác. Vui lòng kiểm tra lại.");	
 			return "user/login/login";
 		}
 	}

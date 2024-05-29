@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/layouts/user/common.jsp"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<c:set var="availablecheckout" value="true"></c:set>
 <body>
 	<!-- Breadcrumb Section Begin -->
 	<section class="breadcrumb-section set-bg"
@@ -46,7 +47,12 @@
 											<td class="shoping__cart__item"><img
 												src="<c:url value="/assets/user/img/products/${item.product.image }"/>"
 												alt="" style="width: 100px">
-												<h5>${item.product.productName }</h5></td>
+												<h5>${item.product.productName }</h5> <c:if
+													test="${item.quantity > item.product.quantity }">
+													<c:set var="availablecheckout" value="false"></c:set>
+													<p style="color: red;">Số lượng trong giỏ hàng lớn hơn
+														tồn kho! Vui lòng thay đổi hoặc xóa sản phẩm</p>
+												</c:if></td>
 											<td class="shoping__cart__price"><c:set
 													var="formattedPrice">
 													<fmt:formatNumber value="${item.product.price}"
@@ -106,7 +112,21 @@
 
 
 							</ul>
-							<a href="order/checkout.htm" class="primary-btn">THANH TOÁN</a>
+							<c:choose>
+								<c:when test="${availablecheckout eq 'false'}">
+									<button class="primary-btn btn disabled btn-block" tabindex="-1"
+										aria-disabled="true" disabled>THANH TOÁN</button>
+								</c:when>
+								<c:otherwise>
+									<form action="order/checkout.htm" method="post"
+										style="display: inline;">
+										<button type="submit" class="primary-btn btn btn-block">THANH
+											TOÁN</button>
+									</form>
+								</c:otherwise>
+							</c:choose>
+
+
 						</div>
 					</div>
 				</div>
@@ -138,12 +158,11 @@
 								if (newVal > stock) {
 									alert('Chỉ còn lại ' + stock
 											+ ' sản phẩm trong kho.');
-									$button.parent().find('input')
-											.val(stock);
+									$button.parent().find('input').val(stock);
 									return;
-								}else{
+								} else {
 									window.location = "EditCart.htm?productId="
-										+ id + "&qty=" + newVal;
+											+ id + "&qty=" + newVal;
 								}
 							} else {
 								// Don't allow decrementing below zero

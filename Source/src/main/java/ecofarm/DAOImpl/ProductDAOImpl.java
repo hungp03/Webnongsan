@@ -25,6 +25,7 @@ public class ProductDAOImpl implements IProductDAO {
 	private IFeedbackDAO feedbackDAO;
 	@Autowired
 	private SessionFactory sessionFactory;
+
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
@@ -54,7 +55,7 @@ public class ProductDAOImpl implements IProductDAO {
 		List<Product> list = new ArrayList<>();
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			
+
 			if (categoryID == 0) {
 				String hql = "FROM Product";
 				list = session.createQuery(hql).list();
@@ -65,7 +66,7 @@ public class ProductDAOImpl implements IProductDAO {
 				list = query.list();
 			}
 
-		}catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -86,7 +87,7 @@ public class ProductDAOImpl implements IProductDAO {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-		} 
+		}
 		if (products.size() > 0) {
 			setRatingStar(products.get(0));
 			setReviews(products.get(0));
@@ -101,7 +102,7 @@ public class ProductDAOImpl implements IProductDAO {
 		List<Product> list = new ArrayList<>();
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			
+
 			if (categoryID == 0) {
 				String hql = "FROM Product ORDER BY PostingDate DESC";
 				list = session.createQuery(hql).list();
@@ -121,20 +122,19 @@ public class ProductDAOImpl implements IProductDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getLatestProduct() {
-	    List<Product> list = new ArrayList<>();
-	    Session session = sessionFactory.getCurrentSession();
-	    try {
-	        String hql = "FROM Product ORDER BY PostingDate DESC";
-	        Query query = session.createQuery(hql);
-	        query.setMaxResults(3);
-	        list = query.list();
-	    } catch (Exception e) {
-	        System.out.println(e.getMessage());
-	        e.printStackTrace();
-	    }
-	    return list;
+		List<Product> list = new ArrayList<>();
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			String hql = "FROM Product ORDER BY PostingDate DESC";
+			Query query = session.createQuery(hql);
+			query.setMaxResults(6);
+			list = query.list();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		return list;
 	}
-
 
 	@Override
 	public List<Product> getReviewProduct() {
@@ -160,17 +160,19 @@ public class ProductDAOImpl implements IProductDAO {
 
 	@Override
 	public List<Product> searchProducts(String likeName) {
-		Session ss = sessionFactory.openSession();
-//		Transaction t = ss.beginTransaction();
-		likeName = (likeName == null) ? "%" : "%" + likeName + "%";
-		String hql = "FROM Product WHERE productName LIKE :name";
-		Query query = ss.createQuery(hql);
-		query.setParameter("name", likeName);
-		@SuppressWarnings("unchecked")
-		List<Product> list = query.list();
-//		t.commit();
-//		ss.close();
-		return list;
+		Session ss = sessionFactory.getCurrentSession();
+		try {
+			likeName = (likeName == null) ? "%" : "%" + likeName + "%";
+			String hql = "FROM Product WHERE productName LIKE :name";
+			Query query = ss.createQuery(hql);
+			query.setParameter("name", likeName);
+			@SuppressWarnings("unchecked")
+			List<Product> list = query.list();
+			return list;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			throw e;
+		}
 	}
 
 	@Override
@@ -228,9 +230,9 @@ public class ProductDAOImpl implements IProductDAO {
 	public void setRatingStar(Product product) {
 		List<Feedback> feedbacks = feedbackDAO.getFeedbackByProduct(product.getProductId());
 		product.setRatingStar(0);
-		
+
 		if (feedbacks != null && !feedbacks.isEmpty()) {
-			double[] totalRating = {0};
+			double[] totalRating = { 0 };
 			feedbacks.forEach(feedback -> {
 				totalRating[0] += feedback.getRatingStar();
 			});
@@ -238,11 +240,12 @@ public class ProductDAOImpl implements IProductDAO {
 			averageRating = roudRatingStars(averageRating);
 			product.setRatingStar(averageRating);
 		}
-		
+
 	}
+
 	private double roudRatingStars(double rating) {
 		BigDecimal bdDecimal = new BigDecimal(Double.toString(rating));
-		bdDecimal =  bdDecimal.setScale(1, RoundingMode.HALF_UP);
+		bdDecimal = bdDecimal.setScale(1, RoundingMode.HALF_UP);
 		return bdDecimal.doubleValue();
 	}
 

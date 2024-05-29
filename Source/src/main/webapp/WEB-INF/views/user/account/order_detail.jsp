@@ -64,7 +64,6 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="row">
 				<div class="col-md-8">
 					<div class="card order-summary"
@@ -82,31 +81,42 @@
 							<table class="table order-items mt-4">
 								<thead>
 									<tr>
+										<th>#</th>
 										<th>Tên sản phẩm</th>
 										<th>Số lượng</th>
 										<th>Đơn giá</th>
 										<th>Tổng tiền</th>
+										<c:if test="${bargecolor eq 'success'}">
+											<th>Đánh giá</th>
+										</c:if>
+
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach varStatus="status" var="o" items="${orderDetail}">
 										<tr>
-											<td>
-												<div class="d-flex align-items-center">
-													<img
-														src="<c:url value='/assets/user/img/products/${o.product.image}'/>"
-														alt="Product Image" class="product-img"
-														style="width: 50px; height: 50px; margin-right: 10px;">
-													<span><a
-														class="address-link"
-														href="product-detail.htm?productId=${o.product.productId }">${o.product.productName }</a></span>
-												</div>
+											<td><img
+												src="<c:url value='/assets/user/img/products/${o.product.image}'/>"
+												alt="Product Image" class="product-img"
+												style="width: 50px; height: 50px; margin-right: 10px;"></td>
+											<td><span><a class="address-link"
+													href="product-detail.htm?productId=${o.product.productId }">${o.product.productName }</a></span>
+
 											</td>
 											<td>${o.quantity }</td>
-											<td><fmt:formatNumber value="${o.price }"
-													type="currency" currencySymbol="đ" maxFractionDigits="0" /></td>
-											<td><fmt:formatNumber value="${o.price * o.quantity }"
-													type="currency" currencySymbol="đ" maxFractionDigits="0" /></td>
+											<td><span><fmt:formatNumber value="${o.price }"
+														type="currency" currencySymbol="đ" maxFractionDigits="0" /></span></td>
+											<td><span><fmt:formatNumber
+														value="${o.price * o.quantity }" type="currency"
+														currencySymbol="đ" maxFractionDigits="0" /></span></td>
+											<c:if test="${bargecolor eq 'success'}">
+												<td><a
+													href="addFeedback.htm?productId=${o.product.productId}"
+													class="address-link"> <i class="fa fa-star"
+														aria-hidden="true"></i> Rate
+												</a></td>
+											</c:if>
+
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -120,7 +130,18 @@
 						style="background-color: #f8f9fa; padding: 20px;">
 						<div class="card-body">
 							<h6>PHƯƠNG THỨC THANH TOÁN</h6>
-							<p>${order.paymentMethod}</p>
+							<c:choose>
+								<c:when test="${order.paymentMethod.trim() eq 'BANKING'}">
+									<c:set var="pm" value="Chuyển khoản ngân hàng" />
+								</c:when>
+								<c:when test="${order.paymentMethod.trim() eq 'COD'}">
+									<c:set var="pm" value="Thanh toán khi nhận hàng" />
+								</c:when>
+								<c:otherwise>
+									<c:set var="pm" value="Phương thức thanh toán không xác định" />
+								</c:otherwise>
+							</c:choose>
+							<p>${pm}</p>
 							<hr>
 							<p>
 								Tạm tính:
@@ -144,11 +165,12 @@
 							<c:if test="${order.status != 0 }">
 								<c:set var="isDisabled" value="disabled" />
 							</c:if>
-							<form id="cancelOrderForm" action="" method="post">
-								<a href="order/cancelRequest.htm?orderId=${o.orderId}"
-									type="submit"
-									class="btn btn-danger btn-block mt-3 ${isDisabled }">Hủy
-									yêu cầu</a>
+							<form id="cancelOrderForm"
+								action="order/cancelRequest.htm?orderId=${order.orderId}"
+								method="post">
+								<button type="submit"
+									class="btn btn-danger btn-block mt-3 ${isDisabled }">
+									Hủy yêu cầu</btn>
 							</form>
 
 						</div>

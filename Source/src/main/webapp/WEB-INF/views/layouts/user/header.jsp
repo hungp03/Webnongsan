@@ -68,31 +68,16 @@
 				</span></a></li>
 		</ul>
 	</div>
-	<div class="humberger__menu__widget">
-		<%-- <div class="header__top__right__language">
-			<img src="<c:url value="/assets/user/img/language.png"/>" alt="">
-			<div>English</div>
-			<span class="arrow_carrot-down"></span>
-			<ul>
-				<li><a href="<c:url value="/assets/user/#"/>">Spanis</a></li>
-				<li><a href="<c:url value="/assets/user/#"/>">English</a></li>
-			</ul>
-		</div> --%>
-		<div class="header__top__right__auth">
-			<a href="<c:url value="/login.htm"/>"><i class="fa fa-user"></i>
-				Login</a>
-		</div>
-	</div>
 	<nav class="humberger__menu__nav mobile-menu">
 		<ul id="menu">
-			<li><a href="<c:url value="/index.htm"/>">Home</a></li>
-			<li><a href="<c:url value="/product.htm"/>">Shop</a></li>
-			<li><a href="<c:url value="/contact.htm"/>">Contact</a></li>
+			<li><a href="<c:url value="/index.htm"/>">Trang chủ</a></li>
+			<li><a href="<c:url value="/product.htm"/>">Sản phẩm</a></li>
+			<li><a href="<c:url value="/contact.htm"/>">Liên hệ</a></li>
 			<c:if test="${empty userInfo }">
-				<li><a href="<c:url value="/login.htm"/>">Login</a></li>
+				<li><a href="<c:url value="/login.htm"/>">Đăng nhập</a></li>
 			</c:if>
 			<c:if test="${not empty userInfo }">
-				<li><a href="<c:url value="/logout.htm"/>">Logout</a></li>
+				<li><a href="<c:url value="/logout.htm"/>">Đăng xuất</a></li>
 			</c:if>
 		</ul>
 	</nav>
@@ -113,14 +98,14 @@
 			<div class="col-lg-6">
 				<nav class="header__menu">
 					<ul id="menu">
-						<li><a href="<c:url value="/index.htm"/>">Home</a></li>
-						<li><a href="<c:url value="/product.htm"/>">Shop</a></li>
-						<li><a href="<c:url value="/contact.htm"/>">Contact</a></li>
+						<li><a href="<c:url value="/index.htm"/>">Trang chủ</a></li>
+						<li><a href="<c:url value="/product.htm"/>">Sản phẩm</a></li>
+						<li><a href="<c:url value="/contact.htm"/>">Liên hệ</a></li>
 						<c:if test="${empty userInfo }">
-							<li><a href="<c:url value="/login.htm"/>">Login</a></li>
+							<li><a href="<c:url value="/login.htm"/>">Đăng nhập</a></li>
 						</c:if>
 						<c:if test="${not empty userInfo}">
-							<li><a href="<c:url value='/logout.htm'/>">Logout</a></li>
+							<li><a href="<c:url value='/logout.htm'/>">Đăng xuất</a></li>
 						</c:if>
 					</ul>
 				</nav>
@@ -152,14 +137,14 @@
 											<div class="dropdown-content">
 											<c:choose>
 												<c:when test="${userInfo.getRole().getRoleId() == 'ADMIN'}">
-													<a href="admin/dashboard.htm">Admin Page</a> 
+													<a href="admin/dashboard.htm">Trang quản trị</a> 
 												</c:when>
 												<c:when test="${userInfo.getRole().getRoleId() == 'EMPLOYEE'}">
-													<a href="employee/dashboard.htm">Employee Page</a> 
+													<a href="employee/dashboard.htm">Trang nhân viên</a> 
 												</c:when>
 											</c:choose>
 												<a
-													href="account/ProfilePage.htm">Profile</a>
+													href="account/ProfilePage.htm">Trang cá nhân</a>
 											</div>
 										</div>
 							</div>
