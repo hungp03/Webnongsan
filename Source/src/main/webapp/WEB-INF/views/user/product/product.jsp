@@ -19,6 +19,18 @@
 	color: #252525;
 	margin-bottom: 8px;
 }
+
+.btn-custom {
+	background-color: #7fad39 !important;
+	font-weight: 600;
+	color: white;
+}
+
+.price-value {
+	font-size: 16px;
+	color: #dd2222;
+	font-weight: 700;
+}
 </style>
 </head>
 <body>
@@ -96,11 +108,11 @@
 
 
 						<div class="sidebar__item">
-							<h4 style="visibility: hidden;">Price</h4>
-							<div class="price-range-wrap" style="visibility: hidden;">
+							<h4>Giá</h4>
+							<div class="price-range-wrap">
 								<div
 									class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-									data-min="10" data-max="540">
+									data-min="1000" data-max="${maxprice }">
 									<div class="ui-slider-range ui-corner-all ui-widget-header"></div>
 									<span tabindex="0"
 										class="ui-slider-handle ui-corner-all ui-state-default"></span>
@@ -108,17 +120,20 @@
 										class="ui-slider-handle ui-corner-all ui-state-default"></span>
 								</div>
 								<div class="range-slider">
-									<div class="price-input">
-										<input type="text" id="minamount"> <input type="text"
-											id="maxamount">
+
+									<div class="d-flex justify-content-between">
+										<p class="price-value" id="minamount"></p>
+										<p class="price-value" id="maxamount"></p>
 									</div>
+
+									<button class="btn btn-custom mt-4" onclick="filterByPrice()">Filter</button>
 								</div>
 							</div>
 						</div>
 
 						<div class="sidebar__item">
 							<div class="latest-product__text">
-								<h4>Lastest Product</h4>
+								<h3>Sản phẩm mới nhất</h3>
 
 								<c:set var="limitLatestProduct" value="${latestProducts.size()}" />
 
@@ -140,10 +155,7 @@
 														alt="">
 												</div>
 												<div class="latest-product__item__text">
-													<h6>
-														<a
-															href="<c:url value="/product-detail.htm?productId=${item.productId }"/>">${item.productName }</a>
-													</h6>
+													<h6>${item.productName }</h6>
 													<span> <c:set var="formattedPrice">
 															<fmt:formatNumber value="${item.price}" type="number"
 																maxFractionDigits="0" />
@@ -163,6 +175,7 @@
 							</div>
 
 						</div>
+
 					</div>
 				</div>
 				<div class="col-lg-9 col-md-7">
@@ -170,6 +183,8 @@
 						<div class="section-title product__discount__title">
 							<h2>Sản phẩm đề xuất</h2>
 						</div>
+
+
 						<div class="row">
 							<div class="product__discount__slider owl-carousel">
 								<c:forEach var="item" items="${ productsByCategory}"
@@ -181,20 +196,28 @@
 												data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
 
 												<ul class="product__item__pic__hover">
-												<li>
-													<form method="post"
-														action="AddWishlist.htm?productId=${item.productId }">
-														<button
-															style="border: none; background-color: transparent;">
-															<a><i class="fa fa-heart"></i></a>
-														</button>
-													</form>
-												</li>
-												<li><a
-													href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
-														class="fa fa-retweet"></i></a></li>
-												<li>
-													<c:if test="${item.quantity > 0 }">
+													<li>
+														<%-- <a
+														href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
+															class="fa fa-heart"></i></a> --%>
+
+														<form method="post"
+															action="AddWishlist.htm?productId=${item.productId }">
+															<button
+																style="border: none; background-color: transparent;">
+																<a><i class="fa fa-heart"></i></a>
+															</button>
+														</form>
+
+
+													</li>
+													<li><a
+														href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
+															class="fa fa-retweet"></i></a></li>
+													<li>
+														<%-- <a
+														href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
+															class="fa fa-shopping-cart"></i></a> --%>
 														<form method="post"
 															action="AddCart.htm?productId=${item.productId }">
 															<button
@@ -202,9 +225,8 @@
 																<a><i class="fa fa-shopping-cart"></i></a>
 															</button>
 														</form>
-													</c:if>
-												</li>
-											</ul>
+													</li>
+												</ul>
 											</div>
 											<div class="product__discount__item__text">
 												<h5>
@@ -223,21 +245,28 @@
 									</div>
 								</c:forEach>
 							</div>
-						</div> 
+						</div>
 						<div class="filter__item mt-2">
 							<div class="row">
 								<div class="col-lg-4 col-md-5">
-									<div class="filter__sort" style="visibility: hidden;">
-										<span>Sắp xếp theo</span> <select>
-											<option value="0">Mặc định</option>
-											<option value="1">Theo giá</option>
+									<!-- <div class="filter__sort" style="visibility: hidden;"> -->
+									<div class="filter__sort">
+										<span>Sắp xếp theo</span> <select id="sort"
+											onchange="sortProducts()">
+											<option value="none"
+												<c:if test="${param.sort eq 'none'}">selected</c:if>>Mặc
+												định</option>
+											<option value="name"
+												<c:if test="${param.sort eq 'name'}">selected</c:if>>Tên</option>
+											<option value="price"
+												<c:if test="${param.sort eq 'price'}">selected</c:if>>Giá</option>
 										</select>
 									</div>
 								</div>
 								<div class="col-lg-4 col-md-4">
 									<div class="filter__found">
 										<h6>
-											Tất cả sản phẩm
+											<span>${productsByCategory.size() }</span> Sản phẩm tìm thấy
 										</h6>
 									</div>
 								</div>
@@ -255,6 +284,9 @@
 											data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
 											<ul class="product__item__pic__hover">
 												<li>
+													<%-- <a
+													href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
+														class="fa fa-heart"></i></a> --%>
 													<form method="post"
 														action="AddWishlist.htm?productId=${item.productId }">
 														<button
@@ -267,15 +299,16 @@
 													href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
 														class="fa fa-retweet"></i></a></li>
 												<li>
-													<c:if test="${item.quantity > 0 }">
-														<form method="post"
-															action="AddCart.htm?productId=${item.productId }">
-															<button
-																style="border: none; background-color: transparent;">
-																<a><i class="fa fa-shopping-cart"></i></a>
-															</button>
-														</form>
-													</c:if>
+													<%-- <a
+													href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
+														class="fa fa-shopping-cart"></i></a> --%>
+													<form method="post"
+														action="AddCart.htm?productId=${item.productId }">
+														<button
+															style="border: none; background-color: transparent;">
+															<a><i class="fa fa-shopping-cart"></i></a>
+														</button>
+													</form>
 												</li>
 											</ul>
 										</div>
@@ -300,49 +333,141 @@
 
 						</div>
 
-						<div class="product__pagination d-flex justify-content-center">
-							<c:set var="PreviousPage" value="${paginateInfo.currentPage }" />
-							<c:if test="${ paginateInfo.currentPage > 1 }">
-								<c:set var="PreviousPage"
-									value="${paginateInfo.currentPage -1 }" />
-							</c:if>
 
-							<c:set var="Nextpage" value="${paginateInfo.currentPage }" />
-							<c:if
-								test="${ paginateInfo.currentPage < paginateInfo.totalPage}">
-								<c:set var="Nextpage" value="${paginateInfo.currentPage + 1 }" />
-							</c:if>
+						<c:if test="${total > 6}">
+							<div class="d-flex justify-content-center">
+								<div class="product__pagination">
+									<c:set var="PreviousPage" value="${paginateInfo.currentPage }" />
+									<c:if test="${ paginateInfo.currentPage > 1 }">
+										<c:set var="PreviousPage"
+											value="${paginateInfo.currentPage -1 }" />
+									</c:if>
 
-							<c:if test="${paginateInfo.currentPage != 1 }">
-								<a
-									href="<c:url value="/product.htm?categoryId=${categoryID}&currentPage=${PreviousPage }"/>"><i
-									class="fa fa-long-arrow-left"></i></a>
-							</c:if>
-							<c:forEach var="item" begin="1" end="${ paginateInfo.totalPage}"
-								varStatus="loop">
-								<c:if test="${loop.index == paginateInfo.currentPage}">
-									<a class="active"
-										href="<c:url value="/product.htm?categoryId=${categoryID}&currentPage=${loop.index }"/>">${loop.index}</a>
-								</c:if>
-								<c:if test="${loop.index != paginateInfo.currentPage}">
-									<a
-										href="<c:url value="/product.htm?categoryId=${categoryID}&currentPage=${loop.index }"/>">${loop.index}</a>
-								</c:if>
-
-							</c:forEach>
-							<c:if
-								test="${paginateInfo.currentPage != paginateInfo.totalPage}">
-								<a
-									href="<c:url value="/product.htm?categoryId=${categoryID}&currentPage=${Nextpage }"/>"><i
-									class="fa fa-long-arrow-right"></i></a>
-							</c:if>
-
-						</div>
+									<c:set var="Nextpage" value="${paginateInfo.currentPage }" />
+									<c:if
+										test="${ paginateInfo.currentPage < paginateInfo.totalPage}">
+										<c:set var="Nextpage" value="${paginateInfo.currentPage + 1 }" />
+									</c:if>
+									<c:set var="minPrice" value="${param.minPrice }"></c:set>
+									<c:set var="maxPrice" value="${param.maxPrice }"></c:set>
+									<c:set var="categoryId" value="${param.categoryId}"></c:set>
+									<c:set var="sort" value="${param.sort }"></c:set>
+									<c:if test="${paginateInfo.currentPage != 1 }">
+										<a
+											href="<c:url value="/product/filterBy.htm">
+                <c:param name="sort" value="${sort}"/>
+                <c:param name="categoryId" value="${categoryId}"/>
+                <c:param name="minPrice" value="${minPrice}"/>
+                <c:param name="maxPrice" value="${maxPrice}"/>
+                <c:param name="currentPage" value="${PreviousPage}"/>
+            </c:url>">
+											<i class="fa fa-long-arrow-left"></i>
+										</a>
+									</c:if>
+									<c:forEach var="item" begin="1"
+										end="${ paginateInfo.totalPage}" varStatus="loop">
+										<c:if test="${loop.index == paginateInfo.currentPage}">
+											<a class="active"
+												href="<c:url value="/product/filterBy.htm">
+                    <c:param name="sort" value="${sort}"/>
+                    <c:param name="categoryId" value="${categoryId}"/>
+                    <c:param name="minPrice" value="${minPrice}"/>
+                	<c:param name="maxPrice" value="${maxPrice}"/>
+                    <c:param name="currentPage" value="${loop.index}"/>
+                </c:url>">
+												${loop.index} </a>
+										</c:if>
+										<c:if test="${loop.index != paginateInfo.currentPage}">
+											<a
+												href="<c:url value="/product/filterBy.htm">
+                    <c:param name="sort" value="${sort}"/>
+                    <c:param name="categoryId" value="${categoryId}"/>
+                    <c:param name="minPrice" value="${minPrice}"/>
+                	<c:param name="maxPrice" value="${maxPrice}"/>
+                    <c:param name="currentPage" value="${loop.index}"/>
+                </c:url>">
+												${loop.index} </a>
+										</c:if>
+									</c:forEach>
+									<c:if
+										test="${paginateInfo.currentPage != paginateInfo.totalPage}">
+										<a
+											href="<c:url value="/product/filterBy.htm">
+                <c:param name="sort" value="${sort}"/>
+                <c:param name="categoryId" value="${categoryId}"/>
+                <c:param name="minPrice" value="${minPrice}"/>
+                <c:param name="maxPrice" value="${maxPrice}"/>
+                <c:param name="currentPage" value="${Nextpage}"/>
+            </c:url>">
+											<i class="fa fa-long-arrow-right"></i>
+										</a>
+									</c:if>
+								</div>
+							</div>
+						</c:if>
 					</div>
 				</div>
 			</div>
 	</section>
 	<!-- Product Section End -->
+	<script type="text/javascript">
+		function getParameterByName(name, url) {
+			if (!url)
+				url = window.location.href;
+			name = name.replace(/[\[\]]/g, "\\$&");
+			var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"), results = regex
+					.exec(url);
+			if (!results)
+				return null;
+			if (!results[2])
+				return '';
+			return decodeURIComponent(results[2].replace(/\+/g, " "));
+		}
 
+		// Lấy tham số tìm kiếm từ URL nếu có
+		var urlParams = new URLSearchParams(window.location.search);
+		var searchValue = urlParams.get('search');
 
+		// Đặt giá trị tìm kiếm vào trường input nếu tham số tìm kiếm đã được cung cấp trong URL
+		if (searchValue !== null) {
+			document.getElementById('search').value = searchValue;
+		}
+	</script>
+	<script>
+		function sortProducts() {
+			var sortValue = document.getElementById("sort").value;
+			var categoryId = getParameterByName("categoryId");
+			var baseUrl = "${pageContext.request.contextPath}/product/";
+			var url = baseUrl + "filterBy.htm?";
+			if (categoryId) {
+				url += "categoryId=" + categoryId;
+			}
+			if (sortValue !== "none") {
+				url += "&sort=" + sortValue;
+			}
+
+			window.location.href = url;
+		}
+
+		function filterByPrice() {
+			var minPrice = parseInt(document.getElementById("minamount").innerText);
+			var maxPrice = parseInt(document.getElementById("maxamount").innerText);
+			var categoryId = getParameterByName("categoryId");
+			var sortValue = getParameterByName("sort");
+			var currentPage = getParameterByName("currentPage");
+			var baseUrl = "${pageContext.request.contextPath}/product/";
+			var url = baseUrl + "filterBy.htm?";
+			if (categoryId) {
+				url += "categoryId=" + categoryId;
+			}
+			if (sortValue) {
+				url += "&sort=" + sortValue;
+			}
+			url += "&minPrice=" + minPrice + "&maxPrice=" + maxPrice;
+
+			url += "&currentPage=" + 1;
+
+			window.location.href = url;
+		}
+	</script>
 </body>
