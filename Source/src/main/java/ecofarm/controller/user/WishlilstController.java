@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ecofarm.DAO.IAccountDAO;
@@ -37,7 +38,7 @@ public class WishlilstController {
 		return "redirect:/login.htm";
 	}
 
-	@RequestMapping("/AddWishlist")
+	@RequestMapping(value= "/AddWishlist",method = RequestMethod.POST)
 	public String AddToWishlist(@RequestParam(value = "productId", required = true) int productId,
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
 			HttpSession session, HttpServletRequest request) {

@@ -219,11 +219,11 @@
 						</div>
 
 						<div class="product__details__price">
-								<c:set var="formattedPrice">
-									<fmt:formatNumber value="${product.price}" type="number"
-										maxFractionDigits="0" />
-								</c:set>
-								${formattedPrice}đ
+							<c:set var="formattedPrice">
+								<fmt:formatNumber value="${product.price}" type="number"
+									maxFractionDigits="0" />
+							</c:set>
+							${formattedPrice}đ
 						</div>
 						<form action="AddCart.htm?productId=${product.productId }"
 							method="post" style="display: inline-block;"
@@ -241,12 +241,23 @@
 							<c:if test="${product.quantity <= 0}">
 								<c:set var="btn_disable" value="disabled"></c:set>
 							</c:if>
-							<button type="submit" class="primary-btn btn" ${btn_disable} style="border: none">ADD
-								TO CARD</button>
+							<button type="submit" class="primary-btn btn" ${btn_disable}
+								style="border: none">ADD TO CARD</button>
 						</form>
-						<a
+						<%-- <a
 							href="<c:url value="/AddWishlist.htm?productId=${product.productId }"/>"
-							class="heart-icon"><span class="icon_heart_alt"></span></a>
+							class="heart-icon"><span class="icon_heart_alt"></span></a> --%>
+						<form method="post"
+													action="AddWishlist.htm?productId=${product.productId }">
+													<button
+														style="border: none; background-color: transparent;">
+													<a class="heart-icon"><span class="icon_heart_alt"></span></a>
+													</button>
+													<!-- <button
+														style="border: none; background-color: transparent;">
+														<a><i class="fa fa-heart"></i></a>
+													</button> -->
+												</form>
 						<ul>
 							<li><b>Đơn vị: </b> <span>${product.unit }</span></li>
 							<c:if test="${product.quantity > 0}">
@@ -342,15 +353,28 @@
 						<div class="product__item__pic set-bg"
 							data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
 							<ul class="product__item__pic__hover">
-								<li><a
+								<li>
+									<form method="post"
+										action="AddWishlist.htm?productId=${item.productId }">
+										<button style="border: none; background-color: transparent;">
+											<a><i class="fa fa-heart"></i></a>
+										</button>
+									</form> <%-- <a
 									href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
-										class="fa fa-heart"></i></a></li>
+										class="fa fa-heart"></i></a> --%>
+								</li>
 								<li><a
 									href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
 										class="fa fa-retweet"></i></a></li>
-								<li><a
+								<li>
+									<form method="post"
+										action="AddCart.htm?productId=${item.productId }">
+										<button style="border: none; background-color: transparent;">
+											<a><i class="fa fa-shopping-cart"></i></a>
+									</form> <%-- <a
 									href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
-										class="fa fa-shopping-cart"></i></a></li>
+										class="fa fa-shopping-cart"></i></a> --%>
+								</li>
 							</ul>
 						</div>
 						<div class="product__item__text">

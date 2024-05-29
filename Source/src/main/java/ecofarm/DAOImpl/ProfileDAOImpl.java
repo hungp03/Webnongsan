@@ -140,6 +140,7 @@ public class ProfileDAOImpl implements IProfileDAO{
 	@Override
 	public boolean deleteAddress(int deletedAddressId) {
 		Session session = sessionFactory.openSession();
+		Transaction tr = session.beginTransaction();
 		boolean isDeleted = false;
 		try {
 			String hql = "FROM Address WHERE addressId =:deletedAddressId";
@@ -147,15 +148,14 @@ public class ProfileDAOImpl implements IProfileDAO{
 			query.setParameter("deletedAddressId", deletedAddressId);
 			Address deletedAddress = (Address) query.uniqueResult();
 			if (deletedAddress == null) {
-				session.close();
 				return false;
 			}
-			Transaction tr = session.beginTransaction();
 			session.delete(deletedAddress);
 			tr.commit();
 			isDeleted = true;
 		} catch (Exception e) {
 			// TODO: handle exception
+			tr.rollback();
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} finally {
@@ -228,4 +228,64 @@ public class ProfileDAOImpl implements IProfileDAO{
 		}
 		return ward;
 	}
+	@Override
+	public boolean chooseDefaultAddress(Account account,int addressId) {
+		Session session = sessionFactory.openSession();
+		Transaction tr = session.beginTransaction();
+		boolean isChoose = false;
+		try {
+			String hql = "FROM Address WHERE AddressID =:AddressID";
+			Query query = session.createQuery(hql);
+			query.setParameter("AddressID", addressId);
+			Address defaultAdress = (Address) query.uniqueResult();
+			account.setDefaultAddress(defaultAdress);
+			isChoose = true;
+			session.update(account);
+			tr.commit();
+		}catch (Exception e) {
+			// TODO: handle exception
+			tr.rollback();
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		return isChoose;
+	}
+
+	@Override
+	public int defaultAddressId(int accountId) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+		String hql = "FROM Account WHERE AccountID =:accountId";
+		Query query = session.createQuery(hql);
+		query.setParameter("accountId",accountId);
+		Account account = (Account) query.uniqueResult();
+		Address defaultAddress = account.getDefaultAddress();
+		int defaultAddressId = (defaultAddress != null) ? defaultAddress.getAddressId() : -1;
+		session.close();
+		return defaultAddressId;
+	}
+	@Override
+	public boolean removeDefalutAddress(Account account) {
+		// TODO Auto-generated method stub
+		boolean isRemove = false;
+		Session session = sessionFactory.openSession();
+		Transaction tr = session.beginTransaction();
+		try {
+			account.setDefaultAddress(null);
+			isRemove = true;
+			session.update(account);
+			tr.commit();
+		}catch (Exception e) {
+			// TODO: handle exception
+			tr.rollback();
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		return isRemove;
+	}
+	
 }
