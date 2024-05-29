@@ -34,44 +34,28 @@ public class CartController {
 	@RequestMapping("cart")
 	public String Index(HttpServletRequest request, HttpSession session,
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail) {
-		/* if (!userEmail.equals("")) { */
-		Account account = accountDAO.getAccountByEmail(userEmail);
-		if (account != null) {
-			List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
-			session.setAttribute("carts", list);
-			session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
-		}
-		return "user/cart";
-		/*
-		 * } else { return "redirect:/login.htm"; }
-		 */
+
+			Account account = accountDAO.getAccountByEmail(userEmail);
+			if (account != null) {
+				List<Cart> list = cartDAO.getCartByAccountID(account.getAccountId());
+				session.setAttribute("carts", list);
+				session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
+			}
+			return "user/cart";
+
+
 	}
 
-	/*
-	 * @RequestMapping(value = { "/AddCart" }, method = RequestMethod.GET) public
-	 * String AddToCart(@RequestParam(value = "productId", required = true) int
-	 * productId,
-	 * 
-	 * @CookieValue(value = "userEmail", defaultValue = "", required = false) String
-	 * userEmail, HttpSession session, HttpServletRequest request) {
-	 * 
-	 * Account account = accountDAO.getAccountByEmail(userEmail); if (account !=
-	 * null) { cartDAO.addToCart(productId, account.getAccountId()); List<Cart> list
-	 * = cartDAO.getCartByAccountID(account.getAccountId());
-	 * session.setAttribute("carts", list); session.setAttribute("totalPrice",
-	 * cartDAO.getTotalPrice(list)); } return "redirect:" +
-	 * request.getHeader("Referer"); }
-	 */
+
 
 	@RequestMapping(value = { "/AddCart" }, method = RequestMethod.POST)
 	public String AddToCartQuantity(@RequestParam(value = "productId", required = true) int productId,
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
-			@RequestParam(value = "quantity", required = false) String quantity, HttpSession session,
-			HttpServletRequest request, ModelMap model) {
-		/*
-		 * if (userEmail.equals("")) { request.setAttribute("user", new Account());
-		 * return "redirect:/login.htm"; }
-		 */
+
+			@RequestParam(value="quantity",required = false) String quantity, HttpSession session, HttpServletRequest request) {
+
+		
+		
 
 		Account account = accountDAO.getAccountByEmail(userEmail);
 		if (account != null) {
