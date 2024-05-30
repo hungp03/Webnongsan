@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ecofarm.DAO.IProfileDAO;
+import ecofarm.DAOImpl.PaginateDAOImpl;
 import ecofarm.DAO.IAccountDAO;
 import ecofarm.DAO.IOrderDAO;
 import ecofarm.DAO.IProductDAO;
@@ -39,6 +40,7 @@ import ecofarm.entity.OrderDetail;
 import ecofarm.entity.Orders;
 import ecofarm.entity.Province;
 import ecofarm.entity.Ward;
+import ecofarm.utility.Paginate;
 import ecofarm.bean.AddressUserBean;
 import ecofarm.bean.ChangePassword;
 import ecofarm.bean.Company;
@@ -53,6 +55,7 @@ public class ProfilePageController {
 	private IProfileDAO profileDAO;
 	@Autowired
 	private IOrderDAO orderDAO;
+	private PaginateDAOImpl paginateDAO = new PaginateDAOImpl();
 	@Autowired
 	@Qualifier("ecofarm")
 	Company company;
@@ -140,17 +143,12 @@ public class ProfilePageController {
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
 			HttpSession session, HttpServletRequest request, ModelMap model) {
 		boolean s = profileDAO.deleteAddress(addressId);
-		/*
-		 * if (s) { model.addAttribute("deleteAddressMessage", 1); } else {
-		 * model.addAttribute("deleteAddressMessage", 0); }
-		 */
 		if (s) {
 			session.setAttribute("deleteAddressMessage", 1);
 		} else {
 			session.setAttribute("deleteAddressMessage", 0);
 		}
 
-//		return "redirect:/account/ProfilePage.htm";
 		return "redirect:/account/ProfilePage.htm";
 
 	}
@@ -268,10 +266,21 @@ public class ProfilePageController {
 
 	@RequestMapping(value = "account/OrderHistory")
 	public String orderHistory(@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
+			@RequestParam(value = "crrPage", required = false, defaultValue = "1") int crrPage,
 			ModelMap modelMap) {
 		Account account = accountDAO.getAccountByEmail(userEmail);
-		List<Orders> userOrder = orderDAO.getOrderFromAccountId(account.getAccountId());
-		modelMap.addAttribute("userOrder", userOrder);
+		List<Orders> orders = orderDAO.getOrderFromAccountId(account.getAccountId());
+		// Tính toán tổng số lượng dựa trên danh sách
+		int totalCategories = orders.size();
+		// Lấy thông tin phân trang
+		Paginate paginate = paginateDAO.getInfoPaginate(totalCategories, 5, crrPage);
+
+		// Lấy danh sách cho trang hiện tại
+		List<Orders> os = orders.subList(paginate.getStart(), paginate.getEnd());
+
+		modelMap.addAttribute("paginate", paginate);
+		modelMap.addAttribute("orders", os);
+
 		return "user/account/orderHistory";
 	}
 

@@ -52,7 +52,7 @@ public class CartController {
 	public String AddToCartQuantity(@RequestParam(value = "productId", required = true) int productId,
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
 
-			@RequestParam(value="quantity",required = false) String quantity, HttpSession session, HttpServletRequest request) {
+			@RequestParam(value="quantity",required = false) String quantity, HttpSession session, HttpServletRequest request, ModelMap model) {
 
 		
 		

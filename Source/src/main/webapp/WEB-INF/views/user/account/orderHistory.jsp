@@ -42,12 +42,12 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:if test="${not empty userOrder}">
-									<c:forEach items="${userOrder}" var="order" varStatus="loop">
+								<c:if test="${not empty orders}">
+									<c:forEach items="${orders}" var="order" varStatus="loop">
 										<tr>
 											<th><a
 												href="order/myorder.htm?orderId=${order.getOrderId() }"><i
-													class="bi bi-info-circle"></i></a></th>
+													class="bi bi-info-circle address-link"></i></a></th>
 											<td><fmt:formatDate type="both"
 													value="${order.getOrderTime() }" pattern="dd-MM-yyyy HH:mm" /></td>
 											<td><fmt:formatNumber value='${order.getPrice() }'
@@ -97,6 +97,37 @@
 				</div>
 			</div>
 		</div>
+		<div class="d-flex justify-content-center mb-3">
+						<c:if test="${orders.size() > 0}">
+							<!-- nav -->
+							<nav>
+								<ul class="pagination d-flex justify-content-center ms-2">
+									<li
+										class="page-item ${(paginate.currentPage == 1) ? 'disabled' : ''}">
+										<a class="page-link mx-1" aria-label="Previous"
+										href="account/OrderHistory.htm?crrPage=${crrPage - 1}">
+											<span aria-hidden="true">&laquo;</span>
+									</a>
+									</li>
+									<c:forEach var="i" begin="1" end="${paginate.totalPage}"
+										varStatus="in">
+										<li
+											class="page-item ${(paginate.currentPage == in.count) ? 'active' : ''}">
+											<a class="page-link mx-1"
+											href="account/OrderHistory.htm?crrPage=${in.count}">${in.count}</a>
+										</li>
+									</c:forEach>
+									<li
+										class="page-item ${(paginate.currentPage == paginate.totalPage) ? 'disabled' : ''}">
+										<a class="page-link mx-1 text-body" aria-label="Next"
+										href="account/OrderHistory.htm?crrPage=${paginate.currentPage + 1}">
+											<span aria-hidden="true">&raquo;</span>
+									</a>
+									</li>
+								</ul>
+							</nav>
+						</c:if>
+					</div>
 	</div>
 
 	<script

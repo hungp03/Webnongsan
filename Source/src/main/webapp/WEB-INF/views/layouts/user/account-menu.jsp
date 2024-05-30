@@ -3,7 +3,7 @@
 <div class="col-lg-2 mb-4" style="font-size: 15px; margin-bottom: 20px;">
 	<div class="col" style="min-height: 1.5rem"></div>
 	<div class="col">
-		<span><a href='account/ProfilePage.htm'> <svg fill="#000000"
+		<span><a href='account/ProfilePage.htm' class="address-link"> <svg fill="#000000"
 					width="1em" height="1em" viewBox="0 0 256 256" id="Flat"
 					xmlns="http://www.w3.org/2000/svg">
 											<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -16,7 +16,7 @@
 	</div>
 	<hr>
 	<div class="col">
-		<span><a href="account/OrderHistory.htm"> <svg width="1em"
+		<span><a href="account/OrderHistory.htm" class="address-link"> <svg width="1em"
 					height="1em" viewBox="0 0 1024 1024" class="icon" version="1.1"
 					xmlns="http://www.w3.org/2000/svg" fill="#000000">
 											<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -33,7 +33,7 @@
 	</div>
 	<hr>
 	<div class="col">
-		<span><a href="account/FeedBack.htm"> <svg fill="#000000"
+		<span><a href="account/FeedBack.htm" class="address-link"> <svg fill="#000000"
 					xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
 					viewBox="0 0 100 100" xml:space="preserve" stroke="#000000">
 											<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -47,7 +47,7 @@
 	</div>
 	<hr>
 	<div class="col">
-		<span><a href="account/ChangePassword.htm"> <svg version="1.1"
+		<span><a href="account/ChangePassword.htm" class="address-link"> <svg version="1.1"
 					id="_x32_" xmlns="http://www.w3.org/2000/svg"
 					xmlns:xlink="http://www.w3.org/1999/xlink" width="1em" height="1em"
 					viewBox="0 0 512 512" xml:space="preserve" fill="#000000">
