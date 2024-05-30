@@ -240,7 +240,7 @@ label {
 							</div>
 							<div class="col-12">
 								<div class="password-field position-relative">
-									<input name="mật khẩu"
+									<input name="password"
 										placeholder="Nhập mật khẩu" type="password"
 										class="form-control"/>
 
