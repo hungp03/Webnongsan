@@ -74,7 +74,6 @@ public class UserController {
 			}
 		}
 		if (accountDAO.checkAccountRegister(account)) {
-			System.out.println(account.getStatus());
 			if (accountDAO.createAccount(account)) {
 				emailValidateRegister = account.getEmail();
 				isAdded = true;
