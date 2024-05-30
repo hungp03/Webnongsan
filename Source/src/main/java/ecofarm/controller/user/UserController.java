@@ -20,6 +20,7 @@ import ecofarm.DAO.IAccountDAO;
 import ecofarm.bean.Company;
 import ecofarm.bean.UploadFile;
 import ecofarm.entity.Account;
+import ecofarm.entity.Role;
 import ecofarm.utility.Mailer;
 
 @Controller
@@ -60,6 +61,9 @@ public class UserController {
 		account.setEmail(email);
 		account.setPassword(password);
 		account.setPhoneNumber(phoneNumber);
+		account.setRole(new Role("GUEST", "Guest"));
+		account.setStatus(1);
+		
 		if (!avatar.isEmpty()) {
 			try {
 				account.setAvatar(baseUploadFile.uploadImage(avatar));
@@ -68,10 +72,9 @@ public class UserController {
 				e.printStackTrace();
 				System.out.println(e.getMessage());
 			}
-
 		}
-
 		if (accountDAO.checkAccountRegister(account)) {
+			System.out.println(account.getStatus());
 			if (accountDAO.createAccount(account)) {
 				emailValidateRegister = account.getEmail();
 				isAdded = true;
