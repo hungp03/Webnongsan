@@ -53,7 +53,7 @@ public class UserController {
 	public String CreateAccount(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
 			@RequestParam("email") String email, @RequestParam("password") String password,
 			@RequestParam("phoneNumber") String phoneNumber, @RequestParam("avatar") MultipartFile avatar,
-			HttpSession session, HttpServletRequest request) {
+			HttpSession session, HttpServletRequest request,HttpServletResponse response) {
 		boolean isAdded = false;
 		Account account = new Account();
 		account.setFirstName(firstName);
@@ -74,16 +74,19 @@ public class UserController {
 			}
 		}
 		if (accountDAO.checkAccountRegister(account)) {
-			if (accountDAO.createAccount(account)) {
+			
 				emailValidateRegister = account.getEmail();
 				isAdded = true;
-			}
 		}
 		try {
 			if (isAdded) {
 				request.setAttribute("status", "Đăng ký tài khoản thành công");
 				session.setAttribute("userInfo", account);
 				validateCodeRegister = mailer.send(emailValidateRegister);
+				Cookie cookie = new Cookie("userEmail", account.getEmail());
+				cookie.setMaxAge(24 * 60 * 60);
+				response.addCookie(cookie);
+				session.setAttribute("account", account);
 				return "redirect:/register/validateCode.htm";
 			} else {
 				request.setAttribute("status", "Đăng ký tài khoản không thành công");
@@ -103,8 +106,10 @@ public class UserController {
 
 	@RequestMapping(value = { "/register/validateCode" }, method = RequestMethod.POST)
 	public String registerValidate(@RequestParam("validateCodeRegister") String validateCode,
-			HttpServletRequest request) {
+			HttpServletRequest request,@CookieValue(value = "userEmail",defaultValue = "",required = false) String userEmail,HttpSession session ) {
 		if (validateCodeRegister.equals(validateCode)) {
+			Account account = (Account) session.getAttribute("account");
+			accountDAO.createAccount(account);
 			return "redirect:/index.htm";
 		} else {
 			request.setAttribute("wrongCode", "Mã sai vui lòng nhập lại");
