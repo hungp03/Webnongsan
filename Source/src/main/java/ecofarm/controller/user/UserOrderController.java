@@ -1,5 +1,6 @@
 package ecofarm.controller.user;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -69,7 +70,7 @@ public class UserOrderController {
 
 	@RequestMapping(value = "checkout_success.htm", method = RequestMethod.POST)
 	public String success(@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
-			ModelMap model, @RequestParam(value = "paymentMethod", required = true) String paymentMethod) {
+			ModelMap model, @RequestParam(value = "paymentMethod", required = true) String paymentMethod, HttpSession ss) {
 		if (userEmail != null && !userEmail.isEmpty()) {
 			String pm = "";
 			Account account = accountDAO.getAccountByEmail(userEmail);
@@ -114,6 +115,7 @@ public class UserOrderController {
 			System.out.println("Đơn hàng số: " + orders.getOrderId());
 			mailer.sendOrder(userEmail, orders.getOrderId(), orders.getOrderTime(), (int) Math.floor(orders.getPrice()) , pm);
 			model.addAttribute("orders", orders);
+			ss.setAttribute("carts", new ArrayList<Cart>());
 			return "user/order/success";
 		}
 		return "redirect:/login.htm";

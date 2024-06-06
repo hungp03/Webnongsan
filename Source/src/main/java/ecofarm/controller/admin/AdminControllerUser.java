@@ -69,7 +69,7 @@ public class AdminControllerUser {
 		return "admin/user/user-list";
 	}
 
-	@RequestMapping("changestatus")
+	@RequestMapping(value="changestatus", method=RequestMethod.POST)
 	public String modifyStatus(@RequestParam("id") int id, RedirectAttributes re) {
 		Account acc = accountDAO.getAccountByID(id);
 		String role = acc.getRole().getRoleId().toLowerCase();

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -51,7 +52,7 @@ public class AdminControllerFeedback {
 		return "admin/feedback/feedback-list";
 	}
 	
-	@RequestMapping("changestatus")
+	@RequestMapping(value="changestatus", method=RequestMethod.POST)
 	public String modifyStatus(@RequestParam("id") int id, RedirectAttributes re) {
 		Feedback feedback = feedbackDAO.getFeedBackById(id);
 		if (feedback != null) {

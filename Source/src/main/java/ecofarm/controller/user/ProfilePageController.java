@@ -269,19 +269,22 @@ public class ProfilePageController {
 			@RequestParam(value = "crrPage", required = false, defaultValue = "1") int crrPage,
 			ModelMap modelMap) {
 		Account account = accountDAO.getAccountByEmail(userEmail);
-		List<Orders> orders = orderDAO.getOrderFromAccountId(account.getAccountId());
-		// Tính toán tổng số lượng dựa trên danh sách
-		int totalCategories = orders.size();
-		// Lấy thông tin phân trang
-		Paginate paginate = paginateDAO.getInfoPaginate(totalCategories, 5, crrPage);
+		if (account != null) {
+			List<Orders> orders = orderDAO.getOrderFromAccountId(account.getAccountId());
+			// Tính toán tổng số lượng dựa trên danh sách
+			int totalCategories = orders.size();
+			// Lấy thông tin phân trang
+			Paginate paginate = paginateDAO.getInfoPaginate(totalCategories, 5, crrPage);
 
-		// Lấy danh sách cho trang hiện tại
-		List<Orders> os = orders.subList(paginate.getStart(), paginate.getEnd());
+			// Lấy danh sách cho trang hiện tại
+			List<Orders> os = orders.subList(paginate.getStart(), paginate.getEnd());
 
-		modelMap.addAttribute("paginate", paginate);
-		modelMap.addAttribute("orders", os);
+			modelMap.addAttribute("paginate", paginate);
+			modelMap.addAttribute("orders", os);
 
-		return "user/account/orderHistory";
+			return "user/account/orderHistory";
+		}
+		return "redirect:/index.htm";
 	}
 
 	@ModelAttribute
@@ -300,7 +303,8 @@ public class ProfilePageController {
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail) {
 		Account account = accountDAO.getAccountByEmail(userEmail);
 //		modelMap.addAttribute("defaultAddressNumber",profileDAO.defaultAddressId(account.getAccountId()));
-		session.setAttribute("defaultAddressNumber", profileDAO.defaultAddressId(account.getAccountId()));
+		if (account != null)
+			session.setAttribute("defaultAddressNumber", profileDAO.defaultAddressId(account.getAccountId()));
 	}
 
 	@RequestMapping(value = "order/myorder.htm", method = RequestMethod.GET)

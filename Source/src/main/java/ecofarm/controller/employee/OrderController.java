@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ecofarm.DAO.IOrderDAO;
@@ -62,7 +63,7 @@ public class OrderController {
 		return "employee/order/order-list";
 	}
 
-	@RequestMapping(value = "update-order")
+	@RequestMapping(value = "update-order", method=RequestMethod.POST)
 	public String updateOrder(@RequestParam("id") int id, @RequestParam("status") String status) {
 		Orders order = orderDAO.findOrder(id);
 

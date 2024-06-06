@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <%@ include file="/WEB-INF/views/layouts/user/common.jsp"%>
 <head>
 <style>
@@ -25,7 +24,6 @@
 </style>
 </head>
 <body>
-	<!-- Hero Section Begin -->
 	<c:if test="${not empty param.minPrice }">
 		<c:set var="minPrice" value="${param.minPrice }"></c:set>
 	</c:if>
@@ -95,13 +93,6 @@
 
 							<div class="sidebar__item">
 								<h4>Giá</h4>
-								<!-- <div>
-								<label>Price</label> <input type="range" min="0" max="5000000"
-									value="0" class="slider" id="priceRange"
-									placeholder="price_filter" style="width: 100%">
-							</div> -->
-
-
 								<div class="price-range-wrap">
 									<div
 										class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
@@ -195,10 +186,10 @@
 													<li>
 														<form method="post"
 															action="AddWishlist.htm?productId=${item.productId }">
-															<button
+															<a><button
 																style="border: none; background-color: transparent;">
-																<a><i class="fa fa-heart"></i></a>
-															</button>
+																<i class="fa fa-heart"></i>
+															</button></a>
 														</form>
 													</li>
 													<li><a
@@ -207,10 +198,10 @@
 													<li><c:if test="${item.quantity > 0 }">
 															<form method="post"
 																action="AddCart.htm?productId=${item.productId }">
-																<button
+																<a><button
 																	style="border: none; background-color: transparent;">
-																	<a><i class="fa fa-shopping-cart"></i></a>
-																</button>
+																	<i class="fa fa-shopping-cart"></i>
+																</button></a>
 															</form>
 														</c:if></li>
 												</ul>

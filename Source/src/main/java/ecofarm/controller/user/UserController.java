@@ -83,9 +83,9 @@ public class UserController {
 				request.setAttribute("status", "Đăng ký tài khoản thành công");
 				session.setAttribute("userInfo", account);
 				validateCodeRegister = mailer.send(emailValidateRegister);
-				Cookie cookie = new Cookie("userEmail", account.getEmail());
-				cookie.setMaxAge(24 * 60 * 60);
-				response.addCookie(cookie);
+				//Cookie cookie = new Cookie("userEmail", account.getEmail());
+				//cookie.setMaxAge(24 * 60 * 60);
+				//response.addCookie(cookie);
 				session.setAttribute("account", account);
 				return "redirect:/register/validateCode.htm";
 			} else {

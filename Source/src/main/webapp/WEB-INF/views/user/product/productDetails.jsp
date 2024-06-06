@@ -107,20 +107,20 @@
 .product__details__quantity input[type=number] {
 	-moz-appearance: textfield;
 	appearance: textfield;
-	width: 50px; /* Adjust width as needed */
+	width: 50px;
 	text-align: center;
 }
 
 .product__details__quantity .pro-qty button {
-	background-color: #6f6f6f26; /* Customize button color */
+	background-color: #6f6f6f26;
 	border: none;
-	padding: 10px 15px; /* Adjust padding as needed */
+	padding: 10px 15px; 
 	cursor: pointer;
-	font-size: 16px; /* Adjust font size as needed */
+	font-size: 16px;
 }
 .primary-btn:disabled {
-  cursor: not-allowed; /* Con trỏ chuột khi hover */
-  opacity: 0.7; /* Độ mờ */
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 </style>
 </head>
@@ -231,7 +231,6 @@
 						</div>
 						<form action="AddCart.htm?productId=${product.productId }"
 							method="post" style="display: inline-block;" onsubmit="return validateQuantity()">
-
 							<div class="product__details__quantity">
 								<div class="quantity">
 									<div class="pro-qty">
@@ -245,10 +244,10 @@
 							<c:if test="${product.quantity <= 0}">
 								<c:set var="btn_disable" value="disabled"></c:set> 
 							</c:if> 
-							<button type="submit" class="primary-btn" ${btn_disable} style="border: none">THÊM VÀO GIỎ HÀNG</button>
+							<button type="submit" class="primary-btn" ${btn_disable} style="border: none">THÊM VÀO GIỎ</button>
 						</form>
+						
 						<a
-							href="<c:url value="/AddWishlist.htm?productId=${product.productId }"/>"
 							class="heart-icon"><span class="icon_heart_alt"></span></a>
 						<ul>
 							<li><b>Đơn vị: </b> <span>${product.unit }</span></li>
@@ -256,7 +255,7 @@
 								<li><b>Tồn kho: </b> <span>${product.quantity }</span></li>
 							</c:if>
 							<c:if test="${product.quantity <= 0}">
-								<li style="color: #dd2222"><b>Sản phẩm hết hàng</span></li>
+								<li style="color: #dd2222"><span>Sản phẩm hết hàng</span></li>
 							</c:if>
 						</ul>
 					</div>
@@ -363,9 +362,6 @@
 									href="<c:url value="/product-detail.htm?productId=${item.productId }"/>">${item.productName }</a>
 							</h6>
 							<h5>
-								<%-- <fmt:formatNumber value='${item.price }' type='currency'
-									currencySymbol='đ' maxFractionDigits='0' /> --%>
-
 								<c:set var="formattedPrice">
 									<fmt:formatNumber value="${item.price}" type="number"
 										maxFractionDigits="0" />
