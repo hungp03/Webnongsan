@@ -24,7 +24,7 @@ public interface IAccountDAO {
 	public static enum EnumRole {
 		GUEST, ADMIN, EMPLOYEE,
 	}
-	
+	public Account getAccountByPhoneNumber(String phoneNumber);
 
 	public List<Account> listAccountWithRole(EnumRole role, String search);
 

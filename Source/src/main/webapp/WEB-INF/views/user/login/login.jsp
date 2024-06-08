@@ -63,7 +63,7 @@
 }
 
 .form-check-input {
-	--bs-form-check-bg:#fff;
+	--bs-form-check-bg: #fff;
 	width: 1em;
 	height: 1em;
 	margin-top: 0.25em;
@@ -79,49 +79,59 @@
 	appearance: none;
 	-webkit-print-color-adjust: exact;
 	color-adjust: exact;
-    print-color-adjust: exact;
+	print-color-adjust: exact;
 }
+
 .justify-content-between {
-    justify-content: space-between !important;
+	justify-content: space-between !important;
 }
 
 .d-flex {
-    display: flex !important;
+	display: flex !important;
 }
+
 .row>* {
-    flex-shrink: 0;
-    width: 100%;
-    max-width: 100%;
-    padding-right: calc(1rem* .5);
-    padding-left: calc(1rem* .5);
-    margin-top: 1rem;
+	flex-shrink: 0;
+	width: 100%;
+	max-width: 100%;
+	padding-right: calc(1rem * .5);
+	padding-left: calc(1rem * .5);
+	margin-top: 1rem;
 }
 
 .form-check-input[type=checkbox] {
 	border-radius: 0.25em;
 }
+
 .form-check-input:checked[type=checkbox] {
-    --bs-form-check-bg-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8c3ZnIHdpZHRoPSIxMiIgaGVpZ2h0PSI5IiB2aWV3Qm94PSIwIDAgMTIgOSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCiAgPHBhdGggZD0iTTQuNTc1IDguOTc3cy0uNDA0LS4wMDctLjUzNi0uMTY1TC4wNTcgNS42NGwuODI5LTEuMjI3TDQuNDcgNy4yNjggMTAuOTIxLjA4NmwuOTIzIDEuMTAzLTYuODYzIDcuNjRjLS4xMzQtLjAwMy0uNDA2LjE0OC0uNDA2LjE0OHoiIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPg0KPC9zdmc+);
+	--bs-form-check-bg-image:
+		url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8c3ZnIHdpZHRoPSIxMiIgaGVpZ2h0PSI5IiB2aWV3Qm94PSIwIDAgMTIgOSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCiAgPHBhdGggZD0iTTQuNTc1IDguOTc3cy0uNDA0LS4wMDctLjUzNi0uMTY1TC4wNTcgNS42NGwuODI5LTEuMjI3TDQuNDcgNy4yNjggMTAuOTIxLjA4NmwuOTIzIDEuMTAzLTYuODYzIDcuNjRjLS4xMzQtLjAwMy0uNDA2LjE0OC0uNDA2LjE0OHoiIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPg0KPC9zdmc+);
 	background-color: green !important;
 }
+
 .form-check-input:checked {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
+	background-color: #0d6efd;
+	border-color: #0d6efd;
 }
+
 .form-check .form-check-input {
-    float: left;
-    margin-left: -1.5em;
+	float: left;
+	margin-left: -1.5em;
 }
+
 .form-check-input[type=checkbox] {
-    border-radius: 0.25em;
+	border-radius: 0.25em;
 }
+
 .text-muted {
 	--bs-text-opacity: 1;
 	color: rgba(33, 37, 41, 0.75) !important;
 }
-a.text-muted{
-	text-decoration:underline;
+
+a.text-muted {
+	text-decoration: underline;
 }
+
 .btn-success {
 	--bs-btn-color: #fff;
 	--bs-btn-bg: #198754;
@@ -141,20 +151,23 @@ a.text-muted{
 
 .link-success {
 	color: RGBA(25, 135, 84, 0.8);
-	-webkit-text-decoration-color: RGBA(25, 135, 84,
-		0.8);
-	text-decoration-color: RGBA(25, 135, 84,
-		0.8);
+	-webkit-text-decoration-color: RGBA(25, 135, 84, 0.8);
+	text-decoration-color: RGBA(25, 135, 84, 0.8);
 }
+
 .link-success:focus, .link-success:hover {
-    color: RGBA(20, 108, 67, 1);
-    -webkit-text-decoration-color: RGBA(20, 108, 67, 1);
-    text-decoration-color: RGBA(20, 108, 67, 1);
+	color: RGBA(20, 108, 67, 1);
+	-webkit-text-decoration-color: RGBA(20, 108, 67, 1);
+	text-decoration-color: RGBA(20, 108, 67, 1);
 }
 
 [type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled),
 	button:not(:disabled) {
 	cursor: pointer;
+}
+
+#userbean .error {
+	color: red
 }
 </style>
 </head>
@@ -172,34 +185,39 @@ a.text-muted{
 				<div class="col-12 col-md-6 offset-lg-1 col-lg-4 order-lg-2 order-1">
 					<div class="mb-lg-9 mb-3">
 						<h1 class="mb-1 h2 fw-bold">
-							Đăng nhập vào  <span class="text-success-login">OGANI </span>
+							Đăng nhập vào <span class="text-success-login">OGANI </span>
 						</h1>
 						<p>Chào mừng quay trở lại. Đăng nhập để tiếp tục</p>
 					</div>
 
-					<form:form id="userbean" class="pt-2" action="login.htm" method="post" modelAttribute="user">
+					<form:form id="userbean" class="pt-2" action="login.htm"
+						method="post" modelAttribute="userBean">
 						<div class="row g-3">
 							<!-- row -->
 
 							<div class="col-12">
 								<!-- input -->
 								<form:input path="email" placeholder="Địa chỉ Email"
-									type="email" class="form-control"/>
+									type="email" class="form-control" />
+								<form:errors path="email" cssClass="error" />
 							</div>
 							<div class="col-12">
 								<!-- input -->
 								<div class="password-field position-relative">
 									<form:input path="password" placeholder="Mật khẩu"
-										type="password" class="form-control"/> 
+										type="password" class="form-control" />
+									<form:errors path="password" cssClass="error" />
 								</div>
 
 							</div>
 							<div class="d-flex justify-content-between">
 								<!-- form check -->
 								<div class="form-check">
-									<input id="flexCheckDefault" name="isRemember"
-										class="form-check-input" type="checkbox" checked="true" value="on">
-<!-- 										<input
+									<form:checkbox id="flexCheckDefault" path="isRemember"
+										class="form-check-input" checked="true"
+										value="on"/>
+									<form:errors path="isRemember" cssClass="error" />
+									<!-- 										<input
 										type="hidden" name="_isRemember" value="on"> -->
 									<!-- label -->
 									<label class="form-check-label" for="flexCheckDefault">
@@ -207,25 +225,27 @@ a.text-muted{
 								</div>
 								<div>
 									<a data-bs-toggle="modal" data-bs-target="#exampleModal"
-										class="text-muted" href="<c:url value="forgotPassword.htm"/>">Quên mật khẩu?</a>
+										class="text-muted" href="<c:url value="forgotPassword.htm"/>">Quên
+										mật khẩu?</a>
 								</div>
 							</div>
 							<!-- btn -->
 							<c:if test="${not empty message}">
 								<div class="col-12">
-									<span style="color: red;font-weight: 500;font-size: 16px;font-family: 'Cairo', sans-serif;line-height: 26px;">
-									${message }</span>
+									<span
+										style="color: red; font-weight: 500; font-size: 16px; font-family: 'Cairo', sans-serif; line-height: 26px;">
+										${message }</span>
 								</div>
 							</c:if>
 							<div class="col-12 d-grid">
-								<button
-									class="btn btn-success btn-block  mb-3" type="submit">Log
-									in</button>
+								<button class="btn btn-success btn-block  mb-3" type="submit">Đăng
+									nhập</button>
 							</div>
 							<!-- link -->
 							<div>
 								Bạn chưa có tài khoản? <a href="<c:url value="register.htm"/>"
-									class="link-success " previewlistener="true">Tạo tài khoản mới</a>
+									class="link-success " previewlistener="true">Tạo tài khoản
+									mới</a>
 							</div>
 						</div>
 					</form:form>

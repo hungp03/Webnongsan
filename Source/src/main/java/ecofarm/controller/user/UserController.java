@@ -4,21 +4,24 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import ecofarm.DAO.IAccountDAO;
 import ecofarm.bean.Company;
+import ecofarm.bean.LoginBean;
 import ecofarm.bean.UploadFile;
+import ecofarm.bean.UserBean;
 import ecofarm.entity.Account;
 import ecofarm.entity.Role;
 import ecofarm.utility.Mailer;
@@ -42,31 +45,44 @@ public class UserController {
 	private String emailValidate = "";
 	private String validateCodeRegister = "";
 	private String emailValidateRegister = "";
+//	@ModelAttribute("userBean")
+//    public UserBean getUserBean() {
+//        return new UserBean();
+//    }
 
 	@RequestMapping(value = { "/register" }, method = RequestMethod.GET)
-	public String Register(HttpServletRequest request) {
-		request.setAttribute("user", new Account());
+	public String Register(HttpServletRequest request,ModelMap model) {
+//		request.setAttribute("user", new Account());
+		model.addAttribute("userBean", new UserBean());
 		return "user/login/register";
 	}
 
 	@RequestMapping(value = { "/register" }, method = RequestMethod.POST)
-	public String CreateAccount(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
-			@RequestParam("email") String email, @RequestParam("password") String password,
-			@RequestParam("phoneNumber") String phoneNumber, @RequestParam("avatar") MultipartFile avatar,
+	public String CreateAccount(@Valid @ModelAttribute("userBean") UserBean userBean, BindingResult bindingResult,
 			HttpSession session, HttpServletRequest request,HttpServletResponse response) {
+		if(accountDAO.getAccountByEmail(userBean.getEmail()) != null) {
+			bindingResult.rejectValue("email","error.userBean", "Email đã tồn tại");
+		}
+		if(accountDAO.getAccountByPhoneNumber(userBean.getPhoneNumber()) != null) {
+			bindingResult.rejectValue("phoneNumber","error.userBean", "Số điện thoại này đã được đăng ký cho một tài khoán khác");
+		}
+
+		if (bindingResult.hasErrors()) {
+	        request.setAttribute("status", "Đăng ký tài khoản không thành công");
+	        return "user/login/register";
+	    }
 		boolean isAdded = false;
 		Account account = new Account();
-		account.setFirstName(firstName);
-		account.setLastName(lastName);
-		account.setEmail(email);
-		account.setPassword(password);
-		account.setPhoneNumber(phoneNumber);
+		account.setFirstName(userBean.getFirstName());
+		account.setLastName(userBean.getLastName());
+		account.setEmail(userBean.getEmail());
+		account.setPassword(userBean.getPassword());
+		account.setPhoneNumber(userBean.getPhoneNumber());
 		account.setRole(new Role("GUEST", "Guest"));
 		account.setStatus(1);
-		
-		if (!avatar.isEmpty()) {
+		if (!userBean.getAvatar().isEmpty()) {
 			try {
-				account.setAvatar(baseUploadFile.uploadImage(avatar));
+				account.setAvatar(baseUploadFile.uploadImage(userBean.getAvatar()));
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
@@ -81,11 +97,7 @@ public class UserController {
 		try {
 			if (isAdded) {
 				request.setAttribute("status", "Đăng ký tài khoản thành công");
-				session.setAttribute("userInfo", account);
 				validateCodeRegister = mailer.send(emailValidateRegister);
-				//Cookie cookie = new Cookie("userEmail", account.getEmail());
-				//cookie.setMaxAge(24 * 60 * 60);
-				//response.addCookie(cookie);
 				session.setAttribute("account", account);
 				return "redirect:/register/validateCode.htm";
 			} else {
@@ -110,6 +122,7 @@ public class UserController {
 		if (validateCodeRegister.equals(validateCode)) {
 			Account account = (Account) session.getAttribute("account");
 			accountDAO.createAccount(account);
+			session.setAttribute("userInfo", account);
 			return "redirect:/index.htm";
 		} else {
 			request.setAttribute("wrongCode", "Mã sai vui lòng nhập lại");
@@ -117,18 +130,26 @@ public class UserController {
 		return "user/login/registerValidate";
 	}
 
+
 	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
-	public String Login(HttpServletRequest request) {
-		request.setAttribute("user", new Account());
+	public String Login(HttpServletRequest request,ModelMap model) {
+//		request.setAttribute("user", new Account());
+		model.addAttribute("userBean", new LoginBean());
 		return "user/login/login";
 	}
 
 	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
-	public String Login(@ModelAttribute("user") Account account, HttpSession session, HttpServletRequest request,
+	public String Login(@Valid @ModelAttribute("userBean") LoginBean userBean, BindingResult bindingResult, HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
+		if (bindingResult.hasErrors()) {
+			request.setAttribute("message", "Đăng nhập thất bại");
+			return "user/login/login";
+		}
 		boolean isLogin = false;
-		String checkRemember = request.getParameter("isRemember");
-
+		String checkRemember = userBean.getIsRemember();
+		Account account = new Account();
+		account.setEmail(userBean.getEmail());
+		account.setPassword(userBean.getPassword());
 		if (accountDAO.checkAccountLogin(account)) {
 			if (accountDAO.getAccountByEmail(account.getEmail()).getStatus() == 0) {
 				request.setAttribute("message", "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ admin để được hỗ trợ");
