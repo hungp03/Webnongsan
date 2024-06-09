@@ -167,9 +167,9 @@ a.text-muted{
 				<div class="col-12 col-md-6 offset-lg-1 col-lg-4 order-lg-2 order-1">
 					<div class="mb-lg-9 mb-3">
 						<h1 class="mb-1 h2 fw-bold">
-							Forgot your password <span class="text-success-login">OGANI </span>
+							Xác thực email để hoàn thành đăng ký tài khoản <span class="text-success-login">OGANI </span>
 						</h1>
-						<p>PLease enter validate code:</p>
+						<p>Vui lòng nhập mã xác thực:</p>
 					</div>
 
 					<form id="userbean" class="pt-2" action="register/validateCode.htm" method="post">
@@ -178,7 +178,7 @@ a.text-muted{
 
 							<div class="col-12">
 								<!-- input -->
-								<input name="validateCodeRegister" placeholder="Validate Code"
+								<input name="validateCodeRegister" placeholder="Mã xác thực"
 									type="text" class="form-control" required/>
 							</div>
 							<c:if test="${not empty wrongCode}">
