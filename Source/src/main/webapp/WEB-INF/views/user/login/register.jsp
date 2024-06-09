@@ -194,6 +194,9 @@ input[type="file" i] {
 label {
     display: inline-block;
 }
+#userbean .error{
+	color: red
+}
 </style>
 </head>
 <body>
@@ -216,46 +219,47 @@ label {
 						</p>
 					</div>
 					<!-- form -->
-					<form id="userbean" action="register.htm"
-						method="post" enctype="multipart/form-data" onsubmit="return validateInput()">
+					<form:form id="userbean" action="register.htm"
+						method="post" enctype="multipart/form-data"  modelAttribute="userBean">
 						<div class="row g-3">
 							<!-- col -->
 							
 							<div class="col">
 								<!-- input -->
-								<input name="firstName" placeholder="Họ"
+								<form:input path="firstName" placeholder="Họ"
 									type="text" class="form-control " required="true"/>
-
+								<form:errors path="firstName" cssClass="error"/>
 							</div>
 							
 							<div class="col">
-								<input name="lastName" placeholder="Tên"
+								<form:input path="lastName" placeholder="Tên"
 									type="text" class="form-control " required="true"/>
+								<form:errors path="lastName" cssClass="error"/>
 							</div>
 							<div class="col-12">
 
-								<input name="email" placeholder="Địa chỉ Email" type="email"
+								<form:input path="email" placeholder="Địa chỉ Email" type="email"
 									class="form-control" required="true"/>
-
+								<form:errors path="email" cssClass="error"/>
 							</div>
 							<div class="col-12">
 								<div class="password-field position-relative">
-									<input name="password"
+									<form:input path="password"
 										placeholder="Nhập mật khẩu" type="password"
 										class="form-control" required="true"/>
-
+									<form:errors path="password" cssClass="error"/>
 								</div>
 							</div>
 							<div class="col-12">
-								<input name="phoneNumber"
+								<form:input path="phoneNumber"
 									placeholder="Số điện thoại" type="text" class="form-control" autocomplete="off" id="phoneNumber"
 									/>
-
+								 <form:errors path="phoneNumber" cssClass="error"/>
 							</div>
 							<div class="col-12" style="display:flex;">
 								<label for="avatar" style="margin-right:5px">Hình đại diện:</label> 
-								<input name="avatar" id="avatar" type="file" class="form-control-file"/>
-
+								<form:input path="avatar" id="avatar" type="file" class="form-control-file"/>
+								<form:errors path="avatar" cssClass="error"/>
 							</div>
 							<!-- btn -->
 							<c:if test="${not empty status}">
@@ -275,33 +279,9 @@ label {
 									class="link-success" href="#!">Chính sách bảo mật</a></small>
 							</p>
 						</div>
-					</form>
+					</form:form>
 				</div>
 			</div>
 		</div>
 	</section>
-	
-	<content tag="script">
-		<script>
- 			function validateInput(){
- 				if(!validatePhoneNumber()){
- 		    		return false;
- 		    	}
- 		    	return true;
-			} 
-			function validatePhoneNumber() {
-		        var phoneNumberInput = document.getElementById('phoneNumber');
-		        var phoneNumber = phoneNumberInput.value;
-		        var phoneNumberPattern = /^0[0-9]{9}$/;
-
-		        if (!phoneNumberPattern.test(phoneNumber)) {
-		            alert('Vui lòng nhập số điện thoại hợp lệ! Số điện thoại phải bắt đầu bằng số 0 và có tổng cộng 10 chữ số.');
-		            return false;
-		        }
-
-		        return true;
-		    }
-			
-		</script>
-	</content>
 </body>

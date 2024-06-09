@@ -256,6 +256,23 @@ public class AccountDAOImpl implements IAccountDAO {
 	        throw new RuntimeException("Error checking if email is used by other accounts", e);
 	    }
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public Account getAccountByPhoneNumber(String phoneNumber) {
+		Session session = sessionFactory.getCurrentSession();
+		List<Account> list = new ArrayList<Account>();
+	    try {
+	        String hql = "FROM Account WHERE phoneNumber = :pn";
+	        Query query = session.createQuery(hql);
+	        query.setParameter("pn", phoneNumber);
+	        list = query.list();
+	        if(list.size() == 0) return null;
+	        else return list.get(0); 
+	    } catch (Exception e) {
+	        logger.error("Error getting account by phoneNumber: " + e.getMessage(), e);
+	        throw new RuntimeException("Error getting account by phoneNumber", e);
+	    }
+	}
 
 
 }
