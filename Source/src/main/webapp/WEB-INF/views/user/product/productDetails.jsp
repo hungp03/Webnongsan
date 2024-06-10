@@ -114,13 +114,14 @@
 .product__details__quantity .pro-qty button {
 	background-color: #6f6f6f26;
 	border: none;
-	padding: 10px 15px; 
+	padding: 10px 15px;
 	cursor: pointer;
 	font-size: 16px;
 }
+
 .primary-btn:disabled {
-  cursor: not-allowed;
-  opacity: 0.7;
+	cursor: not-allowed;
+	opacity: 0.7;
 }
 </style>
 </head>
@@ -223,32 +224,44 @@
 						</div>
 
 						<div class="product__details__price">
-								<c:set var="formattedPrice">
-									<fmt:formatNumber value="${product.price}" type="number"
-										maxFractionDigits="0" />
-								</c:set>
-								${formattedPrice}đ
+							<c:set var="formattedPrice">
+								<fmt:formatNumber value="${product.price}" type="number"
+									maxFractionDigits="0" />
+							</c:set>
+							${formattedPrice}đ
 						</div>
-						<form action="AddCart.htm?productId=${product.productId }"
-							method="post" style="display: inline-block;" onsubmit="return validateQuantity()">
-							<div class="product__details__quantity">
-								<div class="quantity">
-									<div class="pro-qty">
-										<button type="button" onclick="changeQuantity(-1)">-</button>
-										<input id="quantity" name="quantity" type="number" min="1"
-											step="1" value="1" oninput="validateInput(event)">
-										<button type="button" onclick="changeQuantity(1)">+</button>
+						<div style="display: flex; align-items: center;">
+						<!-- method="post" style="display: inline-block;" -->
+							<form action="AddCart.htm?productId=${product.productId }"
+								method="post" style="display: flex;"
+								onsubmit="return validateQuantity()">
+								<div class="product__details__quantity">
+									<div class="quantity">
+										<div class="pro-qty">
+											<button type="button" onclick="changeQuantity(-1)">-</button>
+											<input id="quantity" name="quantity" type="number" min="1"
+												step="1" value="1" oninput="validateInput(event)">
+											<button type="button" onclick="changeQuantity(1)">+</button>
+										</div>
 									</div>
 								</div>
-							</div>
-							<c:if test="${product.quantity <= 0}">
-								<c:set var="btn_disable" value="disabled"></c:set> 
-							</c:if> 
-							<button type="submit" class="primary-btn" ${btn_disable} style="border: none">THÊM VÀO GIỎ</button>
-						</form>
-						
-						<a
-							class="heart-icon"><span class="icon_heart_alt"></span></a>
+								<c:if test="${product.quantity <= 0}">
+									<c:set var="btn_disable" value="disabled"></c:set>
+								</c:if>
+								<button type="submit" class="primary-btn" ${btn_disable}
+									style="border: none">THÊM VÀO GIỎ</button>
+							</form>
+
+							<!-- <a class="heart-icon"><span class="icon_heart_alt">
+						</span></a> --><form></form>
+							<form method="post"
+								action="AddWishlist.htm?productId=${product.productId }">
+								<button style="border: none; background-color: transparent;">
+									<a class="heart-icon"><span class="icon_heart_alt">
+									</span></a>
+								</button>
+							</form>
+						</div>
 						<ul>
 							<li><b>Đơn vị: </b> <span>${product.unit }</span></li>
 							<c:if test="${product.quantity > 0}">
@@ -294,8 +307,7 @@
 												</div>
 												<div class="comment-text w-100 active">
 													<h5>${item.account.getName() }</h5>
-													<span
-															class="label label-success">Đã mua hàng</span> 
+													<span class="label label-success">Đã mua hàng</span>
 													<div>
 														<c:set var="countStar" value="0"></c:set>
 														<c:forEach begin="1" end="${item.ratingStar }">
@@ -309,10 +321,9 @@
 														</c:if>
 													</div>
 													<div class="comment-footer">
-														<span class="date"><fmt:formatDate pattern="dd-MM-yyyy HH:mm"
-								value="${item.postingDate }" /></span> <span
-															class="action-icons">
-														</span>
+														<span class="date"><fmt:formatDate
+																pattern="dd-MM-yyyy HH:mm" value="${item.postingDate }" /></span>
+														<span class="action-icons"> </span>
 													</div>
 													<p class="m-b-5 m-t-10">${item.feedbackContent }</p>
 												</div>
@@ -345,15 +356,31 @@
 						<div class="product__item__pic set-bg"
 							data-setbg="<c:url value="/assets/user/img/products/${item.image }"/>">
 							<ul class="product__item__pic__hover">
-								<li><a
+								<li>
+									<%-- <a
 									href="<c:url value="/AddWishlist.htm?productId=${item.productId }"/>"><i
-										class="fa fa-heart"></i></a></li>
+										class="fa fa-heart"></i></a> --%>
+									<form method="post"
+										action="AddWishlist.htm?productId=${item.productId }">
+										<button style="border: none; background-color: transparent;">
+											<a><i class="fa fa-heart"></i></a>
+										</button>
+									</form>
+								</li>
 								<li><a
 									href="<c:url value="/product-detail.htm?productId=${item.productId }"/>"><i
 										class="fa fa-retweet"></i></a></li>
-								<li><a
+								<li>
+									<%-- <a
 									href="<c:url value="/AddCart.htm?productId=${item.productId }"/>"><i
-										class="fa fa-shopping-cart"></i></a></li>
+										class="fa fa-shopping-cart"></i></a> --%>
+									<form method="post"
+										action="AddCart.htm?productId=${item.productId }">
+										<button style="border: none; background-color: transparent;">
+											<a><i class="fa fa-shopping-cart"></i></a>
+										</button>
+									</form>
+								</li>
 							</ul>
 						</div>
 						<div class="product__item__text">
@@ -377,45 +404,48 @@
 		</div>
 	</section>
 	<!-- Related Product Section End -->
-	<content tag="script">
-		<script>
-			function changeQuantity(amount) {
-			    var quantityInput = document.getElementById('quantity');
-			    var currentQuantity = parseInt(quantityInput.value);
-			    var newQuantity = currentQuantity + amount;
+	<content tag="script"> <script>
+		function changeQuantity(amount) {
+			var quantityInput = document.getElementById('quantity');
+			var currentQuantity = parseInt(quantityInput.value);
+			var newQuantity = currentQuantity + amount;
 
-			    if (newQuantity >= 1) {
-			        quantityInput.value = newQuantity;
-			    }
+			if (newQuantity >= 1) {
+				quantityInput.value = newQuantity;
 			}
-			function validateInput(event){
-				var input = event.target;
-				var value = input.value;
+		}
+		function validateInput(event) {
+			var input = event.target;
+			var value = input.value;
 
-				// Kiểm tra và xóa tất cả dấu '.'
-			    var newValue  = value.replace(/\./g, '');
-				
-				if (value === '-' || value === '0' || parseInt(value) < 1){
-					input.value = '';
-				}else{
-					input.value = newValue;
-				}
+			// Kiểm tra và xóa tất cả dấu '.'
+			var newValue = value.replace(/\./g, '');
 
+			if (value === '-' || value === '0' || parseInt(value) < 1) {
+				input.value = '';
+			} else {
+				input.value = newValue;
 			}
-			
-			function validateQuantity(){
-				var quantity = document.getElementById('quantity').value;
-				var productQuantity = ${product.quantity};
-				if(quantity === '' || !Number.isInteger(Number(quantity))){
-					alert("Vui lòng nhập số lượng của sản phẩm");
-					return false;
-				}if(parseInt(quantity) > productQuantity){
-					alert("Số lượng sản phẩm tồn kho không đủ. Chỉ còn "+productQuantity+" sản phẩm trong kho.");
-					return false;
-				}
-				return true;
+
+		}
+
+		function validateQuantity() {
+			var quantity = document.getElementById('quantity').value;
+			var productQuantity = $
+			{
+				product.quantity
 			}
-			
-		</script>
-	</content>
+			;
+			if (quantity === '' || !Number.isInteger(Number(quantity))) {
+				alert("Vui lòng nhập số lượng của sản phẩm");
+				return false;
+			}
+			if (parseInt(quantity) > productQuantity) {
+				alert("Số lượng sản phẩm tồn kho không đủ. Chỉ còn "
+						+ productQuantity + " sản phẩm trong kho.");
+				return false;
+			}
+			return true;
+		}
+	</script> </content>
 </body>

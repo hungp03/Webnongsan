@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ecofarm.DAO.IProfileDAO;
+import ecofarm.DAO.IAccountDAO.EnumRole;
 import ecofarm.DAOImpl.PaginateDAOImpl;
 import ecofarm.DAO.IAccountDAO;
 import ecofarm.DAO.IOrderDAO;
@@ -39,13 +41,17 @@ import ecofarm.entity.Address;
 import ecofarm.entity.OrderDetail;
 import ecofarm.entity.Orders;
 import ecofarm.entity.Province;
+import ecofarm.entity.Role;
 import ecofarm.entity.Ward;
 import ecofarm.utility.Paginate;
 import ecofarm.bean.AddressUserBean;
 import ecofarm.bean.ChangePassword;
 import ecofarm.bean.Company;
 import ecofarm.bean.UploadFile;
+import ecofarm.bean.UserBean;
+
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ProfilePageController {
@@ -60,6 +66,21 @@ public class ProfilePageController {
 	@Qualifier("ecofarm")
 	Company company;
 
+//	@RequestMapping("/account/ProfilePage")
+//	public String profilePageIndex(
+//			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
+//			HttpSession session, ModelMap modelMap, HttpServletRequest request) {
+//		if (userEmail.equals("")) {
+//			request.setAttribute("user", new Account());
+//			return "redirect:/login.htm";
+//		}
+//		Account account = accountDAO.getAccountByEmail(userEmail);
+//		modelMap.addAttribute("profileInfo", account);
+//		List<Address> allAdress = profileDAO.getAllAddressInfo(account);
+//		modelMap.addAttribute("allAdress", allAdress);
+////		allAdress = profileDAO.getAllAddressInfo(account)
+//		return "user/account/profilePage";
+//	}
 	@RequestMapping("/account/ProfilePage")
 	public String profilePageIndex(
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
@@ -68,8 +89,17 @@ public class ProfilePageController {
 			request.setAttribute("user", new Account());
 			return "redirect:/login.htm";
 		}
+		UserBean accountUser = new UserBean();
 		Account account = accountDAO.getAccountByEmail(userEmail);
-		modelMap.addAttribute("profileInfo", account);
+		accountUser.setFirstName(account.getFirstName());
+		accountUser.setLastName(account.getLastName());
+		accountUser.setEmail(account.getEmail());
+		accountUser.setPhoneNumber(account.getPhoneNumber());
+		accountUser.setAvatarDir(account.getAvatar());
+		if((UserBean)modelMap.get("profileInfo") == null) {
+			modelMap.addAttribute("profileInfo", accountUser);
+		}
+		
 		List<Address> allAdress = profileDAO.getAllAddressInfo(account);
 		modelMap.addAttribute("allAdress", allAdress);
 //		allAdress = profileDAO.getAllAddressInfo(account)
@@ -161,20 +191,66 @@ public class ProfilePageController {
 		return "redirect:/account/ProfilePage.htm";
 	}
 
+//	@RequestMapping("/UpdateProfileInfo")
+//	public String updateProfileInfo(
+//			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
+//			HttpSession session, ModelMap modelMap, HttpServletRequest request,
+//			@ModelAttribute("profileInfo") Account updateProfile, HttpServletRequest reques,
+//			HttpServletResponse response) {
+//		if (userEmail.equals("")) {
+//			request.setAttribute("user", new Account());
+//			return "redirect:/login.htm";
+//		}
+//		Account account = accountDAO.getAccountByEmail(userEmail);
+//		int accountID = account.getAccountId();
+//		if (profileDAO.changeProfileInfo(accountID, updateProfile)) {
+//			Account loggedInUser = accountDAO.getAccountByEmail(updateProfile.getEmail());
+////			Xóa thông tin gmail cũ trong cookie
+//			Cookie cookie = new Cookie("userEmail", userEmail);
+//			cookie.setMaxAge(0);
+//			response.addCookie(cookie);
+////			Thêm thông tin gmail mới vào cookie
+//			cookie = new Cookie("userEmail", loggedInUser.getEmail());
+//			cookie.setMaxAge(-1);
+//			response.addCookie(cookie);
+////			Sửa thông tin trong session
+//			session.removeAttribute("userInfo");
+//			session.setAttribute("userInfo", accountDAO.getAccountByEmail(updateProfile.getEmail()));
+//		}
+////		return "user/profilePage";
+//		return "redirect:/account/ProfilePage.htm";
+//	}
 	@RequestMapping("/UpdateProfileInfo")
 	public String updateProfileInfo(
-			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
-			HttpSession session, ModelMap modelMap, HttpServletRequest request,
-			@ModelAttribute("profileInfo") Account updateProfile, HttpServletRequest reques,
-			HttpServletResponse response) {
+	@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
+	HttpSession session, ModelMap model, HttpServletRequest request,
+	@Validated @ModelAttribute("profileInfo") UserBean userBean, BindingResult errors, RedirectAttributes ra,
+	HttpServletResponse response) {
 		if (userEmail.equals("")) {
 			request.setAttribute("user", new Account());
 			return "redirect:/login.htm";
 		}
+		
 		Account account = accountDAO.getAccountByEmail(userEmail);
 		int accountID = account.getAccountId();
-		if (profileDAO.changeProfileInfo(accountID, updateProfile)) {
-			Account loggedInUser = accountDAO.getAccountByEmail(updateProfile.getEmail());
+		
+
+	    if (errors.hasErrors()) {
+	        // Add errors and other attributes to redirectAttributes
+	        ra.addFlashAttribute("org.springframework.validation.BindingResult.profileInfo", errors);
+	        ra.addFlashAttribute("profileInfo", userBean);
+			if (accountDAO.isEmailUsedByOtherAccounts(userBean.getEmail(), accountID)) {
+				ra.addFlashAttribute("mess", "Email đã tồn tại trên hệ thống");
+				return "redirect:/account/ProfilePage.htm";
+			}
+	        return "redirect:/account/ProfilePage.htm";
+	    }
+		account.setFirstName(userBean.getFirstName());
+		account.setLastName(userBean.getLastName());
+		account.setEmail(userBean.getEmail());
+		account.setPhoneNumber(userBean.getPhoneNumber());
+		if (profileDAO.changeProfileInfo(accountID, account)) {
+			Account loggedInUser = accountDAO.getAccountByEmail(account.getEmail());
 //			Xóa thông tin gmail cũ trong cookie
 			Cookie cookie = new Cookie("userEmail", userEmail);
 			cookie.setMaxAge(0);
@@ -185,10 +261,10 @@ public class ProfilePageController {
 			response.addCookie(cookie);
 //			Sửa thông tin trong session
 			session.removeAttribute("userInfo");
-			session.setAttribute("userInfo", accountDAO.getAccountByEmail(updateProfile.getEmail()));
+			session.setAttribute("userInfo", accountDAO.getAccountByEmail(account.getEmail()));
 		}
-//		return "user/profilePage";
 		return "redirect:/account/ProfilePage.htm";
+//		return "redirect:/account/ProfilePage.htm";
 	}
 
 	@ModelAttribute
