@@ -24,7 +24,6 @@ import ecofarm.bean.UploadFile;
 import ecofarm.bean.UserBean;
 import ecofarm.entity.Account;
 import ecofarm.entity.Role;
-import ecofarm.utility.CaptchaGenerator;
 import ecofarm.utility.Mailer;
 
 @Controller
@@ -40,14 +39,12 @@ public class UserController {
 	@Qualifier("ecofarm")
 	Company company;
 	
-	
 	@Autowired
 	private IAccountDAO accountDAO;
 	private String validateCodeFP = "";
 	private String emailValidate = "";
 	private String validateCodeRegister = "";
 	private String emailValidateRegister = "";
-	private String captchaCode = "";
 //	@ModelAttribute("userBean")
 //    public UserBean getUserBean() {
 //        return new UserBean();
@@ -137,8 +134,6 @@ public class UserController {
 	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
 	public String Login(HttpServletRequest request,ModelMap model) {
 //		request.setAttribute("user", new Account());
-		captchaCode = CaptchaGenerator.generateCaptchaCode(6);
-		request.setAttribute("captcha", captchaCode);
 		model.addAttribute("userBean", new LoginBean());
 		return "user/login/login";
 	}
@@ -146,14 +141,8 @@ public class UserController {
 	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
 	public String Login(@Valid @ModelAttribute("userBean") LoginBean userBean, BindingResult bindingResult, HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
-		String resCaptcha = CaptchaGenerator.convertToHtmlSpan(userBean.getCaptchaCode());
-		if(!captchaCode.equals(resCaptcha)) {
-			bindingResult.rejectValue("captchaCode","error.loginBean", "Mã captcha đã nhập sai vui lòng nhập lại");
-		}
 		if (bindingResult.hasErrors()) {
 			request.setAttribute("message", "Đăng nhập thất bại");
-			captchaCode = CaptchaGenerator.generateCaptchaCode(6);
-			request.setAttribute("captcha", captchaCode);
 			return "user/login/login";
 		}
 		boolean isLogin = false;
@@ -164,8 +153,6 @@ public class UserController {
 		if (accountDAO.checkAccountLogin(account)) {
 			if (accountDAO.getAccountByEmail(account.getEmail()).getStatus() == 0) {
 				request.setAttribute("message", "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ admin để được hỗ trợ");
-				captchaCode = CaptchaGenerator.generateCaptchaCode(6);
-				request.setAttribute("captcha", captchaCode);
 				return "user/login/login";
 			}
 			isLogin = true;
@@ -187,8 +174,6 @@ public class UserController {
 			request.setAttribute("status", "Đăng nhập tài khoản thành công");
 			return "redirect:/index.htm";
 		} else {
-			captchaCode = CaptchaGenerator.generateCaptchaCode(6);
-			request.setAttribute("captcha", captchaCode);
 			request.setAttribute("message", "Email hoặc password của bạn không chính xác. Vui lòng kiểm tra lại.");	
 			return "user/login/login";
 		}

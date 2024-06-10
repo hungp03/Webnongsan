@@ -169,45 +169,6 @@ a.text-muted {
 #userbean .error {
 	color: red
 }
-#userbean .captcha{
-    font-style: italic;
-    font-size: 18px;
-    letter-spacing: 10px;
-    padding: 5px 10px;
-    background-color: #eee;
-    display: inline-block;
-    margin-bottom: 10px;
-    font-weight: 900
-}
-#userbean .captcha span{
-	text-shadow: 1px 1px 0.5px gray;
-}
-#userbean .captcha span:nth-child(odd) {
-    position: relative;
-    top: 3px; /* Điều chỉnh giá trị để di chuyển ký tự lẻ xuống dưới */
-}
-#userbean .captcha span:nth-child(even) {
-    position: relative;
-    top: -3px; /* Điều chỉnh giá trị để di chuyển ký tự chẵn lên trên */
-}
-#userbean .captcha span:nth-child(1){
-	color: #F1C93B;
-}
-#userbean .captcha span:nth-child(2){
-	color: #E9F;
-}
-#userbean .captcha span:nth-child(3){
-	color: #E90;
-}
-#userbean .captcha span:nth-child(4){
-	color: #3572EF;
-}
-#userbean .captcha span:nth-child(5){
-	color: #41B06E;
-}
-#userbean .captcha span:nth-child(6){
-	color: #9A3B3B;
-}
 </style>
 </head>
 <body>
@@ -248,13 +209,6 @@ a.text-muted {
 									<form:errors path="password" cssClass="error" />
 								</div>
 
-							</div>
-							<div class="col-12">
-								<!-- input -->
-								<div class="captcha">${captcha }</div>
-								<form:input path="captchaCode" placeholder="Mã captcha"
-									type="text" class="form-control" />
-								<form:errors path="captchaCode" cssClass="error" />
 							</div>
 							<div class="d-flex justify-content-between">
 								<!-- form check -->
