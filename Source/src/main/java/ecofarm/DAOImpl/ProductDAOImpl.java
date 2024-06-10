@@ -58,7 +58,7 @@ public class ProductDAOImpl implements IProductDAO {
 				String hql = "FROM Product";
 				list = session.createQuery(hql).list();
 			} else {
-				String hql = "FROM Product WHERE CategoryID = :categoryID";
+				String hql = "FROM Product WHERE category.categoryId = :categoryID";
 				Query query = session.createQuery(hql);
 				query.setParameter("categoryID", categoryID);
 				list = query.list();
@@ -78,7 +78,7 @@ public class ProductDAOImpl implements IProductDAO {
 		List<Product> products = new ArrayList<>();
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			String hql = "FROM Product WHERE ProductID = :productID";
+			String hql = "FROM Product WHERE productId = :productID";
 			Query query = session.createQuery(hql);
 			query.setParameter("productID", productID);
 			products = query.list();
@@ -102,10 +102,10 @@ public class ProductDAOImpl implements IProductDAO {
 		try {
 
 			if (categoryID == 0) {
-				String hql = "FROM Product ORDER BY PostingDate DESC";
+				String hql = "FROM Product ORDER BY postingDate DESC";
 				list = session.createQuery(hql).list();
 			} else {
-				String hql = "FROM Product WHERE CategoryID = :categoryID ORDER BY PostingDate DESC";
+				String hql = "FROM Product WHERE category.categoryId = :categoryID ORDER BY postingDate DESC";
 				Query query = session.createQuery(hql);
 				query.setParameter("categoryID", categoryID);
 				list = query.list();
@@ -123,7 +123,7 @@ public class ProductDAOImpl implements IProductDAO {
 		List<Product> list = new ArrayList<>();
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			String hql = "FROM Product ORDER BY PostingDate DESC";
+			String hql = "FROM Product ORDER BY postingDate DESC";
 			Query query = session.createQuery(hql);
 			query.setMaxResults(6);
 			list = query.list();

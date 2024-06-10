@@ -9,12 +9,11 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.transaction.annotation.Transactional;
+
 import ecofarm.DAO.IProfileDAO;
 import ecofarm.entity.Account;
 import ecofarm.entity.Address;
-import ecofarm.entity.District;
 import ecofarm.entity.Feedback;
-import ecofarm.entity.OrderDetail;
 import ecofarm.entity.Province;
 import ecofarm.entity.Ward;
 @Transactional
@@ -31,7 +30,7 @@ public class ProfileDAOImpl implements IProfileDAO{
 		try {
 			int accountID = account.getAccountId();
 			Transaction tr = session.beginTransaction();
-			String hql = "FROM Account WHERE AccountID =:accountID";
+			String hql = "FROM Account WHERE accountId =:accountID";
 			Query query = session.createQuery(hql);
 			query.setParameter("accountID", accountID);
 			accountInfo = (Account) query.uniqueResult(); // Lấy phần tử duy nhất
@@ -51,7 +50,7 @@ public class ProfileDAOImpl implements IProfileDAO{
 		Session session = sessionFactory.openSession();
 		try {
 			Transaction tr = session.beginTransaction();
-			String hql = "FROM Account WHERE AccountID =:accountID";
+			String hql = "FROM Account WHERE accountId =:accountID";
 			Query query = session.createQuery(hql);
 			query.setParameter("accountID", accountID);
 			accounts = query.list();
@@ -215,7 +214,7 @@ public class ProfileDAOImpl implements IProfileDAO{
 		Session session = sessionFactory.openSession();
 		Ward ward = null;
 		try {
-			String hql = "FROM Ward WHERE WardID =:wardId";
+			String hql = "FROM Ward WHERE wardId =:wardId";
 			Query query = session.createQuery(hql);
 			query.setParameter("wardId", wardId);
 			ward = (Ward) query.uniqueResult();
@@ -234,7 +233,7 @@ public class ProfileDAOImpl implements IProfileDAO{
 		Transaction tr = session.beginTransaction();
 		boolean isChoose = false;
 		try {
-			String hql = "FROM Address WHERE AddressID =:AddressID";
+			String hql = "FROM Address WHERE addressId =:AddressID";
 			Query query = session.createQuery(hql);
 			query.setParameter("AddressID", addressId);
 			Address defaultAdress = (Address) query.uniqueResult();
@@ -257,7 +256,7 @@ public class ProfileDAOImpl implements IProfileDAO{
 	public int defaultAddressId(int accountId) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.openSession();
-		String hql = "FROM Account WHERE AccountID =:accountId";
+		String hql = "FROM Account WHERE accountId =:accountId";
 		Query query = session.createQuery(hql);
 		query.setParameter("accountId",accountId);
 		Account account = (Account) query.uniqueResult();

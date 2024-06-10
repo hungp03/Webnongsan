@@ -38,7 +38,7 @@ public class CartDAOImpl implements ICartDAO {
 		Session session = sessionFactory.getCurrentSession();
 		try {
 
-			String hql = "FROM Cart WHERE AccountID = :accountID";
+			String hql = "FROM Cart WHERE account.accountId = :accountID";
 			Query query = session.createQuery(hql);
 			query.setParameter("accountID", accountID);
 			list = query.list();
@@ -114,7 +114,7 @@ public class CartDAOImpl implements ICartDAO {
 		Session session = sessionFactory.getCurrentSession();
 		try {
 
-			String hql = "FROM Cart WHERE AccountID =:accountID AND ProductID =:productID";
+			String hql = "FROM Cart WHERE account.accountId =:accountID AND product.productId =:productID";
 			Query query = session.createQuery(hql);
 			query.setParameter("accountID", accountID);
 			query.setParameter("productID", productID);

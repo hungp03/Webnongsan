@@ -42,8 +42,6 @@ public class CartController {
 				session.setAttribute("totalPrice", cartDAO.getTotalPrice(list));
 			}
 			return "user/cart";
-
-
 	}
 
 
@@ -51,12 +49,8 @@ public class CartController {
 	@RequestMapping(value = { "/AddCart" }, method = RequestMethod.POST)
 	public String AddToCartQuantity(@RequestParam(value = "productId", required = true) int productId,
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
-
 			@RequestParam(value="quantity",required = false) String quantity, HttpSession session, HttpServletRequest request, ModelMap model) {
 
-
-		
-		
 
 		Account account = accountDAO.getAccountByEmail(userEmail);
 		if (account != null) {
