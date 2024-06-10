@@ -101,7 +101,7 @@
 						<%@include file="/WEB-INF/views/layouts/user/account-menu.jsp"%>
 
 						<!-- Profile detail -->
-						<form:form action="UpdateProfileInfo.htm"
+						<%-- <form:form action="UpdateProfileInfo.htm"
 							modelAttribute="profileInfo" method="post" onsubmit="return validateForm()">
 							<div class="col-lg-6 mb-5 mb-xxl-0">
 								<div class="bg-secondary-soft px-4 py-5 rounded">
@@ -141,7 +141,52 @@
 									</div>
 								</div>
 							</div>
+						</form:form> --%>
+						<form:form action="UpdateProfileInfo.htm"
+							modelAttribute="profileInfo" method="post">
+							<div class="col-lg-6 mb-5 mb-xxl-0">
+								<div class="bg-secondary-soft px-4 py-5 rounded">
+									<div class="row g-3">
+										<h4 class="mb-5 mt-0">Thông tin</h4>
+										<div class="col-sm-12" style="visibility: hidden"></div>
+										<div class="col-sm-6">
+											<label class="form-label">Họ</label>
+											<form:input path="FirstName" class="form-control"
+												autocomplete="off" required="true"/>
+											<form:errors class="text-danger" path="firstName" />
+										</div>
+										<!-- Last name -->
+										<div class="col-sm-6">
+											<label class="form-label">Tên</label>
+											<form:input path="LastName" class="form-control"
+												autocomplete="off" required="true"/>
+											<form:errors class="text-danger" path="lastName" />
+										</div>
+										<!-- Email number -->
+										<div class="col-sm-8">
+											<label class="form-label" class="form-control">Email</label>
+											<form:input path="Email" class="form-control"
+												autocomplete="off" required="true" id="email"/>
+											<form:errors class="text-danger" path="email" />
+											<div class="text-danger">${mess}</div>
+										</div>
+										<!-- Phone number -->
+										<div class="col-sm-8">
+											<label class="form-label" class="form-control">Số điện thoại</label>
+											<form:input path="PhoneNumber" class="form-control"
+												autocomplete="off" required="true" id="phoneNumber"/>
+											<form:errors class="text-danger" path="phoneNumber" />
+											
+										</div>
+										<div
+											class="gap-3 d-md-flex justify-content-md-end text-center">
+											<button class="btn btn-primary btn-sm btn-block">Cập nhật</button>
+										</div>
+									</div>
+								</div>
+							</div>
 						</form:form>
+						
 						<!-- Upload profile -->
 						<form:form>
 							<div class="col-lg-4">
