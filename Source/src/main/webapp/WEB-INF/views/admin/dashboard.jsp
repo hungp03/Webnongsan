@@ -26,12 +26,6 @@
 													</ol>
 												</nav>
 											</div>
-											<!-- Button for opening sidebar on smaller screens -->
-											<!-- <button class="btn btn-primary d-lg-none" type="button"
-										data-toggle="offcanvas" data-target="#offcanvasSidebar"
-										aria-controls="offcanvasSidebar">
-										<i class="bi bi-list"></i>
-									</button> -->
 										</div>
 									</div>
 								</div>
@@ -41,8 +35,8 @@
 									<div class="col-md-12">
 										<!-- Card -->
 										<div class="card bg-light border-0 rounded-4"
-											style="background-image: url(assets/admin/img/slide_2.jpg); background-repeat: no-repeat; background-size: cover; background-position: right;">
-											<div class="card-body p-lg-12 p-5">
+											style="background-image: url(assets/user/img/breadcrumb.jpg); background-repeat: no-repeat; background-size: cover; background-position: right;">
+											<div class="card-body p-lg-12 p-5 text-white">
 												<h1>Xin chào Admin</h1>
 												<p>Chào mừng bạn quay trở lại</p>
 											</div>
@@ -135,23 +129,6 @@
 					</div>
 				</div>
 			</div>
-
-			<%-- <!-- Off-canvas sidebar for smaller screens -->
-				<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSidebar"
-					aria-labelledby="offcanvasSidebarLabel">
-					<div class="offcanvas-header">
-						<h5 class="offcanvas-title" id="offcanvasSidebarLabel">Menu</h5>
-						<button type="button" class="close" data-dismiss="offcanvas" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="offcanvas-body">
-						<%@include file="/WEB-INF/views/layouts/admin/admin-headernav.jsp" %>
-					</div>
-				</div>
-				<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-				<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-				<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> --%>
 		</body>
 
 		<script src="<c:url value=" /assets/admin/js/AlertHandler.js" />"></script>

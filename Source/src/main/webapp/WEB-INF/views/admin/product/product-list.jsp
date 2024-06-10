@@ -151,7 +151,7 @@
 													<td class="align-middle"><span>${item.quantity }</span></td>
 													<td class="align-middle"><span class="text-dark fw-bold">
 															<fmt:formatNumber value="${item.price }" type="currency"
-																currencySymbol="VND" maxFractionDigits="0" />
+																currencySymbol="đ" maxFractionDigits="0" />
 														</span></td>
 													<td class="align-middle"><a
 															href="admin/products/update_product/${item.productId}.htm"

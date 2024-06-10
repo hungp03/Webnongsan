@@ -140,7 +140,7 @@
 																				<td class="align-item"><a
 																						href="product-detail.htm?productId=${o.product.productId }">
 																						<img src="<c:url value="
-																							/assets/user/img/products/${o.product.image} "/>"
+																							assets/user/img/products/${o.product.image} "/>"
 																							style="width: 50px; height: 50px;">
 																					</a></td>
 																				<td class="align-item">
@@ -237,10 +237,6 @@
 
 														</div>
 													</div>
-
-
-
-
 												</div>
 
 											</div>
@@ -260,6 +256,4 @@
 				</div>
 			</div>
 		</body>
-		<script type="text/javascript" src="<c:url value=" assets/js/user/account.js" />"></script>
-
 		</html>

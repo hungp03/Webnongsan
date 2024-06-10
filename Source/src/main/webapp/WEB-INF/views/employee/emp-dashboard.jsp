@@ -26,12 +26,7 @@
 													</ol>
 												</nav>
 											</div>
-											<!-- Button for opening sidebar on smaller screens -->
-											<!-- <button class="btn btn-primary d-lg-none" type="button"
-										data-toggle="offcanvas" data-target="#offcanvasSidebar"
-										aria-controls="offcanvasSidebar">
-										<i class="bi bi-list"></i>
-									</button> -->
+								
 										</div>
 									</div>
 								</div>
@@ -41,7 +36,7 @@
 									<div class="col-md-12">
 										<!-- Card -->
 										<div class="card bg-light border-0 rounded-4"
-											style="background-image: url(assets/admin/img/slide_2.jpg); background-repeat: no-repeat; background-size: cover; background-position: right;">
+											style="background-image: url(assets/user/img/breadcrumb.jpg); background-repeat: no-repeat; background-size: cover; background-position: right;">
 											<div class="card-body p-lg-12 p-5">
 												<h1>Xin chào!</h1>
 												<p>Chào mừng bạn quay lại.</p>
@@ -124,8 +119,7 @@
 												<div class="lh-1">
 													<h1 class="mb-2 mt-2 fw-bold fs-2">${totalClient}</h1>
 												</div>
-												<%-- <span>${clientBuyThisMonth } khách hàng mua hàng tháng này</span>
-													--%>
+												
 											</div>
 										</div>
 									</div>

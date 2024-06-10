@@ -94,7 +94,7 @@
 													<p class="mb-2 fw-bold">Current Image</p>
 													<img id="output" class="width-100" style="width: 100px"
 														src="<c:url value="
-														/assets/user/img/products/${crrBean.image}" />"
+														assets/user/img/products/${crrBean.image}" />"
 													alt="No Image" />
 												</div>
 											</c:if>

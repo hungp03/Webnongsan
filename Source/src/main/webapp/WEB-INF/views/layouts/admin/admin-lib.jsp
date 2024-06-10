@@ -15,11 +15,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Get Current Path  -->
 <base href="${pageContext.servletContext.contextPath }/">
 
 
-<!-- Bootstraps CSS -->
+
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -47,10 +46,5 @@
 <!-- Custom Css-->
 <link rel="stylesheet" href="assets/admin/css/main.css" type="text/css">
 <link rel="stylesheet" href="assets/admin/css/custom.css" type="text/css">
-<!-- <link rel="stylesheet" href="assets/owlcarousel/owl.carousel.min.css"
-	type="text/css">
-<link rel="stylesheet"
-	href="assets/owlcarousel/owl.theme.default.min.css" type="text/css"> -->
 
-<title>Ogani</title>
 </head>

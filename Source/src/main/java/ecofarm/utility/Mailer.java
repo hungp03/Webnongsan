@@ -66,7 +66,7 @@ public class Mailer {
 		}
 	}
 
-	public String sendOrder(String to, int orderCode, Date orderDate, int totalPrice, String paymentMethod) {
+	public boolean sendOrder(String to, int orderCode, Date orderDate, int totalPrice, String paymentMethod) {
 	    try {
 	        MimeMessage mail = mailer.createMimeMessage();
 	        MimeMessageHelper helper = new MimeMessageHelper(mail);
@@ -94,7 +94,7 @@ public class Mailer {
 	        helper.setSubject("Xác nhận đặt hàng");
 	        helper.setText(body, true);
 	        mailer.send(mail);
-	        return "Email đã được gửi thành công!"; 
+	        return true;
 	    } catch (Exception e) {
 	        throw new RuntimeException(e);
 	    }
