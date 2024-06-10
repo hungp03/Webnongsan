@@ -127,7 +127,7 @@ public class CategoryDAOImpl implements ICategoryDAO {
 	public List<Category> searchCategory(String alikeName) {
 		Session ss = sessionFactory.getCurrentSession();
 		alikeName = (alikeName == null) ? "%" : "%" + alikeName + "%";
-		String hql = "FROM Category WHERE Name LIKE :name";
+		String hql = "FROM Category WHERE name LIKE :name";
 		Query query = ss.createQuery(hql);
 		query.setParameter("name", alikeName);
 		@SuppressWarnings("unchecked")

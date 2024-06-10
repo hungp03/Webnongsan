@@ -34,7 +34,7 @@ public class WishlistDAOImpl implements IWishlistDAO {
 		List<Wishlist> list = new ArrayList<>();
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			String hql = "FROM Wishlist WHERE AccountID = :accountID";
+			String hql = "FROM Wishlist WHERE account.accountId = :accountID";
 			Query query = session.createQuery(hql);
 			query.setParameter("accountID", accountID);
 			list = query.list();
@@ -50,7 +50,7 @@ public class WishlistDAOImpl implements IWishlistDAO {
 		List<Wishlist> list = new ArrayList<>();
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			String hql = "FROM Wishlist WHERE AccountID =:accountID AND ProductID =:productID";
+			String hql = "FROM Wishlist WHERE account.accountId =:accountID AND product.productId =:productID";
 			Query query = session.createQuery(hql);
 			query.setParameter("accountID", accountID);
 			query.setParameter("productID", productID);

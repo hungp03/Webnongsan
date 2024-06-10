@@ -54,7 +54,7 @@ public class AccountDAOImpl implements IAccountDAO {
 	public Account getAccountByEmail(String email) {
 	    Session session = sessionFactory.getCurrentSession();
 	    try {
-	        String hql = "FROM Account WHERE Email = :email";
+	        String hql = "FROM Account WHERE email = :email";
 	        Query query = session.createQuery(hql);
 	        query.setParameter("email", email);
 	        Account account = (Account) query.uniqueResult(); 
@@ -118,7 +118,7 @@ public class AccountDAOImpl implements IAccountDAO {
 		List<Account> accounts = new ArrayList<>();
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			String hql = "FROM Account WHERE AccountID =:accountID";
+			String hql = "FROM Account WHERE accountId =:accountID";
 			Query query = session.createQuery(hql);
 			query.setParameter("accountID", accountID);
 			accounts = query.list();
@@ -162,7 +162,7 @@ public class AccountDAOImpl implements IAccountDAO {
 		Session session = sessionFactory.getCurrentSession();
 		List<Account> list = null;
 		try {
-			String hql = "FROM Account WHERE RoleID = :roleID";
+			String hql = "FROM Account WHERE role.roleId = :roleID";
 			if (search != null && !search.isEmpty()) {
 				hql += " AND (CONCAT(lastName, ' ', firstName) LIKE :search OR email LIKE :search)";
 			}
@@ -229,7 +229,7 @@ public class AccountDAOImpl implements IAccountDAO {
 
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			String hql = "From Role Where RoleID = :roleID";
+			String hql = "From Role Where role.roleId = :roleID";
 			Query query = session.createQuery(hql);
 			query.setString("roleID", role.toString());
 			_role = (Role) query.uniqueResult();
@@ -245,7 +245,7 @@ public class AccountDAOImpl implements IAccountDAO {
 	public boolean isEmailUsedByOtherAccounts(String email, int accountId) {
 	    Session session = sessionFactory.getCurrentSession();
 	    try {
-	        String hql = "SELECT COUNT(*) FROM Account WHERE Email = :email AND AccountID != :accountId";
+	        String hql = "SELECT COUNT(*) FROM Account WHERE email = :email AND accountId != :accountId";
 	        Query query = session.createQuery(hql);
 	        query.setParameter("email", email);
 	        query.setParameter("accountId", accountId);

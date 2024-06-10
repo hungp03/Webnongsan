@@ -53,6 +53,8 @@ public class WishlilstController {
 		}
 		Account account = accountDAO.getAccountByEmail(userEmail);
 		wishlistDAO.addToWishlist(productId, account.getAccountId());
+		List<Wishlist> wishlist = wishlistDAO.getWishlistByAccountID(account.getAccountId());
+		session.setAttribute("wishlist", wishlist);
 		return "redirect:" + request.getHeader("Referer");
 	}
 

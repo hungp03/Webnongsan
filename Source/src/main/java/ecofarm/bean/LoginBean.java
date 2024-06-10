@@ -11,6 +11,9 @@ public class LoginBean {
 	@NotBlank(message = "Mật khẩu không được để trống")
 	private String password;
 	private String isRemember;
+	@NotBlank(message = "Mã captcha không được để trống")
+	private String captchaCode;
+	
 	
 	public String getEmail() {
 		return email;
@@ -30,5 +33,12 @@ public class LoginBean {
 	public void setIsRemember(String isRemember) {
 		this.isRemember = isRemember;
 	}
+	public String getCaptchaCode() {
+		return captchaCode;
+	}
+	public void setCaptchaCode(String captchaCode) {
+		this.captchaCode = captchaCode;
+	}
+	
 	
 }
