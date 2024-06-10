@@ -76,10 +76,6 @@
 .mb-1 {
     margin-bottom: 0.25rem !important;
 }
-.text-warning {
-    --bs-text-opacity: 1;
-    color: rgba(255,193,7, 1) !important;
-}
 .col {
     flex: 1 0 0%;
 }
@@ -111,56 +107,7 @@
 [type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
     cursor: pointer;
 }
-.btn-success {
-    --bs-btn-color: #fff;
-    --bs-btn-bg: #198754;
-    --bs-btn-border-color: #198754;
-    --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: #157347;
-    --bs-btn-hover-border-color: #146c43;
-    --bs-btn-focus-shadow-rgb: 60, 153, 110;
-    --bs-btn-active-color: #fff;
-    --bs-btn-active-bg: #146c43;
-    --bs-btn-active-border-color: #13653f;
-    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-disabled-color: #fff;
-    --bs-btn-disabled-bg: #198754;
-    --bs-btn-disabled-border-color: #198754;
-}
-.btn {
-    --bs-btn-padding-x: 0.75rem;
-    --bs-btn-padding-y: 0.375rem;
-    --bs-btn-font-family: ;
-    --bs-btn-font-size: 1rem;
-    --bs-btn-font-weight: 400;
-    --bs-btn-line-height: 1.5;
-    --bs-btn-color: #212529;
-    --bs-btn-bg: transparent;
-    --bs-btn-border-width: 1px;
-    --bs-btn-border-color: transparent;
-    --bs-btn-border-radius:0.375rem;
-    --bs-btn-hover-border-color: transparent;
-    --bs-btn-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
-    --bs-btn-disabled-opacity: 0.65;
-    --bs-btn-focus-box-shadow: 0 0 0 0.25rem rgba(60,153,110, .5);
-    display: inline-block;
-    padding: 0.375rem 0.375rem*2;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: fff;
-    text-align: center;
-    text-decoration: none;
-    vertical-align: middle;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-    border: 1px solid #198754;
-    border-radius:0.375rem;
-    background-color: #198754;
-    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-}
+
 input[type="file" i] {
     appearance: none;
     background-color: initial;
@@ -207,7 +154,7 @@ label {
 			<div class="row justify-content-center align-items-center">
 				<div class="col-12 col-md-6 col-lg-4 order-lg-1 order-2">
 					<!-- img -->
-					<img src="<c:url value="/assets/user/img/signup-g.svg"/>" alt=""
+					<img src="<c:url value="/assets/user/img/signup-g.jpg"/>" alt=""
 						class="img-fluid">
 				</div>
 				<!-- col -->
@@ -215,7 +162,7 @@ label {
 					<div class="mb-lg-9 mb-5" style="margin-bottom: 0px!important">
 						<h1 class="mb-1 h2 fw-bold">Đăng ký</h1>
 						<p>
-							Chào mừng đến với <span class="text-warning">Ogani!</span> Hãy nhập vào thông tin của bạn để đăng nhập
+							Chào mừng đến với <span style="color: #7fad39;">Ogani!</span> Hãy nhập vào thông tin của bạn để đăng nhập
 						</p>
 					</div>
 					<!-- form -->
@@ -268,16 +215,9 @@ label {
 									${ status}</span>
 								</div>
 							</c:if>
-							<div class="col-12 d-grid">
+							<div class="col-12 d-grid mb-5">
 								<button name="update" type="submit" class="btn btn-success">Tiếp theo</button>
 							</div>
-
-							<!-- text -->
-							<p>
-								<small>Bằng việc nhấn tiếp tục bạn đã đồng ý với điều khoản dịch vụ của chúng tôi <a
-									class="link-success" href="#!"> Điều khoản dịch vụ</a> &amp; <a
-									class="link-success" href="#!">Chính sách bảo mật</a></small>
-							</p>
 						</div>
 					</form:form>
 				</div>

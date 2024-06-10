@@ -17,7 +17,6 @@ function getParameterByName(name, url) {
 var urlParams = new URLSearchParams(window.location.search);
 var searchValue = urlParams.get('search');
 
-// Đặt giá trị tìm kiếm vào trường input nếu tham số tìm kiếm đã được cung cấp trong URL
 if (searchValue !== null) {
 	document.getElementById('search').value = searchValue;
 }

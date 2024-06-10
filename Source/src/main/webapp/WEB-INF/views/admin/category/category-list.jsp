@@ -115,7 +115,6 @@
 											<th>SL sản phẩm</th>
 											<th>Cập nhật</th>
 											<th>Xóa</th>
-											<th>Status</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -152,15 +151,6 @@
 															class="btn btn-danger btn-sm ${item.products.size() > 0 ? 'disabled' : ''}">
 															Delete</button>
 													</form>
-												</td>
-
-												<td class="align-middle">
-													<c:if test="${item.products.size() > 0}">
-														<span class="badge bg-success">Published</span>
-													</c:if>
-													<c:if test="${item.products.size() == 0}">
-														<span class="badge bg-danger">Unpublished</span>
-													</c:if>
 												</td>
 											</tr>
 										</c:forEach>

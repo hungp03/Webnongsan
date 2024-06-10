@@ -102,7 +102,7 @@
 																<div class="dropdown">
 																	<button
 																		class="btn btn-sm btn-custom dropdown-toggle"
-																		type="button" data-bs-toggle="dropdown"
+																		type="button" data-bs-toggle="dropdown"  style="width: 85px;"
 																		aria-expanded="false">
 																		<c:if test="${item.status == 0 }">Chờ xử lý
 																		</c:if>

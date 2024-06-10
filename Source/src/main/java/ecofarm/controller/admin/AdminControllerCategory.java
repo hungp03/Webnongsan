@@ -46,9 +46,9 @@ public class AdminControllerCategory {
 
 		// Áp dụng filter
 		if (filter == 1) {
-			categories = categories.stream().filter(r -> r.getProducts().size() == 0).collect(Collectors.toList());
-		} else if (filter == 2) {
 			categories = categories.stream().filter(r -> r.getProducts().size() > 0).collect(Collectors.toList());
+		} else if (filter == 2) {
+			categories = categories.stream().filter(r -> r.getProducts().size() <= 0).collect(Collectors.toList());
 		}
 
 		// Tính toán tổng số lượng danh mục dựa trên danh sách đã lọc
