@@ -123,11 +123,10 @@
 									<div class="comment-footer">
 										<span class="date">${item.postingDate }</span> <span
 											class="label label-success">Đã mua hàng</span> <span
-											class="action-icons"> <a href="#" data-abc="true"><i
-												class="fa fa-heart"></i></a>
+											class="action-icons">
 										</span>
 									</div>
-									<p class="m-b-5 m-t-10">${item.feedbackContent }</p>
+									<p>${item.feedbackContent }</p>
 								</div>
 								<div class="edit-button">
 									<a href="EditFeedback.htm?productId=${item.product.productId}">Sửa</a>

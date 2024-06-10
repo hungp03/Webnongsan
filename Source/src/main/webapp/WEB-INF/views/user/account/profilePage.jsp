@@ -87,7 +87,7 @@
 
 		}
 	</script>
-	<div class="container">
+	<div class="container mb-5">
 		<div class="row">
 			<div class="col-12">
 				<!-- Page title -->
@@ -99,49 +99,6 @@
 				<table class="file-upload">
 					<div class="row mb-4 gx-5">
 						<%@include file="/WEB-INF/views/layouts/user/account-menu.jsp"%>
-
-						<!-- Profile detail -->
-						<%-- <form:form action="UpdateProfileInfo.htm"
-							modelAttribute="profileInfo" method="post" onsubmit="return validateForm()">
-							<div class="col-lg-6 mb-5 mb-xxl-0">
-								<div class="bg-secondary-soft px-4 py-5 rounded">
-									<div class="row g-3">
-										<h4 class="mb-5 mt-0">Thông tin</h4>
-										<div class="col-sm-12" style="visibility: hidden"></div>
-										<div class="col-sm-6">
-											<label class="form-label">Họ</label>
-											<form:input path="FirstName" class="form-control"
-												autocomplete="off" required="true"/>
-										</div>
-										<!-- Last name -->
-										<div class="col-sm-6">
-											<label class="form-label">Tên</label>
-											<form:input path="LastName" class="form-control"
-												autocomplete="off" required="true"/>
-										</div>
-										<!-- Email number -->
-										<div class="col-sm-8">
-											<label class="form-label" class="form-control">Email</label>
-											<form:input path="Email" class="form-control"
-												autocomplete="off" required="true" id="email"/>
-										</div>
-										<!-- Phone number -->
-										<div class="col-sm-8">
-											<label class="form-label" class="form-control">Số điện thoại</label>
-											<form:input path="PhoneNumber" class="form-control"
-												autocomplete="off" required="true" id="phoneNumber"/>
-											<form:input path="password" cssStyle="display:none" />
-											<form:input path="role.roleId" cssStyle="display:none" />
-											<form:input path="Avatar" cssStyle="display:none"/>
-										</div>
-										<div
-											class="gap-3 d-md-flex justify-content-md-end text-center">
-											<button class="btn btn-primary btn-sm btn-block">Cập nhật</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</form:form> --%>
 						<form:form action="UpdateProfileInfo.htm"
 							modelAttribute="profileInfo" method="post">
 							<div class="col-lg-6 mb-5 mb-xxl-0">
@@ -163,7 +120,7 @@
 											<form:errors class="text-danger" path="lastName" />
 										</div>
 										<!-- Email number -->
-										<div class="col-sm-8">
+										<div class="col-sm-12">
 											<label class="form-label" class="form-control">Email</label>
 											<form:input path="Email" class="form-control"
 												autocomplete="off" required="true" id="email"/>
@@ -171,16 +128,15 @@
 											<div class="text-danger">${mess}</div>
 										</div>
 										<!-- Phone number -->
-										<div class="col-sm-8">
+										<div class="col-sm-12">
 											<label class="form-label" class="form-control">Số điện thoại</label>
 											<form:input path="PhoneNumber" class="form-control"
 												autocomplete="off" required="true" id="phoneNumber"/>
 											<form:errors class="text-danger" path="phoneNumber" />
 											
 										</div>
-										<div
-											class="gap-3 d-md-flex justify-content-md-end text-center">
-											<button class="btn btn-primary btn-sm btn-block">Cập nhật</button>
+										<div>
+											<button class="btn btn-primary ml-3 mt-3">Cập nhật</button>
 										</div>
 									</div>
 								</div>
@@ -209,7 +165,7 @@
 												style="position: relative;width: 300px; height: 300px;";
 													src="assets/user/img/account/${userInfo.avatar};";
 													alt="User photo"">
-												</c:when>
+											</c:when>
 											<c:otherwise>
 												<img
 													id = "preview"
@@ -226,42 +182,19 @@
 											<div class="col-sm-12"
 												style="size: 500px; visibility: visibility;">
 												
-												<!-- <div class="col-sm-12">
-													<input type="file" id="customFile" name="file" hidden=""
-														style="border: 2px solid red">
-												</div> -->
-												<!-- <div class="col-sm-6"> -->
-													<!-- <div class="col-sm-12" style="display: flex; justify-content: center; align-items: center;">
-														<label class="btn btn-success" for="customFile">Tải lên</label>
-													</div> -->
 												<div class="col-sm-12">
 												<form></form>
 												<form action="account/UploadAvatar.htm" method="post" enctype="multipart/form-data">
-													<!-- <input type="file" id="customFile" name="file" hidden=""
-														style="border: 2px solid red"> -->
 													<input type="file" id="customFile" name="userAvatar"  onchange="previewImage(event)"
 														style="border: 2px solid red" hidden>
-													<!-- <div class="col-sm-12" style="display: flex; justify-content: center; align-items: center;"> -->
 													<div class="col-sm-12" style="display: flex; justify-content: center;">
 														<label style="margin: 0px 10px 0px 0px;" class="btn btn-secondary" for="customFile"  onchange="previewImage(event)">Chọn ảnh</label>
 														<button type="submit" class="btn btn-success">Tải lên</button>
 													</div>
 												</form>
 													
-												</div>
-													<%-- <div class="col-sm-12" style="display: flex; justify-content: center; align-items: center;">
-														<form:form action="account/UploadAvartar" method="post" enctype="multipart/form-data">
-															<input type="file" name="file">
-															<input type="submit" value="Upload" />
-														</form:form>
-														<label class="btn btn-success" for="customFile">Tải lên</label>
-													</div>
- --%>
-												<!-- </div> -->
-												
+												</div>		
 											</div>
-
-											
 										</div>
 									</div>
 								</div>
@@ -276,14 +209,11 @@
 						<thead>
 							<tr>
 								<th scope="col">Địa chỉ</th>
-								<th scope="col" ; style="text-align: center;">Địa chỉ mặc
-									định</th>
+								<th scope="col" style="text-align: center;">Đặt làm mặc định</th>
 								<th scope="col">Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							<%-- 		<c:if test="${empty allAddress }">
-							</c:if> --%>
 							<c:forEach items="${allAdress }" var="address" varStatus="loop">
 								<tr>
 									<td>${address.getFullAddress()}</td>
@@ -292,11 +222,11 @@
 											test="${defaultAddressNumber != address.getAddressId()}">
 											<a
 												href="account/ChooseDefaultAddress.htm?addressId=${address.getAddressId()}"><button
-													type="button" class="btn btn-success">Chọn</button></a>
+													type="button" class="btn btn-success" style="width: 60px;">Chọn</button></a>
 										</c:if> <c:if
 											test="${defaultAddressNumber == address.getAddressId()}">
 											<a href="account/RemoveDefaultAddress.htm"><button
-													type="button" class="btn btn-dark">Bỏ</button></a>
+													type="button" class="btn btn-dark" style="width: 60px;">Bỏ</button></a>
 										</c:if></td>
 
 
@@ -321,40 +251,12 @@
 						</c:when>
 					</c:choose>
 				</div>
-				<!-- <div class="gap-3 d-md-flex justify-content-md-end text-center">
-					<button type="button" class="btn btn-primary btn-lg"
-						style="margin-right: 4em;">Thêm địa chỉ</button>
-				</div> -->
 
 				<div>
 
 					<div class="col-9 p-3">
 						<div class="h4 text-uppercase">Thêm địa chỉ mới</div>
 						<hr>
-
-						<%-- 			<c:choose>
-				<c:when test="${message == 0}">
-					<div class="  alert alert-danger alert-dismissible fade show"
-						role="alert">
-						Cập nhật thất bại!
-						<button type="button" class="ms-auto btn-close"
-							data-bs-dismiss="alert" aria-label="Close"></button>
-					</div>
-
-
-				</c:when>
-				<c:when test="${message == 1}">
-					<div class=" alert alert-success alert-dismissible fade show"
-						role="alert">
-						Cập nhật thành công!
-						<button type="button" class="btn-close" data-bs-dismiss="alert"
-							aria-label="Close"></button>
-					</div>
-				</c:when>
-
-			</c:choose>
- --%>
-
 
 						<form:form action="account/AddNewAddress.htm" id="address-form"
 							modelAttribute="userAddress" method="post">
@@ -426,36 +328,17 @@
 						</form:form>
 					</div>
 				</div>
-				<div style="min-height: 400px;"></div>
-				<!-- Form END -->
 			</div>
 		</div>
 	</div>
-
-
-
-
-	<div id="snippetContent">
-
-		<!-- 		<link rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
-			integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA="
-			crossorigin="anonymous">
- -->
-	</div>
-	<!-- Thư viện tìm kiếm cbb -->
-	<!-- Include Select2 CSS -->
 
 	<link
 		href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css"
 		rel="stylesheet" />
 
-	<!-- Include jQuery (cần thiết cho Select2) -->
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-	<!-- Include Select2 JavaScript -->
 
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"
@@ -562,8 +445,6 @@
 			document.querySelector('#add-new-address').disabled = true;
 		});
 	</script>
-	<!-- Hiện thông báo -->
-	<script type="text/javascript" src="assets/js/user/account.js"></script>
 	<c:remove var="deleteAddressMessage" scope="session" />
     <script>
         function previewImage(event) {

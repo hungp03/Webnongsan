@@ -37,7 +37,7 @@
 										<!-- Card -->
 										<div class="card bg-light border-0 rounded-4"
 											style="background-image: url(assets/user/img/breadcrumb.jpg); background-repeat: no-repeat; background-size: cover; background-position: right;">
-											<div class="card-body p-lg-12 p-5">
+											<div class="card-body p-lg-12 p-5 text-white">
 												<h1>Xin chào!</h1>
 												<p>Chào mừng bạn quay lại.</p>
 											</div>

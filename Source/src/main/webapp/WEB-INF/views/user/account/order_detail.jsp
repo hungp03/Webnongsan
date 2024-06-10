@@ -169,8 +169,8 @@
 								action="order/cancelRequest.htm?orderId=${order.orderId}"
 								method="post">
 								<button type="submit"
-									class="btn btn-danger btn-block mt-3 ${isDisabled }">
-									Hủy yêu cầu</btn>
+									class="btn btn-danger btn-block mt-3 ${isDisabled }" ${isDisabled }>
+									Hủy yêu cầu</button>
 							</form>
 
 						</div>

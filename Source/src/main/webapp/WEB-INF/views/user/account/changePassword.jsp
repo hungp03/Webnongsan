@@ -92,7 +92,7 @@
 										</div>
 									</div>
 									<div class="gap-3 d-md-flex justify-content-md-end text-center">
-										<button type="submit" class="btn btn-primary btn-lg"
+										<button type="submit" class="btn btn-primary"
 											style="margin-right: 4em;">Đổi mật khẩu</button>
 									</div>
 						</form:form>
