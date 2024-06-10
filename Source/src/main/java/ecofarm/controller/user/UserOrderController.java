@@ -112,7 +112,7 @@ public class UserOrderController {
 				orderDAO.insertOrderDetail(orderDetail);
 			}
 			cartDAO.removeAllProductinCart(account.getAccountId());
-			System.out.println("Đơn hàng số: " + orders.getOrderId());
+			//System.out.println("Đơn hàng số: " + orders.getOrderId());
 			mailer.sendOrder(userEmail, orders.getOrderId(), orders.getOrderTime(), (int) Math.floor(orders.getPrice()) , pm);
 			model.addAttribute("orders", orders);
 			ss.setAttribute("carts", new ArrayList<Cart>());
@@ -120,7 +120,7 @@ public class UserOrderController {
 		}
 		return "redirect:/login.htm";
 	}
-	@RequestMapping(value = "checkout_banking.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "checkout_banking.htm", method = RequestMethod.POST)
 	public String bankingPayment(ModelMap model, @CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail) {
 		if (userEmail != null && !userEmail.isEmpty()) {
 			Account account = accountDAO.getAccountByEmail(userEmail);
