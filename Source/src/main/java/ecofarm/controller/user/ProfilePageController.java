@@ -66,21 +66,6 @@ public class ProfilePageController {
 	@Qualifier("ecofarm")
 	Company company;
 
-//	@RequestMapping("/account/ProfilePage")
-//	public String profilePageIndex(
-//			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
-//			HttpSession session, ModelMap modelMap, HttpServletRequest request) {
-//		if (userEmail.equals("")) {
-//			request.setAttribute("user", new Account());
-//			return "redirect:/login.htm";
-//		}
-//		Account account = accountDAO.getAccountByEmail(userEmail);
-//		modelMap.addAttribute("profileInfo", account);
-//		List<Address> allAdress = profileDAO.getAllAddressInfo(account);
-//		modelMap.addAttribute("allAdress", allAdress);
-////		allAdress = profileDAO.getAllAddressInfo(account)
-//		return "user/account/profilePage";
-//	}
 	@RequestMapping("/account/ProfilePage")
 	public String profilePageIndex(
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
@@ -120,16 +105,6 @@ public class ProfilePageController {
 
 	}
 
-//	@RequestMapping("account/DeleteAddress")
-//	public String deleteAdress(@RequestParam(value = "addressId", required = true) int addressId,
-//			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
-//			HttpSession session, HttpServletRequest request) {
-//		Account account = accountDAO.getAccountByEmail(userEmail);
-//		profileDAO.deleteAddress(addressId);
-//
-//		return "redirect:/account/ProfilePage.htm";
-//
-//	}
 	@Autowired
 	@Qualifier("accountImgDir")
 	UploadFile accountImgUpload;
@@ -191,35 +166,6 @@ public class ProfilePageController {
 		return "redirect:/account/ProfilePage.htm";
 	}
 
-//	@RequestMapping("/UpdateProfileInfo")
-//	public String updateProfileInfo(
-//			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
-//			HttpSession session, ModelMap modelMap, HttpServletRequest request,
-//			@ModelAttribute("profileInfo") Account updateProfile, HttpServletRequest reques,
-//			HttpServletResponse response) {
-//		if (userEmail.equals("")) {
-//			request.setAttribute("user", new Account());
-//			return "redirect:/login.htm";
-//		}
-//		Account account = accountDAO.getAccountByEmail(userEmail);
-//		int accountID = account.getAccountId();
-//		if (profileDAO.changeProfileInfo(accountID, updateProfile)) {
-//			Account loggedInUser = accountDAO.getAccountByEmail(updateProfile.getEmail());
-////			Xóa thông tin gmail cũ trong cookie
-//			Cookie cookie = new Cookie("userEmail", userEmail);
-//			cookie.setMaxAge(0);
-//			response.addCookie(cookie);
-////			Thêm thông tin gmail mới vào cookie
-//			cookie = new Cookie("userEmail", loggedInUser.getEmail());
-//			cookie.setMaxAge(-1);
-//			response.addCookie(cookie);
-////			Sửa thông tin trong session
-//			session.removeAttribute("userInfo");
-//			session.setAttribute("userInfo", accountDAO.getAccountByEmail(updateProfile.getEmail()));
-//		}
-////		return "user/profilePage";
-//		return "redirect:/account/ProfilePage.htm";
-//	}
 	@RequestMapping("/UpdateProfileInfo")
 	public String updateProfileInfo(
 	@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
