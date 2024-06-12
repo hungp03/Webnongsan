@@ -49,11 +49,11 @@
 										<!-- Card -->
 										<div class="card h-100 card-lg">
 											<!-- Card body -->
-											<div class="card-body p-4">
+											<div class="card-body p-6">
 												<!-- Heading -->
-												<div class="d-flex justify-content-between align-items-center mb-4">
+												<div class="d-flex justify-content-between align-items-center mb-6">
 													<div>
-														<h4 class="mb-0 fs-5">Tổng doanh thu</h4>
+														<h4 class="mb-2 fs-5">Tổng doanh thu</h4>
 													</div>
 													<div
 														class="icon-shape icon-md bg-light-danger text-dark-danger rounded-circle">

@@ -10,7 +10,6 @@
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
-            <small class="sidebar-heading px-2 text-muted">Sản phẩm</small>
             <!-- Nav Item - Product -->
             <li class="nav-item">
                 <a href="employee/products.htm" class="nav-link">

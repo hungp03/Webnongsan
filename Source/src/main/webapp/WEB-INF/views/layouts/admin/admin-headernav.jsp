@@ -10,7 +10,6 @@
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
-            <small class="sidebar-heading px-2 text-muted">Tài khoản</small>
             <!-- Nav Item - Account -->
             <li class="nav-item">
                 <a href="admin/user/get-employee.htm" class="nav-link">
@@ -34,7 +33,6 @@
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
-            <small class="sidebar-heading px-2 text-muted">Sản phẩm</small>
             <!-- Nav Item - Product -->
             <li class="nav-item">
                 <a href="admin/products.htm" class="nav-link">

@@ -67,29 +67,39 @@ public class ProfilePageController {
 	Company company;
 
 	@RequestMapping("/account/ProfilePage")
-	public String profilePageIndex(
-			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
-			HttpSession session, ModelMap modelMap, HttpServletRequest request) {
-		if (userEmail.equals("")) {
-			request.setAttribute("user", new Account());
-			return "redirect:/login.htm";
-		}
-		UserBean accountUser = new UserBean();
-		Account account = accountDAO.getAccountByEmail(userEmail);
-		accountUser.setFirstName(account.getFirstName());
-		accountUser.setLastName(account.getLastName());
-		accountUser.setEmail(account.getEmail());
-		accountUser.setPhoneNumber(account.getPhoneNumber());
-		accountUser.setAvatarDir(account.getAvatar());
-		if((UserBean)modelMap.get("profileInfo") == null) {
-			modelMap.addAttribute("profileInfo", accountUser);
-		}
-		
-		List<Address> allAdress = profileDAO.getAllAddressInfo(account);
-		modelMap.addAttribute("allAdress", allAdress);
-//		allAdress = profileDAO.getAllAddressInfo(account)
-		return "user/account/profilePage";
-	}
+    public String profilePageIndex(
+            @CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail,
+            HttpSession session, ModelMap modelMap, HttpServletRequest request) {
+        if (userEmail.equals("")) {
+            request.setAttribute("user", new Account());
+            return "redirect:/login.htm";
+        }
+
+        UserBean accountUser = new UserBean();
+        Account account = accountDAO.getAccountByEmail(userEmail);
+        accountUser.setFirstName(account.getFirstName());
+        accountUser.setLastName(account.getLastName());
+        accountUser.setEmail(account.getEmail());
+        accountUser.setPhoneNumber(account.getPhoneNumber());
+        accountUser.setAvatarDir(account.getAvatar());
+
+        if ((UserBean) modelMap.get("profileInfo") == null) {
+            modelMap.addAttribute("profileInfo", accountUser);
+        }
+
+        List<Address> allAdress = profileDAO.getAllAddressInfo(account);
+        modelMap.addAttribute("allAdress", allAdress);
+
+        List<Province> allProvince = profileDAO.getAllProvince();
+        ArrayList<Province> province = (ArrayList<Province>) profileDAO.getAllProvince();
+        AddressBean addressBean = new AddressDatasBean().ConvertToDataAddressBean(province);
+        modelMap.addAttribute("allProvince", allProvince);
+        modelMap.addAttribute("address", addressBean);
+        AddressUserBean userAddress = new AddressUserBean();
+        modelMap.addAttribute("userAddress", userAddress);
+
+        return "user/account/profilePage";
+    }
 
 	@RequestMapping(value = "/account/RemoveDefaultAddress")
 	public String removeDefaultAddress(
@@ -309,22 +319,20 @@ public class ProfilePageController {
 		return "redirect:/index.htm";
 	}
 
-	@ModelAttribute
-	void chooseAddress(ModelMap modelMap) {
-		List<Province> allProvince = profileDAO.getAllProvince();
-		ArrayList<Province> province = (ArrayList<Province>) profileDAO.getAllProvince();
-		AddressBean addressBean = new AddressDatasBean().ConvertToDataAddressBean(province);
-		modelMap.addAttribute("allProvince", allProvince);
-		modelMap.addAttribute("address", addressBean);
-		AddressUserBean userAddress = new AddressUserBean();
-		modelMap.addAttribute("userAddress", userAddress);
-	}
+	/*
+	 * @ModelAttribute void chooseAddress(ModelMap modelMap) { List<Province>
+	 * allProvince = profileDAO.getAllProvince(); ArrayList<Province> province =
+	 * (ArrayList<Province>) profileDAO.getAllProvince(); AddressBean addressBean =
+	 * new AddressDatasBean().ConvertToDataAddressBean(province);
+	 * modelMap.addAttribute("allProvince", allProvince);
+	 * modelMap.addAttribute("address", addressBean); AddressUserBean userAddress =
+	 * new AddressUserBean(); modelMap.addAttribute("userAddress", userAddress); }
+	 */
 
 	@ModelAttribute
 	void defaultAddress(HttpSession session,
 			@CookieValue(value = "userEmail", defaultValue = "", required = false) String userEmail) {
 		Account account = accountDAO.getAccountByEmail(userEmail);
-//		modelMap.addAttribute("defaultAddressNumber",profileDAO.defaultAddressId(account.getAccountId()));
 		if (account != null)
 			session.setAttribute("defaultAddressNumber", profileDAO.defaultAddressId(account.getAccountId()));
 	}
